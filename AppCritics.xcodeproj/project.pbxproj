@@ -1,0 +1,520 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* AppCriticsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppCriticsAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		FB1D55E60EB34C7100EA25C7 /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB1D55E50EB34C7100EA25C7 /* dist.plist */; };
+		FB445A6F0ED2F36000D89246 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445A6E0ED2F36000D89246 /* Reachability.m */; };
+		FB445AA90ED2F42400D89246 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */; };
+		FB445BAB0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */; };
+		FB445BFC0ED609FB00D89246 /* PSAppStoreReviewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */; };
+		FB445D770ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */; };
+		FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2C70EAF35750061B88B /* PSCountView.m */; };
+		FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CB0EAF35750061B88B /* PSImageView.m */; };
+		FB81A2D30EAF35750061B88B /* PSProgressBarSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */; };
+		FB81A2D60EAF39B10061B88B /* PSAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2D50EAF39B10061B88B /* PSAppStore.m */; };
+		FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */; };
+		FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */; };
+		FB81A33E0EAF55060061B88B /* PSAppStoreCountriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */; };
+		FB81A3780EAF5E6B0061B88B /* PSAppStoreReviews.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */; };
+		FB81A5AA0EB0776F0061B88B /* PSAppStoreReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */; };
+		FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */; };
+		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
+		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
+		FBB44ED60ECCEB6700A04B1F /* PSTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */; };
+		FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB44EF50ECCF24700A04B1F /* Icon.png */; };
+		FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */; };
+		FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBB451C80ECF150400A04B1F /* Settings.bundle */; };
+		FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536C0ECF8DD800A04B1F /* halfstar.png */; };
+		FBB4536F0ECF8DD800A04B1F /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536D0ECF8DD800A04B1F /* star.png */; };
+		FBB453820ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB453810ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib */; };
+		FBB453890ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB453880ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m */; };
+		FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4539D0ED0348300A04B1F /* PSRatingView.m */; };
+		FBB454100ED084B500A04B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4540F0ED084B500A04B1F /* Default.png */; };
+		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
+		FBDC0F3E0EE03FA900442E92 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0F3D0EE03FA900442E92 /* About.png */; };
+		FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* AppCriticsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCriticsAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppCriticsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppCriticsAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* AppCritics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppCritics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* AppCritics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCritics_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB1D55E50EB34C7100EA25C7 /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
+		FB445A6D0ED2F36000D89246 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		FB445A6E0ED2F36000D89246 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
+		FB445BA90ED54D5D00D89246 /* PSAppStoreReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviewsViewController.h; sourceTree = "<group>"; };
+		FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewsViewController.m; sourceTree = "<group>"; };
+		FB445BFA0ED609FB00D89246 /* PSAppStoreReviewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviewTableCell.h; sourceTree = "<group>"; };
+		FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewTableCell.m; sourceTree = "<group>"; };
+		FB445D750ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviewsHeaderTableCell.h; sourceTree = "<group>"; };
+		FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewsHeaderTableCell.m; sourceTree = "<group>"; };
+		FB81A2C60EAF35750061B88B /* PSCountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCountView.h; sourceTree = "<group>"; };
+		FB81A2C70EAF35750061B88B /* PSCountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCountView.m; sourceTree = "<group>"; };
+		FB81A2CA0EAF35750061B88B /* PSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageView.h; sourceTree = "<group>"; };
+		FB81A2CB0EAF35750061B88B /* PSImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageView.m; sourceTree = "<group>"; };
+		FB81A2CC0EAF35750061B88B /* PSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLog.h; sourceTree = "<group>"; };
+		FB81A2CD0EAF35750061B88B /* PSProgressBarSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressBarSheet.h; sourceTree = "<group>"; };
+		FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSProgressBarSheet.m; sourceTree = "<group>"; };
+		FB81A2CF0EAF35750061B88B /* PSProgressHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressHandler.h; sourceTree = "<group>"; };
+		FB81A2D40EAF39B10061B88B /* PSAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStore.h; sourceTree = "<group>"; };
+		FB81A2D50EAF39B10061B88B /* PSAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStore.m; sourceTree = "<group>"; };
+		FB81A2F00EAF3FAA0061B88B /* PSAppStoreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplication.h; sourceTree = "<group>"; };
+		FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplication.m; sourceTree = "<group>"; };
+		FB81A2F70EAF501C0061B88B /* PSAppStoreApplicationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationsViewController.h; sourceTree = "<group>"; };
+		FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationsViewController.m; sourceTree = "<group>"; };
+		FB81A33C0EAF55060061B88B /* PSAppStoreCountriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreCountriesViewController.h; sourceTree = "<group>"; };
+		FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreCountriesViewController.m; sourceTree = "<group>"; };
+		FB81A3760EAF5E6B0061B88B /* PSAppStoreReviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviews.h; sourceTree = "<group>"; };
+		FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviews.m; sourceTree = "<group>"; };
+		FB81A5A80EB0776F0061B88B /* PSAppStoreReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReview.h; sourceTree = "<group>"; };
+		FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReview.m; sourceTree = "<group>"; };
+		FB81A5AE0EB087A90061B88B /* PSAppStoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreTableCell.h; sourceTree = "<group>"; };
+		FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreTableCell.m; sourceTree = "<group>"; };
+		FB81A6910EB12C400061B88B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		FB81A6920EB12C520061B88B /* GTMRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMRegex.h; sourceTree = "<group>"; };
+		FB81A6930EB12C520061B88B /* GTMRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMRegex.m; sourceTree = "<group>"; };
+		FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAboutViewController.h; sourceTree = "<group>"; };
+		FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAboutViewController.m; sourceTree = "<group>"; };
+		FBB44ED40ECCEB6700A04B1F /* PSTitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTitleValueCell.h; sourceTree = "<group>"; };
+		FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTitleValueCell.m; sourceTree = "<group>"; };
+		FBB44EF50ECCF24700A04B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		FBB450D40ECE451800A04B1F /* PSAppStoreApplicationTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationTableCell.h; sourceTree = "<group>"; };
+		FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationTableCell.m; sourceTree = "<group>"; };
+		FBB451C80ECF150400A04B1F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		FBB4536C0ECF8DD800A04B1F /* halfstar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halfstar.png; sourceTree = "<group>"; };
+		FBB4536D0ECF8DD800A04B1F /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		FBB453810ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSEditAppStoreApplicationView.xib; sourceTree = "<group>"; };
+		FBB453870ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSEditAppStoreApplicationViewController.h; sourceTree = "<group>"; };
+		FBB453880ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSEditAppStoreApplicationViewController.m; sourceTree = "<group>"; };
+		FBB4539C0ED0348300A04B1F /* PSRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRatingView.h; sourceTree = "<group>"; };
+		FBB4539D0ED0348300A04B1F /* PSRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRatingView.m; sourceTree = "<group>"; };
+		FBB4540F0ED084B500A04B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FBB4555C0ED0E6BE00A04B1F /* PSSelectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSelectionListViewController.h; sourceTree = "<group>"; };
+		FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSelectionListViewController.m; sourceTree = "<group>"; };
+		FBDC0F3D0EE03FA900442E92 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About.png; sourceTree = "<group>"; };
+		FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+PSNSDateAdditions.h"; sourceTree = "<group>"; };
+		FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+PSNSDateAdditions.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				FB445AA90ED2F42400D89246 /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FB81A4390EAF79410061B88B /* ThirdParty */,
+				FB81A2BA0EAF34A80061B88B /* Common */,
+				FB81A2D70EAF3A180061B88B /* Models */,
+				FB81A5FB0EB1152A0061B88B /* Views */,
+				FBB453860ECF93BA00A04B1F /* Controllers */,
+				FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */,
+				FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */,
+				1D3623240D0F684500981E51 /* AppCriticsAppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppCriticsAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* AppCritics.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				FBB451C80ECF150400A04B1F /* Settings.bundle */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* AppCritics_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FBDC0F3D0EE03FA900442E92 /* About.png */,
+				FBB4540F0ED084B500A04B1F /* Default.png */,
+				FBB4536C0ECF8DD800A04B1F /* halfstar.png */,
+				FBB4536D0ECF8DD800A04B1F /* star.png */,
+				FBB44EF50ECCF24700A04B1F /* Icon.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				FB1D55E50EB34C7100EA25C7 /* dist.plist */,
+				FBB453810ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB81A2BA0EAF34A80061B88B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				FB81A2BD0EAF34D50061B88B /* Categories */,
+				FB81A2BE0EAF34DE0061B88B /* Protocols */,
+				FB81A2BF0EAF34E70061B88B /* Views */,
+				FBB4555B0ED0E69700A04B1F /* Controllers */,
+				FB81A2CC0EAF35750061B88B /* PSLog.h */,
+				FB81A2CD0EAF35750061B88B /* PSProgressBarSheet.h */,
+				FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		FB81A2BD0EAF34D50061B88B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		FB81A2BE0EAF34DE0061B88B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FB81A2CF0EAF35750061B88B /* PSProgressHandler.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		FB81A2BF0EAF34E70061B88B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBB44ED40ECCEB6700A04B1F /* PSTitleValueCell.h */,
+				FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */,
+				FB81A2C60EAF35750061B88B /* PSCountView.h */,
+				FB81A2C70EAF35750061B88B /* PSCountView.m */,
+				FB81A2CA0EAF35750061B88B /* PSImageView.h */,
+				FB81A2CB0EAF35750061B88B /* PSImageView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FB81A2D70EAF3A180061B88B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB81A2D40EAF39B10061B88B /* PSAppStore.h */,
+				FB81A2D50EAF39B10061B88B /* PSAppStore.m */,
+				FB81A2F00EAF3FAA0061B88B /* PSAppStoreApplication.h */,
+				FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */,
+				FB81A3760EAF5E6B0061B88B /* PSAppStoreReviews.h */,
+				FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */,
+				FB81A5A80EB0776F0061B88B /* PSAppStoreReview.h */,
+				FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FB81A4390EAF79410061B88B /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				FB445A6D0ED2F36000D89246 /* Reachability.h */,
+				FB445A6E0ED2F36000D89246 /* Reachability.m */,
+				FB81A6920EB12C520061B88B /* GTMRegex.h */,
+				FB81A6930EB12C520061B88B /* GTMRegex.m */,
+				FB81A6910EB12C400061B88B /* GTMDefines.h */,
+			);
+			name = ThirdParty;
+			sourceTree = "<group>";
+		};
+		FB81A5FB0EB1152A0061B88B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBB450D40ECE451800A04B1F /* PSAppStoreApplicationTableCell.h */,
+				FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */,
+				FB81A5AE0EB087A90061B88B /* PSAppStoreTableCell.h */,
+				FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */,
+				FBB4539C0ED0348300A04B1F /* PSRatingView.h */,
+				FBB4539D0ED0348300A04B1F /* PSRatingView.m */,
+				FB445BFA0ED609FB00D89246 /* PSAppStoreReviewTableCell.h */,
+				FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */,
+				FB445D750ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.h */,
+				FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FBB453860ECF93BA00A04B1F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FB81A2F70EAF501C0061B88B /* PSAppStoreApplicationsViewController.h */,
+				FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */,
+				FB81A33C0EAF55060061B88B /* PSAppStoreCountriesViewController.h */,
+				FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */,
+				FB445BA90ED54D5D00D89246 /* PSAppStoreReviewsViewController.h */,
+				FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */,
+				FBB453870ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.h */,
+				FBB453880ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FBB4555B0ED0E69700A04B1F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */,
+				FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */,
+				FBB4555C0ED0E6BE00A04B1F /* PSSelectionListViewController.h */,
+				FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* AppCritics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AppCritics" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppCritics;
+			productName = AppCritics;
+			productReference = 1D6058910D05DD3D006BFB54 /* AppCritics.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AppCritics" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* AppCritics */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB1D55E60EB34C7100EA25C7 /* dist.plist in Resources */,
+				FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */,
+				FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */,
+				FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */,
+				FBB4536F0ECF8DD800A04B1F /* star.png in Resources */,
+				FBB453820ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib in Resources */,
+				FBB454100ED084B500A04B1F /* Default.png in Resources */,
+				FBDC0F3E0EE03FA900442E92 /* About.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* AppCriticsAppDelegate.m in Sources */,
+				FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */,
+				FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */,
+				FB81A2D30EAF35750061B88B /* PSProgressBarSheet.m in Sources */,
+				FB81A2D60EAF39B10061B88B /* PSAppStore.m in Sources */,
+				FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */,
+				FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */,
+				FB81A33E0EAF55060061B88B /* PSAppStoreCountriesViewController.m in Sources */,
+				FB81A3780EAF5E6B0061B88B /* PSAppStoreReviews.m in Sources */,
+				FB81A5AA0EB0776F0061B88B /* PSAppStoreReview.m in Sources */,
+				FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */,
+				FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */,
+				FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */,
+				FBB44ED60ECCEB6700A04B1F /* PSTitleValueCell.m in Sources */,
+				FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */,
+				FBB453890ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m in Sources */,
+				FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */,
+				FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */,
+				FB445A6F0ED2F36000D89246 /* Reachability.m in Sources */,
+				FB445BAB0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m in Sources */,
+				FB445BFC0ED609FB00D89246 /* PSAppStoreReviewTableCell.m in Sources */,
+				FB445D770ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m in Sources */,
+				FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = AppCritics;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = AppCritics;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "653547E2-11E5-4782-B533-43C719A66CBA";
+				SDKROOT = iphoneos2.1;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				SDKROOT = iphoneos2.1;
+			};
+			name = Release;
+		};
+		FB81A76C0EB1A6AC0061B88B /* Ad Hoc Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE9982A7-DAF9-49B4-9702-F75D2397D090";
+				SDKROOT = iphoneos2.1;
+			};
+			name = "Ad Hoc Distribution";
+		};
+		FB81A76D0EB1A6AC0061B88B /* Ad Hoc Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = AppCritics;
+				PROVISIONING_PROFILE = "D6BD5E54-1A3E-4775-8A87-13525CB71E55";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D6BD5E54-1A3E-4775-8A87-13525CB71E55";
+			};
+			name = "Ad Hoc Distribution";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AppCritics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+				FB81A76D0EB1A6AC0061B88B /* Ad Hoc Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AppCritics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+				FB81A76C0EB1A6AC0061B88B /* Ad Hoc Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
