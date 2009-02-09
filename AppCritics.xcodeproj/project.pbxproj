@@ -12,7 +12,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		FB1D55E60EB34C7100EA25C7 /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB1D55E50EB34C7100EA25C7 /* dist.plist */; };
 		FB445A6F0ED2F36000D89246 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445A6E0ED2F36000D89246 /* Reachability.m */; };
 		FB445AA90ED2F42400D89246 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */; };
 		FB445BAB0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */; };
@@ -55,7 +54,6 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* AppCritics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCritics_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FB1D55E50EB34C7100EA25C7 /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
 		FB445A6D0ED2F36000D89246 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		FB445A6E0ED2F36000D89246 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
@@ -183,7 +181,6 @@
 				FBB4536D0ECF8DD800A04B1F /* star.png */,
 				FBB44EF50ECCF24700A04B1F /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				FB1D55E50EB34C7100EA25C7 /* dist.plist */,
 				FBB453810ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib */,
 			);
 			name = Resources;
@@ -354,7 +351,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB1D55E60EB34C7100EA25C7 /* dist.plist in Resources */,
 				FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */,
 				FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */,
 				FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */,
@@ -420,11 +416,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = AppCritics;
+				PROVISIONING_PROFILE = "21444E31-6F10-467C-A81F-293A9FC14417";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
 			};
 			name = Release;
 		};
@@ -449,12 +449,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
 				SDKROOT = iphoneos2.1;
 			};
 			name = Release;
@@ -491,6 +492,35 @@
 			};
 			name = "Ad Hoc Distribution";
 		};
+		FBD1F0890EE3BE4200336D60 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-lz";
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "77E78568-B4FB-4A72-AF4F-6F564003F6E4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E78568-B4FB-4A72-AF4F-6F564003F6E4";
+				SDKROOT = iphoneos2.1;
+			};
+			name = Distribution;
+		};
+		FBD1F08A0EE3BE4200336D60 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = AppCritics;
+			};
+			name = Distribution;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -499,6 +529,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				FBD1F08A0EE3BE4200336D60 /* Distribution */,
 				FB81A76D0EB1A6AC0061B88B /* Ad Hoc Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -509,6 +540,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				FBD1F0890EE3BE4200336D60 /* Distribution */,
 				FB81A76C0EB1A6AC0061B88B /* Ad Hoc Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
