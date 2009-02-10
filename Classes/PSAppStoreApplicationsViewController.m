@@ -103,7 +103,7 @@
 
 - (void)showAbout:(id)sender
 {
-	PSAboutViewController *aboutView = [[[PSAboutViewController alloc] init] autorelease];
+	PSAboutViewController *aboutView = [[[PSAboutViewController alloc] initWithParentViewForConfirmation:self.navigationController.view] autorelease];
 	[[self navigationController] pushViewController:aboutView animated:YES];
 }
 

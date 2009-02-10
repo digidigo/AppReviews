@@ -1,6 +1,6 @@
 //
 //  PSCountView.m
-//  EventHorizon
+//  PSCommon
 //
 //  Created by Charles Gamble on 15/09/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
@@ -12,6 +12,9 @@
 #define kPSCounterMinWidth 20
 
 
+/**
+ * Subclass of UIView which displays a positive count value in a lozenge.
+ */
 @implementation PSCountView
 
 @synthesize count, fontSize;
@@ -81,8 +84,14 @@
 	[super dealloc];
 }
 
-// Class method that calculates the bounds required for a given count and font size.
-// Can be used by parent view during layout.
+/**
+ * Calculates the bounds of the lozenge for a specified count and font, which allows
+ * a parent view to perform sizing, layout, etc.
+ *
+ * @param theCount		The count value.
+ * @param theFontSize	The font size.
+ * @return CGRect containing the bounds required.
+ */
 + (CGRect)boundsForCount:(NSUInteger)theCount usingFontSize:(CGFloat)theFontSize
 {
     if (theCount == 0)
@@ -111,6 +120,14 @@
     return result;
 }
 
+/**
+ * Sets the color of the lozenge.
+ *
+ * @param red	Red value (0.0 - 1.0)
+ * @param green	Green value (0.0 - 1.0)
+ * @param blue	Blue value (0.0 - 1.0)
+ * @param alpha	Alpha value (0.0 - 1.0)
+ */
 - (void)setLozengeRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	lozengeRed = red;
@@ -120,6 +137,14 @@
 	[self setNeedsDisplay];
 }
 
+/**
+ * Sets the color of the count.
+ *
+ * @param red	Red value (0.0 - 1.0)
+ * @param green	Green value (0.0 - 1.0)
+ * @param blue	Blue value (0.0 - 1.0)
+ * @param alpha	Alpha value (0.0 - 1.0)
+ */
 - (void)setCountRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	countRed = red;
@@ -139,6 +164,62 @@
 {
 	fontSize = theSize;
 	[self setNeedsDisplay];
+}
+
+/**
+ * Sets the color of the lozenge.
+ *
+ * @param inColor	UIColor for the lozenge.
+ */
+- (void)setLozengeColor:(UIColor *)inColor
+{
+	CGColorRef colorRef = inColor.CGColor;
+	size_t numComponents = CGColorGetNumberOfComponents(colorRef);
+	if (numComponents == 2)
+	{
+		const CGFloat *components = CGColorGetComponents(colorRef);
+		CGFloat all = components[0];
+		CGFloat alpha = components[1];
+		
+		[self setLozengeRed:all green:all blue:all alpha:alpha];
+	}
+	else
+	{
+		const CGFloat *components = CGColorGetComponents(colorRef);
+		CGFloat red = components[0];
+		CGFloat green = components[1];
+		CGFloat blue = components[2];
+		CGFloat alpha = components[3];
+		[self setLozengeRed:red green:green blue:blue alpha:alpha];
+	}	
+}
+
+/**
+ * Sets the color of the count.
+ *
+ * @param inColor	UIColor for the count.
+ */
+- (void)setCountColor:(UIColor *)inColor
+{
+	CGColorRef colorRef = inColor.CGColor;
+	size_t numComponents = CGColorGetNumberOfComponents(colorRef);
+	if (numComponents == 2)
+	{
+		const CGFloat *components = CGColorGetComponents(colorRef);
+		CGFloat all = components[0];
+		CGFloat alpha = components[1];
+		
+		[self setCountRed:all green:all blue:all alpha:alpha];
+	}
+	else
+	{
+		const CGFloat *components = CGColorGetComponents(colorRef);
+		CGFloat red = components[0];
+		CGFloat green = components[1];
+		CGFloat blue = components[2];
+		CGFloat alpha = components[3];
+		[self setCountRed:red green:green blue:blue alpha:alpha];
+	}	
 }
 
 @end

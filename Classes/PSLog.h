@@ -12,11 +12,11 @@
 // If we're not in a debug build, remove the PSLog statements. This
 // makes calls to PSLog "compile out" of Release builds
 #ifdef DEBUG
-#define PSLogDebug(...)		NSLog(@"DEBUG: %s %@", __func__, [NSString stringWithFormat:__VA_ARGS__])
-#define PSLog(...)			NSLog(@"INFO: %s %@", __func__, [NSString stringWithFormat:__VA_ARGS__])
-#define PSLogInfo(...)		NSLog(@"INFO: %s %@", __func__, [NSString stringWithFormat:__VA_ARGS__])
-#define PSLogWarning(...)	NSLog(@"WARNING: %s %@", __func__, [NSString stringWithFormat:__VA_ARGS__])
-#define PSLogError(...)		NSLog(@"ERROR: %s %@", __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLogDebug(...)		NSLog(@"[Thread %p] DEBUG: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLog(...)			NSLog(@"[Thread %p] INFO: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLogInfo(...)		NSLog(@"[Thread %p] INFO: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLogWarning(...)	NSLog(@"[Thread %p] WARNING: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLogError(...)		NSLog(@"[Thread %p] ERROR: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
 #else
 #undef PSLogDebug
 #undef PSLog
@@ -29,3 +29,7 @@
 #define PSLogWarning(...) do {} while(0)
 #define PSLogError(...) do {} while(0)
 #endif
+
+#define PSLogRelease(...)				NSLog(@"[Thread %p] INFO: %s %@", [NSThread currentThread], __func__, [NSString stringWithFormat:__VA_ARGS__])
+#define PSLogIntervalSince(msg,since)	NSLog(@"[Thread %p] TIMING: %@ took %fs", [NSThread currentThread], (msg), [[NSDate date] timeIntervalSinceDate:(since)])
+#define PSLogElapsedTime(msg,elapsed)	NSLog(@"[Thread %p] TIMING: %@ took %fs", [NSThread currentThread], (msg), (elapsed))

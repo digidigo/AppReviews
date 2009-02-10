@@ -1,6 +1,6 @@
 //
 //  PSProgressBarSheet.h
-//  Common
+//  PSCommon
 //
 //  Created by Charles Gamble on 10/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.

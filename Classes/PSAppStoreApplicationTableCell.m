@@ -7,6 +7,7 @@
 //
 
 #import "PSAppStoreApplicationTableCell.h"
+#import "UIColor+MoreColors.h"
 
 
 @implementation PSAppStoreApplicationTableCell
@@ -31,7 +32,7 @@
 		companyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		companyLabel.backgroundColor = [UIColor whiteColor];
 		companyLabel.opaque = YES;
-		companyLabel.textColor = [UIColor colorWithRed:50.0/255.0 green:79.0/255.0 blue:133.0/255.0 alpha:1];
+		companyLabel.textColor = [UIColor tableCellTextBlue];
 		companyLabel.highlightedTextColor = [UIColor whiteColor];
 		companyLabel.font = [UIFont boldSystemFontOfSize:12];
 		companyLabel.textAlignment = UITextAlignmentLeft;

@@ -29,7 +29,7 @@
 		FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */; };
 		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
 		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
-		FBB44ED60ECCEB6700A04B1F /* PSTitleValueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */; };
+		FBB44ED60ECCEB6700A04B1F /* PSTitleValueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */; };
 		FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB44EF50ECCF24700A04B1F /* Icon.png */; };
 		FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */; };
 		FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBB451C80ECF150400A04B1F /* Settings.bundle */; };
@@ -40,6 +40,8 @@
 		FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4539D0ED0348300A04B1F /* PSRatingView.m */; };
 		FBB454100ED084B500A04B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4540F0ED084B500A04B1F /* Default.png */; };
 		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
+		FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDA31D90F416FD60015A948 /* NSString+PSPathAdditions.m */; };
+		FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */; };
 		FBDC0F3E0EE03FA900442E92 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0F3D0EE03FA900442E92 /* About.png */; };
 		FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */; };
 /* End PBXBuildFile section */
@@ -90,14 +92,14 @@
 		FB81A6930EB12C520061B88B /* GTMRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMRegex.m; sourceTree = "<group>"; };
 		FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAboutViewController.h; sourceTree = "<group>"; };
 		FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAboutViewController.m; sourceTree = "<group>"; };
-		FBB44ED40ECCEB6700A04B1F /* PSTitleValueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTitleValueCell.h; sourceTree = "<group>"; };
-		FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTitleValueCell.m; sourceTree = "<group>"; };
+		FBB44ED40ECCEB6700A04B1F /* PSTitleValueTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTitleValueTableCell.h; sourceTree = "<group>"; };
+		FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTitleValueTableCell.m; sourceTree = "<group>"; };
 		FBB44EF50ECCF24700A04B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FBB450D40ECE451800A04B1F /* PSAppStoreApplicationTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationTableCell.h; sourceTree = "<group>"; };
 		FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationTableCell.m; sourceTree = "<group>"; };
 		FBB451C80ECF150400A04B1F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		FBB4536C0ECF8DD800A04B1F /* halfstar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halfstar.png; sourceTree = "<group>"; };
-		FBB4536D0ECF8DD800A04B1F /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		FBB4536C0ECF8DD800A04B1F /* halfstar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = halfstar.png; path = Resources/halfstar.png; sourceTree = "<group>"; };
+		FBB4536D0ECF8DD800A04B1F /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Resources/star.png; sourceTree = "<group>"; };
 		FBB453810ECF8F2900A04B1F /* PSEditAppStoreApplicationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSEditAppStoreApplicationView.xib; sourceTree = "<group>"; };
 		FBB453870ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSEditAppStoreApplicationViewController.h; sourceTree = "<group>"; };
 		FBB453880ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSEditAppStoreApplicationViewController.m; sourceTree = "<group>"; };
@@ -106,7 +108,11 @@
 		FBB4540F0ED084B500A04B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FBB4555C0ED0E6BE00A04B1F /* PSSelectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSelectionListViewController.h; sourceTree = "<group>"; };
 		FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSelectionListViewController.m; sourceTree = "<group>"; };
-		FBDC0F3D0EE03FA900442E92 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = About.png; sourceTree = "<group>"; };
+		FBDA31D80F416FD60015A948 /* NSString+PSPathAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PSPathAdditions.h"; sourceTree = "<group>"; };
+		FBDA31D90F416FD60015A948 /* NSString+PSPathAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PSPathAdditions.m"; sourceTree = "<group>"; };
+		FBDA31DA0F416FD60015A948 /* UIColor+MoreColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MoreColors.h"; sourceTree = "<group>"; };
+		FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MoreColors.m"; sourceTree = "<group>"; };
+		FBDC0F3D0EE03FA900442E92 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = About.png; path = Resources/About.png; sourceTree = "<group>"; };
 		FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+PSNSDateAdditions.h"; sourceTree = "<group>"; };
 		FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+PSNSDateAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +220,10 @@
 		FB81A2BD0EAF34D50061B88B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				FBDA31D80F416FD60015A948 /* NSString+PSPathAdditions.h */,
+				FBDA31D90F416FD60015A948 /* NSString+PSPathAdditions.m */,
+				FBDA31DA0F416FD60015A948 /* UIColor+MoreColors.h */,
+				FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -229,8 +239,8 @@
 		FB81A2BF0EAF34E70061B88B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FBB44ED40ECCEB6700A04B1F /* PSTitleValueCell.h */,
-				FBB44ED50ECCEB6700A04B1F /* PSTitleValueCell.m */,
+				FBB44ED40ECCEB6700A04B1F /* PSTitleValueTableCell.h */,
+				FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */,
 				FB81A2C60EAF35750061B88B /* PSCountView.h */,
 				FB81A2C70EAF35750061B88B /* PSCountView.m */,
 				FB81A2CA0EAF35750061B88B /* PSImageView.h */,
@@ -382,7 +392,7 @@
 				FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */,
 				FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */,
 				FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */,
-				FBB44ED60ECCEB6700A04B1F /* PSTitleValueCell.m in Sources */,
+				FBB44ED60ECCEB6700A04B1F /* PSTitleValueTableCell.m in Sources */,
 				FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */,
 				FBB453890ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m in Sources */,
 				FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */,
@@ -392,6 +402,8 @@
 				FB445BFC0ED609FB00D89246 /* PSAppStoreReviewTableCell.m in Sources */,
 				FB445D770ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m in Sources */,
 				FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */,
+				FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */,
+				FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +414,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -409,6 +423,8 @@
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = AppCritics;
+				PROVISIONING_PROFILE = "21444E31-6F10-467C-A81F-293A9FC14417";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
 			};
 			name = Debug;
 		};
@@ -480,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
@@ -487,8 +504,8 @@
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = AppCritics;
-				PROVISIONING_PROFILE = "D6BD5E54-1A3E-4775-8A87-13525CB71E55";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D6BD5E54-1A3E-4775-8A87-13525CB71E55";
+				PROVISIONING_PROFILE = "6CA40C49-F054-4C7D-832A-802DFD429B8A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6CA40C49-F054-4C7D-832A-802DFD429B8A";
 			};
 			name = "Ad Hoc Distribution";
 		};
@@ -513,11 +530,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = AppCritics;
+				PROVISIONING_PROFILE = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
 			};
 			name = Distribution;
 		};

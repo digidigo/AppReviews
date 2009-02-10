@@ -250,7 +250,7 @@
 	// Setup and show view controller.
 	self.selectionListViewController.returnTarget = self;
 	self.selectionListViewController.returnSelector = @selector(updateDefaultStore:);
-	[self.selectionListViewController setListLabels:listLabels values:listValues selections:listSelections];
+	[self.selectionListViewController setListLabels:listLabels images:nil values:listValues selections:listSelections];
 	[self.navigationController pushViewController:self.selectionListViewController animated:YES];
 }
 

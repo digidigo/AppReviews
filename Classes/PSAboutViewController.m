@@ -7,13 +7,13 @@
 //
 
 #import "PSAboutViewController.h"
-#import "PSTitleValueCell.h"
+#import "PSTitleValueTableCell.h"
 #import "PSLog.h"
 
 
-#define OPEN_WEBSITE_URL		1
-#define OPEN_RELEASE_NOTES_URL	2
-#define OPEN_EMAIL				3
+#define kOpenWebsiteURLTagValue			1
+#define kOpenReleaseNotesURLTagValue	2
+#define kOpenEmailTagValue				3
 
 
 typedef enum
@@ -26,7 +26,7 @@ typedef enum
 } PSAboutRow;
 
 
-@interface PSAboutViewController (Private)
+@interface PSAboutViewController ()
 
 - (id)infoValueForKey:(NSString*)key;
 - (NSString *)pathForIcon;
@@ -93,6 +93,7 @@ typedef enum
  */
 - (void)dealloc
 {
+	PSLogDebug(@"");
 	[appName release];
 	[appIcon release];
 	[appVersion release];
@@ -195,19 +196,19 @@ typedef enum
 		case PSAboutWebsiteRow:
 		{
 			sheet = [[UIActionSheet alloc] initWithTitle:websiteURL delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Visit Website", nil];
-			sheet.tag = OPEN_WEBSITE_URL;
+			sheet.tag = kOpenWebsiteURLTagValue;
 			break;
 		}
 		case PSAboutVersionRow:
 		{
-			sheet = [[UIActionSheet alloc] initWithTitle:releaseNotesURL delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Release Notes", nil];
-			sheet.tag = OPEN_RELEASE_NOTES_URL;
+			sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Release Notes", nil];
+			sheet.tag = kOpenReleaseNotesURLTagValue;
 			break;
 		}
 		case PSAboutEmailRow:
 		{
 			sheet = [[UIActionSheet alloc] initWithTitle:email delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send Feedback", nil];
-			sheet.tag = OPEN_EMAIL;
+			sheet.tag = kOpenEmailTagValue;
 			break;
 		}
 		default:
@@ -285,10 +286,10 @@ typedef enum
 		case PSAboutVersionRow:
 		{
 			// Obtain the cell.
-			PSTitleValueCell *tvCell = (PSTitleValueCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -301,10 +302,10 @@ typedef enum
 		case PSAboutCopyrightRow:
 		{
 			// Obtain the cell.
-			PSTitleValueCell *tvCell = (PSTitleValueCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -317,10 +318,10 @@ typedef enum
 		case PSAboutWebsiteRow:
 		{
 			// Obtain the cell.
-			PSTitleValueCell *tvCell = (PSTitleValueCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -333,10 +334,10 @@ typedef enum
 		case PSAboutEmailRow:
 		{
 			// Obtain the cell.
-			PSTitleValueCell *tvCell = (PSTitleValueCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -372,7 +373,7 @@ typedef enum
 	
 	switch (actionSheet.tag)
 	{
-		case OPEN_WEBSITE_URL:
+		case kOpenWebsiteURLTagValue:
 		{
 			if (buttonIndex == 0)
 			{
@@ -386,7 +387,7 @@ typedef enum
 			}
 			break;
 		}
-		case OPEN_RELEASE_NOTES_URL:
+		case kOpenReleaseNotesURLTagValue:
 		{
 			if (buttonIndex == 0)
 			{
@@ -400,12 +401,13 @@ typedef enum
 			}
 			break;
 		}
-		case OPEN_EMAIL:
+		case kOpenEmailTagValue:
 		{
 			if (buttonIndex == 0)
 			{
 				// Ensure app data is saved before app quits.
-				NSString *emailURL = [NSString stringWithFormat:@"mailto:%@?subject=%@%%20Feedback", email, [appName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+				NSString *subject = [NSString stringWithFormat:@"%@ Feedback (version %@)", appName, appVersion];
+				NSString *emailURL = [NSString stringWithFormat:@"mailto:%@?subject=%@", email, [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 				url = [NSURL URLWithString:emailURL];
 			}
 			break;

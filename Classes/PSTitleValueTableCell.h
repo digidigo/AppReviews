@@ -1,5 +1,5 @@
 //
-//  PSTitleValueCell.h
+//  PSTitleValueTableCell.h
 //  PSCommon
 //
 //  Created by Charles Gamble on 21/03/2008.
@@ -10,10 +10,16 @@
 
 
 /**
- * UITableViewCell which displays a title and a value.
+ * Cell identifier for this custom cell.
+ */
+extern NSString *kPSTitleValueTableCellID;
+
+
+/**
+ * Subclass of UITableViewCell which displays a title and a value.
  * Maximum title width can be set using the titleWidth property.
  */
-@interface PSTitleValueCell : UITableViewCell
+@interface PSTitleValueTableCell : UITableViewCell
 {
 	UILabel *titleLabel;
 	UILabel *valueLabel;

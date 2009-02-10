@@ -1,6 +1,6 @@
 //
 //  PSImageView.m
-//  EventHorizon
+//  PSCommon
 //
 //  Created by Charles Gamble on 21/09/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
@@ -10,10 +10,12 @@
 #import <UIKit/UIColor.h>
 
 
+/**
+ * Subclass of UIView to display a UIImage centered within the view.
+ */
 @implementation PSImageView
 
 @synthesize image;
-
 
 - (id)initWithFrame:(CGRect)frame
 {

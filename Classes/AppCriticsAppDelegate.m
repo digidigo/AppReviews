@@ -11,6 +11,7 @@
 #import "PSAppStoreReviews.h"
 #import "PSAppStoreApplication.h"
 #import "PSAppStoreApplicationsViewController.h"
+#import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
 
 @interface AppCriticsAppDelegate (Private)
@@ -37,8 +38,7 @@
 		self.settings = [self loadUserSettings:@"143441"];
 		self.exiting = NO;
 		// Find our Documents path.
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-		self.documentsPath = [paths objectAtIndex:0];
+		self.documentsPath = [NSString documentsPath];
 
 		self.appStores = [NSArray array];
 		self.appStoreApplications = [NSMutableArray array];

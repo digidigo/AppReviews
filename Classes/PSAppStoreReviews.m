@@ -12,6 +12,7 @@
 #import "PSAppStore.h"
 #import "AppCriticsAppDelegate.h"
 #import "GTMRegex.h"
+#import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
 
 
@@ -147,16 +148,14 @@
 
 - (NSString *)localFilename
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *documentsDirectory = [NSString documentsPath];
 	NSString *result = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@.archive", self.appId, self.storeId]];
 	return result;
 }
 
 - (NSString *)localXMLFilename
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *documentsDirectory = [NSString documentsPath];
 	NSString *result = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@.xml", self.appId, self.storeId]];
 	return result;
 }

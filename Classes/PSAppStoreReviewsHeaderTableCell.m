@@ -10,6 +10,7 @@
 #import "PSAppStoreReviews.h"
 #import "PSAppStoreApplication.h"
 #import "PSRatingView.h"
+#import "UIColor+MoreColors.h"
 #import "AppCriticsAppDelegate.h"
 
 
@@ -23,7 +24,7 @@ static UIColor *sLabelColor = nil;
 
 + (void)initialize
 {
-	sLabelColor = [[UIColor colorWithRed:50.0/255.0 green:79.0/255.0 blue:133.0/255.0 alpha:1] retain];
+	sLabelColor = [[UIColor tableCellTextBlue] retain];
 }
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
