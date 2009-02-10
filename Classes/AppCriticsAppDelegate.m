@@ -212,6 +212,7 @@
 		[self setupTestData];
 #endif
 		// Start new user off with some default applications.
+		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appId:@"303143596"] autorelease]];	
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appId:@"286546049"] autorelease]];	
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"Remote" appId:@"284417350"] autorelease]];	
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"Texas Hold'em" appId:@"284602850"] autorelease]];	
