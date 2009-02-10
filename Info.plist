@@ -21,11 +21,11 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2008 Percula Software</string>
+	<string>© 2009 Percula Software</string>
 	<key>PSWebsiteURL</key>
 	<string>www.perculasoft.com</string>
 	<key>PSReleaseNotesURL</key>
