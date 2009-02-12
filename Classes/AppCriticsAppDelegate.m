@@ -214,8 +214,6 @@
 		// Start new user off with some default applications.
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appId:@"303143596"] autorelease]];	
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appId:@"286546049"] autorelease]];	
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"Remote" appId:@"284417350"] autorelease]];	
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"Texas Hold'em" appId:@"284602850"] autorelease]];	
 		PSLog(@"Added %d apps", [appStoreApplications count]);
 	}
 	
@@ -329,9 +327,11 @@
 {
 	NSMutableArray *tmpArray = [NSMutableArray array];
 	
-	[tmpArray addObject:[[[PSAppStoreApplication alloc] initWithName:@"Virtual Conquest" appId:@"290649401"] autorelease]];
+	[tmpArray addObject:[[[PSAppStoreApplication alloc] initWithName:@"vConqr" appId:@"290649401"] autorelease]];
 	[tmpArray addObject:[[[PSAppStoreApplication alloc] initWithName:@"Lux Touch" appId:@"292538570"] autorelease]];
-	self.appStoreApplications = tmpArray;	
+	[tmpArray addObject:[[[PSAppStoreApplication alloc] initWithName:@"Remote" appId:@"284417350"] autorelease]];	
+	[tmpArray addObject:[[[PSAppStoreApplication alloc] initWithName:@"Texas Hold'em" appId:@"284602850"] autorelease]];	
+	self.appStoreApplications = tmpArray;
 }
 
 #endif
