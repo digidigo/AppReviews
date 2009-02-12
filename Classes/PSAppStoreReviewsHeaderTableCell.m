@@ -15,6 +15,7 @@
 
 
 static UIColor *sLabelColor = nil;
+static CGGradientRef sGradient = NULL;
 
 
 @implementation PSAppStoreReviewsHeaderTableCell
@@ -25,6 +26,16 @@ static UIColor *sLabelColor = nil;
 + (void)initialize
 {
 	sLabelColor = [[UIColor tableCellTextBlue] retain];
+
+	// Create the gradient.
+	CGColorSpaceRef myColorspace;
+	size_t num_locations = 2;
+	CGFloat locations[2] = { 0.0, 1.0 };
+	CGFloat components[8] = { 235.0/255.0, 238.0/255.0, 245.0/255.0, 1.0,	// Start color
+							  159.0/255.0, 158.0/255.0, 163.0/255.0, 1.0 };	// End color
+	myColorspace = CGColorSpaceCreateDeviceRGB();
+	sGradient = CGGradientCreateWithColorComponents (myColorspace, components, locations, num_locations);
+	CGColorSpaceRelease(myColorspace);
 }
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
@@ -210,24 +221,12 @@ static UIColor *sLabelColor = nil;
 {
     // Drawing code
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGGradientRef myGradient;
-	CGColorSpaceRef myColorspace;
-	size_t num_locations = 2;
-	CGFloat locations[2] = { 0.0, 1.0 };
-	CGFloat components[8] = { 235.0/255.0, 238.0/255.0, 245.0/255.0, 1.0,  // Start color
-	159.0/255.0, 158.0/255.0, 163.0/255.0, 1.0 }; // End color
-	
-	//myColorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-	myColorspace = CGColorSpaceCreateDeviceRGB();
-	myGradient = CGGradientCreateWithColorComponents (myColorspace, components, locations, num_locations);
 	CGPoint myStartPoint, myEndPoint;
 	myStartPoint.x = 0.0;
 	myStartPoint.y = 0.0;
 	myEndPoint.x = 0.0;
 	myEndPoint.y = self.bounds.size.height - 1.0;
-	CGContextDrawLinearGradient (context, myGradient, myStartPoint, myEndPoint, 0);
-	CGColorSpaceRelease(myColorspace);
-	CFRelease(myGradient);	
+	CGContextDrawLinearGradient (context, sGradient, myStartPoint, myEndPoint, 0);
 }
 
 - (void)layoutSubviews
