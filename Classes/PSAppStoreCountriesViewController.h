@@ -17,6 +17,7 @@
 	PSAppStoreApplication *appStoreApplication;
 	UIBarButtonItem *updateButton;
 	NSMutableArray *enabledStores;
+	NSMutableArray *displayedStores;
 	PSAppStoreReviewsViewController *appStoreReviewsViewController;
 	
 	// Members used when updating reviews.
@@ -26,10 +27,5 @@
 }
 
 @property (nonatomic, retain) PSAppStoreApplication *appStoreApplication;
-@property (nonatomic, retain) UIBarButtonItem *updateButton;
-@property (nonatomic, retain) PSAppStoreReviewsViewController *appStoreReviewsViewController;
-@property (nonatomic, retain) PSProgressBarSheet *progressBarSheet;
-@property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
-@property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
 
 @end

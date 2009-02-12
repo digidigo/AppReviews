@@ -19,15 +19,24 @@
 #import "PSLog.h"
 
 
-@interface PSAppStoreCountriesViewController (Private)
+@interface PSAppStoreCountriesViewController ()
 
+@property (nonatomic, retain) NSMutableArray *enabledStores;
+@property (nonatomic, retain) NSMutableArray *displayedStores;
+@property (nonatomic, retain) UIBarButtonItem *updateButton;
+@property (nonatomic, retain) PSAppStoreReviewsViewController *appStoreReviewsViewController;
+@property (nonatomic, retain) PSProgressBarSheet *progressBarSheet;
+@property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
+@property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
+
+- (void)updateDisplayedStores;
 - (void)updateReviews:(PSProgressBarSheet *)inProgressBarSheet;
 
 @end
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize appStoreApplication, updateButton, appStoreReviewsViewController, progressBarSheet, storeIdsProcessed, storeIdsRemaining;
+@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, progressBarSheet, storeIdsProcessed, storeIdsRemaining;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -47,7 +56,8 @@
 		self.progressBarSheet = [[[PSProgressBarSheet alloc] initWithTitle:@"Processing App Reviews" parentView:self.view] autorelease];
 		self.storeIdsProcessed = [NSMutableArray array];
 		self.storeIdsRemaining = [NSMutableArray array];
-		enabledStores = [[NSMutableArray array] retain];
+		self.enabledStores = [NSMutableArray array];
+		self.displayedStores = [NSMutableArray array];
     }
     return self;
 }
@@ -61,7 +71,9 @@
 	for (PSAppStore *store in appDelegate.appStores)
 	{
 		if (store.enabled)
+		{
 			[enabledStores addObject:store];
+		}
 	}
 	
 	// Deselect any selected row.
@@ -69,7 +81,7 @@
 	if (selectedRow)
 		[self.tableView deselectRowAtIndexPath:selectedRow animated:NO];
 	
-	[self.tableView reloadData];
+	[self updateDisplayedStores];
 }
 
 - (void)dealloc
@@ -82,6 +94,7 @@
 	[storeIdsProcessed release];
 	[storeIdsRemaining release];
 	[enabledStores release];
+	[displayedStores release];
     [super dealloc];
 }
 
@@ -95,6 +108,25 @@
 		self.title = appStoreApplication.name;
 	else
 		self.title = appStoreApplication.appId;
+}
+
+- (void)updateDisplayedStores
+{
+	// Updates the tableview and takes account of the hideEmptyCountries setting.
+	[displayedStores removeAllObjects];
+	for (PSAppStore *appStore in enabledStores)
+	{
+		PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
+		// Only add store if it has reviews OR we are not hiding empty stores.
+		if ((storeReviews && storeReviews.countTotal > 0) ||
+			([[NSUserDefaults standardUserDefaults] boolForKey:@"hideEmptyCountries"] == NO))
+		{
+			[displayedStores addObject:appStore];
+		}
+	}
+	
+	// Refresh table.
+	[self.tableView reloadData];
 }
 
 - (void)updateAllReviews:(id)sender
@@ -142,7 +174,7 @@
 	else
 	{
 		// Update table to show any store's reviews that were just completed.
-		[self.tableView reloadData];
+		[self updateDisplayedStores];
 		
 		// Fill in missing app details if we have them available in last processed store reviews.
 		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [storeIdsProcessed count] > 0)
@@ -234,7 +266,7 @@
 
 - (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	PSAppStore *appStore = [enabledStores objectAtIndex:indexPath.row];
+	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
 	if (storeReviews)
 	{
@@ -246,7 +278,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// Display reviews for store.	
-	PSAppStore *appStore = [enabledStores objectAtIndex:indexPath.row];
+	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	PSAppStoreReviews *appStoreReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
 	// Lazily create countries view controller.
 	if (self.appStoreReviewsViewController == nil)
@@ -276,7 +308,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [enabledStores count];
+    return [displayedStores count];
 }
 
 
@@ -290,7 +322,7 @@
         cell = [[[PSAppStoreTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	PSAppStore *appStore = [enabledStores objectAtIndex:indexPath.row];
+	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	cell.nameLabel.text = appStore.name;
 	PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
 	if (storeReviews)
