@@ -1,19 +1,20 @@
 //
 //  PSAppStoreTableCell.m
-//  EventHorizon
+//  AppCritics
 //
 //  Created by Charles Gamble on 16/09/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
 #import "PSAppStoreTableCell.h"
+#import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
 
 
 @implementation PSAppStoreTableCell
 
-@synthesize nameLabel, ratingView, countView;
+@synthesize nameLabel, flagView, ratingView, countView;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -30,6 +31,9 @@
 		nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		[self.contentView addSubview:nameLabel];
 		
+		flagView = [[PSImageView alloc] initWithFrame:CGRectZero];
+		[self.contentView addSubview:flagView];
+		
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:ratingView];
 		
@@ -43,6 +47,7 @@
 - (void)dealloc
 {
 	[nameLabel release];
+	[flagView release];
 	[ratingView release];
 	[countView release];
     [super dealloc];
@@ -83,6 +88,7 @@
 #define MARGIN_Y 5
 #define UPPER_ROW_TOP 3
 #define LOWER_ROW_TOP 23
+#define IMAGE_SIZE 32
 
     [super layoutSubviews];
     CGRect contentRect = self.contentView.bounds;
@@ -92,11 +98,15 @@
 	CGRect countBounds = [PSCountView boundsForCount:[countView count] usingFontSize:nameLabel.font.pointSize];
 
 	// Position name label.
-	frame = CGRectMake(boundsX + MARGIN_X, UPPER_ROW_TOP, contentRect.size.width-(MARGIN_X + MARGIN_X + countBounds.size.width + MARGIN_X), 20.0);
+	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X, UPPER_ROW_TOP, contentRect.size.width-(MARGIN_X + IMAGE_SIZE + MARGIN_X + MARGIN_X + countBounds.size.width + MARGIN_X), 20.0);
 	nameLabel.frame = frame;
 
+	// Position flag view.
+	frame = CGRectMake(boundsX + MARGIN_X, floorf((contentRect.size.height-IMAGE_SIZE)/2.0), IMAGE_SIZE, IMAGE_SIZE);
+	flagView.frame = frame;
+	
 	// Position rating view.
-	frame = CGRectMake(boundsX + MARGIN_X, LOWER_ROW_TOP, kRatingWidth, kRatingHeight);
+	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X, LOWER_ROW_TOP, kRatingWidth, kRatingHeight);
 	ratingView.frame = frame;
 	
 	// Position count.

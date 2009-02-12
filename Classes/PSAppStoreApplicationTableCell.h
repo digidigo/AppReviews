@@ -1,6 +1,6 @@
 //
 //  PSAppStoreApplicationTableCell.h
-//  EventHorizon
+//  AppCritics
 //
 //  Created by Charles Gamble on 16/09/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  NSDate+PSNSDateAdditions.h
-//  EventHorizon
+//  AppCritics
 //
 //  Created by Charles Gamble on 02/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.

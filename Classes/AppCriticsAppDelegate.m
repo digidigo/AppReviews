@@ -212,7 +212,7 @@
 		[self setupTestData];
 #endif
 		// Start new user off with some default applications.
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appId:@"303143596"] autorelease]];	
+		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"AppCritics" appId:@"303143596"] autorelease]];	
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appId:@"286546049"] autorelease]];	
 		PSLog(@"Added %d apps", [appStoreApplications count]);
 	}

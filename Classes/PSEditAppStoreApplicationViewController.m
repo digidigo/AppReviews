@@ -236,11 +236,13 @@
 	self.selectionListViewController.listPrompt = @"Choose a default store for this application";
 	// Preselect current value.
 	NSMutableArray *listLabels = [NSMutableArray array];
+	NSMutableArray *listImages = [NSMutableArray array];
 	NSMutableArray *listValues = [NSMutableArray array];
 	NSMutableArray *listSelections = [NSMutableArray array];
 	for (PSAppStore *store in appDelegate.appStores)
 	{
 		[listLabels addObject:store.name];
+		[listImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", store.storeId]]];
 		[listValues addObject:store.storeId];
 		[listSelections addObject:[NSNumber numberWithBool:NO]];
 	}
@@ -250,7 +252,7 @@
 	// Setup and show view controller.
 	self.selectionListViewController.returnTarget = self;
 	self.selectionListViewController.returnSelector = @selector(updateDefaultStore:);
-	[self.selectionListViewController setListLabels:listLabels images:nil values:listValues selections:listSelections];
+	[self.selectionListViewController setListLabels:listLabels images:listImages values:listValues selections:listSelections];
 	[self.navigationController pushViewController:self.selectionListViewController animated:YES];
 }
 

@@ -14,6 +14,7 @@
 #import "AppCriticsAppDelegate.h"
 #import "PSProgressBarSheet.h"
 #import "PSAppStoreTableCell.h"
+#import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
 #import "PSLog.h"
@@ -324,6 +325,7 @@
     // Configure the cell
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	cell.nameLabel.text = appStore.name;
+	cell.flagView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", appStore.storeId]];
 	PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
 	if (storeReviews)
 	{
