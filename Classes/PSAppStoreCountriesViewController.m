@@ -253,7 +253,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:PSAppStoreReviewsUpdatedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreReviewsUpdatedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -331,11 +331,20 @@
 	{
 		cell.countView.count = storeReviews.countTotal;
 		cell.ratingView.rating = storeReviews.averageRating;
+		if (storeReviews.hasNewReviews)
+		{
+			[cell.countView setLozengeColor:[UIColor colorWithRed:142.0/255.0 green:217.0/255.0 blue:255.0/255.0 alpha:1.0]];
+		}
+		else
+		{
+			[cell.countView setLozengeColor:nil];
+		}
 	}
 	else
 	{
 		cell.countView.count = 0;
 		cell.ratingView.rating = 0.0;
+		[cell.countView setLozengeColor:nil];
 	}
 	
     return cell;

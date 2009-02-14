@@ -9,7 +9,18 @@
 #import "PSCountView.h"
 #import <UIKit/UIColor.h>
 
+
 #define kPSCounterMinWidth 20
+
+
+static CGFloat sDefaultLozengeRed = 0.55;
+static CGFloat sDefaultLozengeGreen = 0.6;
+static CGFloat sDefaultLozengeBlue = 0.7;
+static CGFloat sDefaultLozengeAlpha = 1.0;
+static CGFloat sDefaultCountRed = 1.0;
+static CGFloat sDefaultCountGreen = 1.0;
+static CGFloat sDefaultCountBlue = 1.0;
+static CGFloat sDefaultCountAlpha = 1.0;
 
 
 /**
@@ -32,16 +43,14 @@
 		self.userInteractionEnabled = NO;
 		self.contentMode = UIViewContentModeRedraw;
 		self.backgroundColor = [UIColor whiteColor];
-		//lozengeRed = 0.6;
-		lozengeRed = 0.55;
-		lozengeGreen = 0.6;
-		//lozengeBlue = 0.6;
-		lozengeBlue = 0.7;
-		lozengeAlpha = 1.0;
-		countRed = 1.0;
-		countGreen = 1.0;
-		countBlue = 1.0;
-		countAlpha = 1.0;
+		lozengeRed = sDefaultLozengeRed;
+		lozengeGreen = sDefaultLozengeGreen;
+		lozengeBlue = sDefaultLozengeBlue;
+		lozengeAlpha = sDefaultLozengeAlpha;
+		countRed = sDefaultCountRed;
+		countGreen = sDefaultCountGreen;
+		countBlue = sDefaultCountBlue;
+		countAlpha = sDefaultCountAlpha;
  	}
 	return self;
 }
@@ -173,25 +182,32 @@
  */
 - (void)setLozengeColor:(UIColor *)inColor
 {
-	CGColorRef colorRef = inColor.CGColor;
-	size_t numComponents = CGColorGetNumberOfComponents(colorRef);
-	if (numComponents == 2)
+	if (inColor)
 	{
-		const CGFloat *components = CGColorGetComponents(colorRef);
-		CGFloat all = components[0];
-		CGFloat alpha = components[1];
-		
-		[self setLozengeRed:all green:all blue:all alpha:alpha];
+		CGColorRef colorRef = inColor.CGColor;
+		size_t numComponents = CGColorGetNumberOfComponents(colorRef);
+		if (numComponents == 2)
+		{
+			const CGFloat *components = CGColorGetComponents(colorRef);
+			CGFloat all = components[0];
+			CGFloat alpha = components[1];
+			
+			[self setLozengeRed:all green:all blue:all alpha:alpha];
+		}
+		else
+		{
+			const CGFloat *components = CGColorGetComponents(colorRef);
+			CGFloat red = components[0];
+			CGFloat green = components[1];
+			CGFloat blue = components[2];
+			CGFloat alpha = components[3];
+			[self setLozengeRed:red green:green blue:blue alpha:alpha];
+		}
 	}
 	else
 	{
-		const CGFloat *components = CGColorGetComponents(colorRef);
-		CGFloat red = components[0];
-		CGFloat green = components[1];
-		CGFloat blue = components[2];
-		CGFloat alpha = components[3];
-		[self setLozengeRed:red green:green blue:blue alpha:alpha];
-	}	
+		[self setLozengeRed:sDefaultLozengeRed green:sDefaultLozengeGreen blue:sDefaultLozengeBlue alpha:sDefaultLozengeAlpha];
+	}
 }
 
 /**
@@ -201,25 +217,32 @@
  */
 - (void)setCountColor:(UIColor *)inColor
 {
-	CGColorRef colorRef = inColor.CGColor;
-	size_t numComponents = CGColorGetNumberOfComponents(colorRef);
-	if (numComponents == 2)
+	if (inColor)
 	{
-		const CGFloat *components = CGColorGetComponents(colorRef);
-		CGFloat all = components[0];
-		CGFloat alpha = components[1];
-		
-		[self setCountRed:all green:all blue:all alpha:alpha];
+		CGColorRef colorRef = inColor.CGColor;
+		size_t numComponents = CGColorGetNumberOfComponents(colorRef);
+		if (numComponents == 2)
+		{
+			const CGFloat *components = CGColorGetComponents(colorRef);
+			CGFloat all = components[0];
+			CGFloat alpha = components[1];
+			
+			[self setCountRed:all green:all blue:all alpha:alpha];
+		}
+		else
+		{
+			const CGFloat *components = CGColorGetComponents(colorRef);
+			CGFloat red = components[0];
+			CGFloat green = components[1];
+			CGFloat blue = components[2];
+			CGFloat alpha = components[3];
+			[self setCountRed:red green:green blue:blue alpha:alpha];
+		}
 	}
 	else
 	{
-		const CGFloat *components = CGColorGetComponents(colorRef);
-		CGFloat red = components[0];
-		CGFloat green = components[1];
-		CGFloat blue = components[2];
-		CGFloat alpha = components[3];
-		[self setCountRed:red green:green blue:blue alpha:alpha];
-	}	
+		[self setCountRed:sDefaultCountRed green:sDefaultCountGreen blue:sDefaultCountBlue alpha:sDefaultCountAlpha];
+	}
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PSProgressHandler.h"
+#import "AppCriticsAppDelegate.h"
 
 
 @class PSAppStoreApplication;
@@ -79,7 +80,7 @@ typedef enum {
 	NSString *localPrice;
 	NSUInteger countTotal;
 	float averageRating;
-	NSUInteger lastSortOrder;
+	PSReviewsSortOrder lastSortOrder;
 	NSDate *lastUpdated;
 	
 	// Non-persistent members.
@@ -87,6 +88,7 @@ typedef enum {
 	NSString *appCompany;
 	NSUInteger countFound;
 	NSMutableArray *reviews;
+	BOOL hasNewReviews;
 
 	// Members used during file download.
 	BOOL downloadCancelled;
@@ -119,9 +121,10 @@ typedef enum {
 @property (nonatomic, assign) NSUInteger countLast;
 @property (nonatomic, assign) NSUInteger countTotal;
 @property (nonatomic, assign) float averageRating;
-@property (nonatomic, assign) NSUInteger lastSortOrder;
+@property (nonatomic, assign) PSReviewsSortOrder lastSortOrder;
 @property (nonatomic, copy) NSDate *lastUpdated;
 @property (nonatomic, retain) NSMutableArray *reviews;
+@property (nonatomic, assign) BOOL hasNewReviews;
 @property (retain) id<PSProgressHandler> downloadProgressHandler;
 @property (copy) NSString *downloadErrorMessage;
 

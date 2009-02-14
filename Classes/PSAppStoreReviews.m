@@ -18,7 +18,7 @@
 
 @implementation PSAppStoreReviews
 
-@synthesize appId, storeId, released, appVersion, appSize, localPrice, appName, appCompany, countFound, countFirst, countLast, countTotal, averageRating, lastSortOrder, lastUpdated, reviews, downloadProgressHandler, downloadErrorMessage;
+@synthesize appId, storeId, released, appVersion, appSize, localPrice, appName, appCompany, countFound, countFirst, countLast, countTotal, averageRating, lastSortOrder, lastUpdated, reviews, hasNewReviews, downloadProgressHandler, downloadErrorMessage;
 
 - (id)init
 {
@@ -42,9 +42,10 @@
 		self.countLast = 0;
 		self.countTotal = 0;
 		self.averageRating = 0.0;
-		self.lastSortOrder = [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+		self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 		self.lastUpdated = [NSDate distantPast];
 		self.reviews = nil;
+		self.hasNewReviews = NO;
 		self.downloadProgressHandler = nil;
 		self.downloadErrorMessage = nil;
 		downloadCancelled = NO;
@@ -73,17 +74,17 @@
 		self.localPrice = [coder decodeObjectForKey:@"localPrice"];
 		self.countTotal = [coder decodeIntegerForKey:@"countTotal"];
 		self.averageRating = [coder decodeFloatForKey:@"averageRating"];
-		self.lastSortOrder = [coder decodeIntegerForKey:@"lastSortOrder"];
+		self.lastSortOrder = (PSReviewsSortOrder) [coder decodeIntegerForKey:@"lastSortOrder"];
 		self.lastUpdated = [coder decodeObjectForKey:@"lastUpdated"];
 		
 		// Initialise non-persistent members.
 		self.reviews = nil;
+		self.hasNewReviews = NO;
 		self.appName = nil;
 		self.appCompany = nil;
 		self.countFound = 0;
 		self.countFirst = 0;
 		self.countLast = 0;
-		//self.reviews = [NSMutableArray array];
 		self.downloadProgressHandler = nil;
 		self.downloadErrorMessage = nil;
 		downloadCancelled = NO;
@@ -314,7 +315,7 @@
 	[xmlParser release];
 	
 	// Move on to next store.
-	[[NSNotificationCenter defaultCenter] postNotificationName:PSAppStoreReviewsUpdatedNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreReviewsUpdatedNotification object:self];
 	
 	[pool release];
 }
@@ -553,7 +554,13 @@
 					NSString *total = [substrings objectAtIndex:3];
 					countFirst = [thisPageFirst integerValue];
 					countLast = [thisPageLast integerValue];
+					NSUInteger oldTotal = self.countTotal;
 					countTotal = [total integerValue];
+					// Set flag indicating there are new reviews if total has increased.
+					if ((countTotal > 0) && (countTotal > oldTotal))
+						self.hasNewReviews = YES;
+					else
+						self.hasNewReviews = NO;
 					// For some reason iTunes sometimes reports 1 star average for a page with 0 reviews,
 					// which looks weird, so we'll reset average to 0 if we have no reviews.
 					if (countTotal <= 0)
@@ -777,7 +784,7 @@
 		[connection release];
 		[self downloadEnded];
 		// Move on to next store.
-		[[NSNotificationCenter defaultCenter] postNotificationName:PSAppStoreReviewsUpdatedNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreReviewsUpdatedNotification object:self];
 	}
 	else
 	{
@@ -818,7 +825,7 @@
 		[connection release];
 		[self downloadEnded];
 		// Move on to next store.
-		[[NSNotificationCenter defaultCenter] postNotificationName:PSAppStoreReviewsUpdatedNotification object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreReviewsUpdatedNotification object:self];
 	}
 	else
 	{
@@ -882,7 +889,7 @@
 	self.appCompany = nil;
 	
 	// Move on to next store.
-	[[NSNotificationCenter defaultCenter] postNotificationName:PSAppStoreReviewsUpdatedNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreReviewsUpdatedNotification object:self];
 
 	PSLogDebug(@"<--");
 }

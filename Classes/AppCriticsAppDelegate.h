@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 
 
-#define PSAppStoreReviewsUpdatedNotification @"PSAppStoreReviewsUpdatedNotification"
+#define kPSAppStoreReviewsUpdatedNotification @"PSAppStoreReviewsUpdatedNotification"
+
+
+typedef enum
+{
+	PSMostHelpfulSortOrder = 1,
+	PSMostRecentSortOrder,
+	PSBestReviewsSortOrder,
+	PSWorstReviewsSortOrder
+} PSReviewsSortOrder;
 
 
 @class PSAppStore;

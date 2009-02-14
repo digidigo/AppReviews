@@ -130,7 +130,7 @@
 		PSAppStore *store = [appDelegate storeForId:self.defaultStore];
 		PSProgressBarSheet *progressBarSheet = [[[PSProgressBarSheet alloc] initWithTitle:@"Verifying Application Identifier" parentView:self.view] autorelease];
 		[progressBarSheet progressBeginWithMessage:store.name];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reviewsUpdated:) name:PSAppStoreReviewsUpdatedNotification object:appReviews];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reviewsUpdated:) name:kPSAppStoreReviewsUpdatedNotification object:appReviews];
 		[self.navigationController setNavigationBarHidden:YES animated:YES];
 		[appReviews fetchReviews:progressBarSheet];
 	}
