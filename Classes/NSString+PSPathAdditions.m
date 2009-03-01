@@ -15,7 +15,7 @@
 @implementation NSString (PSPathAdditions)
 
 /**
- * Gets the path to the Documents folder.
+ * Gets the path to the ~/Documents folder.
  */
 + (NSString *)documentsPath
 {
@@ -24,12 +24,20 @@
 }
 
 /**
- * Gets the path to the Library folder.
+ * Gets the path to the ~/Library folder.
  */
 + (NSString *)libraryPath
 {
 	NSString *homePath = NSHomeDirectory();
 	return [homePath stringByAppendingPathComponent:@"Library"];
+}
+
+/**
+ * Gets the path to the ~/Library/Caches folder.
+ */
++ (NSString *)cachesPath
+{
+	return [[NSString libraryPath] stringByAppendingPathComponent:@"Caches"];
 }
 
 /**

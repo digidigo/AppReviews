@@ -22,6 +22,7 @@
 	NSString *websiteURL;
 	NSString *releaseNotesURL;
 	NSString *email;
+	NSString *appId;
 	CGFloat applicationNameFontSize;
 	UIView *parentViewForConfirmation;
 }

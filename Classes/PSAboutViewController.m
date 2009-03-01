@@ -13,7 +13,8 @@
 
 #define kOpenWebsiteURLTagValue			1
 #define kOpenReleaseNotesURLTagValue	2
-#define kOpenEmailTagValue				3
+#define kFeedbackEmailTagValue			3
+#define kRecommendEmailTagValue			4
 
 
 typedef enum
@@ -22,7 +23,9 @@ typedef enum
 	PSAboutVersionRow,
 	PSAboutCopyrightRow,
 	PSAboutWebsiteRow,
-	PSAboutEmailRow
+	PSAboutFeedbackEmailRow,
+	PSAboutRecommendEmailRow,
+	PSAboutRowCount
 } PSAboutRow;
 
 
@@ -79,6 +82,7 @@ typedef enum
 		websiteURL = [[self infoValueForKey:@"PSWebsiteURL"] retain];
 		releaseNotesURL = [[self infoValueForKey:@"PSReleaseNotesURL"] retain];
 		email = [[self infoValueForKey:@"PSContactEmail"] retain];
+		appId = [[self infoValueForKey:@"PSApplicationID"] retain];
 		NSString *iconFilePath = [self pathForIcon];
 		if (iconFilePath && [iconFilePath length] > 0)
 			appIcon = [[UIImage imageWithContentsOfFile:iconFilePath] retain];
@@ -101,6 +105,7 @@ typedef enum
 	[websiteURL release];
 	[releaseNotesURL release];
 	[email release];
+	[appId release];
 	[parentViewForConfirmation release];
     [super dealloc];
 }
@@ -160,7 +165,8 @@ typedef enum
 	{
 		case PSAboutWebsiteRow:
 		case PSAboutVersionRow:
-		case PSAboutEmailRow:
+		case PSAboutFeedbackEmailRow:
+		case PSAboutRecommendEmailRow:
 			return indexPath;
 	}
 	
@@ -180,7 +186,8 @@ typedef enum
 	{
 		case PSAboutWebsiteRow:
 		case PSAboutVersionRow:
-		case PSAboutEmailRow:
+		case PSAboutFeedbackEmailRow:
+		case PSAboutRecommendEmailRow:
 			return UITableViewCellAccessoryDisclosureIndicator;
 	}
 	
@@ -205,10 +212,16 @@ typedef enum
 			sheet.tag = kOpenReleaseNotesURLTagValue;
 			break;
 		}
-		case PSAboutEmailRow:
+		case PSAboutFeedbackEmailRow:
 		{
 			sheet = [[UIActionSheet alloc] initWithTitle:email delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send Feedback", nil];
-			sheet.tag = kOpenEmailTagValue;
+			sheet.tag = kFeedbackEmailTagValue;
+			break;
+		}
+		case PSAboutRecommendEmailRow:
+		{
+			sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send Email", nil];
+			sheet.tag = kRecommendEmailTagValue;
 			break;
 		}
 		default:
@@ -256,7 +269,7 @@ typedef enum
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return (NSInteger)PSAboutRowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -331,7 +344,7 @@ typedef enum
 			cell = tvCell;
 			break;
 		}
-		case PSAboutEmailRow:
+		case PSAboutFeedbackEmailRow:
 		{
 			// Obtain the cell.
 			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
@@ -344,6 +357,22 @@ typedef enum
 			tvCell.titleWidth = 50;
 			tvCell.titleLabel.text = @"Email";
 			tvCell.valueLabel.text = email;
+			cell = tvCell;
+			break;
+		}
+		case PSAboutRecommendEmailRow:
+		{
+			// Obtain the cell.
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			if (tvCell == nil)
+			{
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+			}
+			// Configure the cell.
+			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			tvCell.titleWidth = 200;
+			tvCell.titleLabel.text = @"Send To Friend";
+			tvCell.valueLabel.text = nil;
 			cell = tvCell;
 			break;
 		}
@@ -401,13 +430,25 @@ typedef enum
 			}
 			break;
 		}
-		case kOpenEmailTagValue:
+		case kFeedbackEmailTagValue:
 		{
 			if (buttonIndex == 0)
 			{
 				// Ensure app data is saved before app quits.
 				NSString *subject = [NSString stringWithFormat:@"%@ Feedback (version %@)", appName, appVersion];
 				NSString *emailURL = [NSString stringWithFormat:@"mailto:%@?subject=%@", email, [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+				url = [NSURL URLWithString:emailURL];
+			}
+			break;
+		}
+		case kRecommendEmailTagValue:
+		{
+			if (buttonIndex == 0)
+			{
+				// Ensure app data is saved before app quits.
+				NSString *subject = [NSString stringWithFormat:@"I thought you might be interested in %@", appName];
+				NSString *body = [NSString stringWithFormat:@"Available in the App Store:\nhttp://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@\n", appId];
+				NSString *emailURL = [NSString stringWithFormat:@"mailto:?subject=%@&body=%@", [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 				url = [NSURL URLWithString:emailURL];
 			}
 			break;

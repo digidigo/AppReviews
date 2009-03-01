@@ -15,14 +15,19 @@
 @interface NSString (PSPathAdditions)
 
 /**
- * Gets the path to the Documents folder.
+ * Gets the path to the ~/Documents folder.
  */
 + (NSString *)documentsPath;
 
 /**
- * Gets the path to the Library folder.
+ * Gets the path to the ~/Library folder.
  */
 + (NSString *)libraryPath;
+
+/**
+ * Gets the path to the ~/Library/Caches folder.
+ */
++ (NSString *)cachesPath;
 
 /**
  * Gets the path to the tmp folder.

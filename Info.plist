@@ -34,5 +34,7 @@
 	<string>support@perculasoft.com</string>
 	<key>PSAboutIconFile</key>
 	<string>About.png</string>
+	<key>PSApplicationID</key>
+	<string>298800295</string>
 </dict>
 </plist>
