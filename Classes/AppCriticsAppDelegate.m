@@ -95,9 +95,11 @@
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
 	PSLogWarning(@"");
+#ifdef DEBUG
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Memory Warning" message:@"AppCritics is running low on memory!\nRestarting your device may alleviate memory issues." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
+#endif
 }
 
 - (void)dealloc
