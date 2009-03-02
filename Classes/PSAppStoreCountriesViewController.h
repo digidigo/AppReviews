@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class PSAppStoreApplication;
-@class PSProgressBarSheet;
+@class PSProgressHUD;
 @class PSAppStoreReviewsViewController;
 
 @interface PSAppStoreCountriesViewController : UITableViewController
@@ -21,7 +21,7 @@
 	PSAppStoreReviewsViewController *appStoreReviewsViewController;
 	
 	// Members used when updating reviews.
-	PSProgressBarSheet *progressBarSheet;
+	PSProgressHUD *progressHUD;
 	NSMutableArray *storeIdsProcessed;
 	NSMutableArray *storeIdsRemaining;
 }

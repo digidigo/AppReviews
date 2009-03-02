@@ -19,7 +19,6 @@
 		FB445D770ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */; };
 		FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2C70EAF35750061B88B /* PSCountView.m */; };
 		FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CB0EAF35750061B88B /* PSImageView.m */; };
-		FB81A2D30EAF35750061B88B /* PSProgressBarSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */; };
 		FB81A2D60EAF39B10061B88B /* PSAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2D50EAF39B10061B88B /* PSAppStore.m */; };
 		FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */; };
 		FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */; };
@@ -106,6 +105,7 @@
 		FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */; };
 		FBDC0F3E0EE03FA900442E92 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0F3D0EE03FA900442E92 /* About.png */; };
 		FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */; };
+		FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,8 +132,6 @@
 		FB81A2CA0EAF35750061B88B /* PSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageView.h; sourceTree = "<group>"; };
 		FB81A2CB0EAF35750061B88B /* PSImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageView.m; sourceTree = "<group>"; };
 		FB81A2CC0EAF35750061B88B /* PSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLog.h; sourceTree = "<group>"; };
-		FB81A2CD0EAF35750061B88B /* PSProgressBarSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressBarSheet.h; sourceTree = "<group>"; };
-		FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSProgressBarSheet.m; sourceTree = "<group>"; };
 		FB81A2CF0EAF35750061B88B /* PSProgressHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressHandler.h; sourceTree = "<group>"; };
 		FB81A2D40EAF39B10061B88B /* PSAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStore.h; sourceTree = "<group>"; };
 		FB81A2D50EAF39B10061B88B /* PSAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStore.m; sourceTree = "<group>"; };
@@ -239,6 +237,8 @@
 		FBDC0F3D0EE03FA900442E92 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = About.png; path = Resources/About.png; sourceTree = "<group>"; };
 		FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+PSNSDateAdditions.h"; sourceTree = "<group>"; };
 		FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+PSNSDateAdditions.m"; sourceTree = "<group>"; };
+		FBE098870F5B4CFB00CDBBA9 /* PSProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressHUD.h; sourceTree = "<group>"; };
+		FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,8 +397,8 @@
 				FB81A2BF0EAF34E70061B88B /* Views */,
 				FBB4555B0ED0E69700A04B1F /* Controllers */,
 				FB81A2CC0EAF35750061B88B /* PSLog.h */,
-				FB81A2CD0EAF35750061B88B /* PSProgressBarSheet.h */,
-				FB81A2CE0EAF35750061B88B /* PSProgressBarSheet.m */,
+				FBE098870F5B4CFB00CDBBA9 /* PSProgressHUD.h */,
+				FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -630,7 +630,6 @@
 				1D3623260D0F684500981E51 /* AppCriticsAppDelegate.m in Sources */,
 				FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */,
 				FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */,
-				FB81A2D30EAF35750061B88B /* PSProgressBarSheet.m in Sources */,
 				FB81A2D60EAF39B10061B88B /* PSAppStore.m in Sources */,
 				FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */,
 				FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */,
@@ -652,6 +651,7 @@
 				FBDC0FE30EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m in Sources */,
 				FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */,
 				FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */,
+				FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

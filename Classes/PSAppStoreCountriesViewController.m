@@ -12,7 +12,7 @@
 #import "PSAppStore.h"
 #import "PSAppStoreReviews.h"
 #import "AppCriticsAppDelegate.h"
-#import "PSProgressBarSheet.h"
+#import "PSProgressHUD.h"
 #import "PSAppStoreTableCell.h"
 #import "PSImageView.h"
 #import "PSRatingView.h"
@@ -26,18 +26,18 @@
 @property (nonatomic, retain) NSMutableArray *displayedStores;
 @property (nonatomic, retain) UIBarButtonItem *updateButton;
 @property (nonatomic, retain) PSAppStoreReviewsViewController *appStoreReviewsViewController;
-@property (nonatomic, retain) PSProgressBarSheet *progressBarSheet;
+@property (nonatomic, retain) PSProgressHUD *progressHUD;
 @property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
 @property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
 
 - (void)updateDisplayedStores;
-- (void)updateReviews:(PSProgressBarSheet *)inProgressBarSheet;
+- (void)updateReviews:(PSProgressHUD *)inProgressBarSheet;
 
 @end
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, progressBarSheet, storeIdsProcessed, storeIdsRemaining;
+@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, progressHUD, storeIdsProcessed, storeIdsRemaining;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -54,7 +54,13 @@
 		// Set the back button title.
 		self.navigationItem.backBarButtonItem =	[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Countries", @"Countries") style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
 
-		self.progressBarSheet = [[[PSProgressBarSheet alloc] initWithTitle:@"Processing App Reviews" parentView:self.view] autorelease];
+		AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+		self.progressHUD = [[[PSProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+		self.progressHUD.parentView = appDelegate.window;
+		self.progressHUD.titleLabel.text = @"Processing App Reviews";
+		self.progressHUD.bezelPosition = PSProgressHUDBezelPositionCenter;
+		self.progressHUD.bezelSize = CGSizeMake(240.0, 110.0);
+
 		self.storeIdsProcessed = [NSMutableArray array];
 		self.storeIdsRemaining = [NSMutableArray array];
 		self.enabledStores = [NSMutableArray array];
@@ -91,7 +97,7 @@
 	[appStoreApplication release];
 	[updateButton release];
 	[appStoreReviewsViewController release];
-	[progressBarSheet release];
+	[progressHUD release];
 	[storeIdsProcessed release];
 	[storeIdsRemaining release];
 	[enabledStores release];
@@ -132,9 +138,6 @@
 
 - (void)updateAllReviews:(id)sender
 {
-	// Hide navbar.
-	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	
 	// Build array of all storeIds for processing.
 	[storeIdsProcessed removeAllObjects];
 	[storeIdsRemaining removeAllObjects];
@@ -151,26 +154,24 @@
 		}
 	}
 	
-	// Show progress sheet.
-	[progressBarSheet progressBeginWithMessage:@"Connecting"];
+	// Show progress view.
+	[progressHUD progressBeginWithMessage:@"Connecting"];
 	
 	// Start processing first entry in storeIds array.
-	[self updateReviews:progressBarSheet];
+	[self updateReviews:progressHUD];
 }
 
 // Always call on main thread.
 // Called when a store download/parse has completed, or been cancelled, or failed.
-- (void)updateReviews:(PSProgressBarSheet *)inProgressBarSheet
+- (void)updateReviews:(PSProgressHUD *)inProgressBarSheet
 {
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
 	if (appDelegate.exiting)
 	{
-		// Remove modal progress sheet because we are exiting.
-		[progressBarSheet progressUpdate:[NSNumber numberWithFloat:1.0f]];
-		[progressBarSheet progressEnd];
-		// Restore navigation bar.
-		[self.navigationController setNavigationBarHidden:NO animated:YES];
+		// Remove modal progress view because we are exiting.
+		[progressHUD progressUpdate:[NSNumber numberWithFloat:1.0f]];
+		[progressHUD progressEnd];
 	}
 	else
 	{
@@ -201,19 +202,17 @@
 			NSString *thisStore = [storeIdsRemaining objectAtIndex:0];
 			PSAppStoreReviews *appStoreReviews = [appStoreApplication.reviewsByStore objectForKey:thisStore];
 			float progress = ((float)([enabledStores count]-[storeIdsRemaining count])/(float)[enabledStores count]);
-			[progressBarSheet progressUpdateMessage:[[appDelegate storeForId:appStoreReviews.storeId] name]];
-			[progressBarSheet progressUpdate:[NSNumber numberWithFloat:progress]];
-			[appStoreReviews fetchReviews:progressBarSheet];
+			[progressHUD progressUpdateMessage:[[appDelegate storeForId:appStoreReviews.storeId] name]];
+			[progressHUD progressUpdate:[NSNumber numberWithFloat:progress]];
+			[appStoreReviews fetchReviews:progressHUD];
 			[storeIdsProcessed addObject:thisStore];
 			[storeIdsRemaining removeObjectAtIndex:0];
 		}
 		else
 		{
 			// No more stores to process.
-			[progressBarSheet progressUpdate:[NSNumber numberWithFloat:1.0f]];
-			[progressBarSheet progressEnd];
-			// Restore navigation bar.
-			[self.navigationController setNavigationBarHidden:NO animated:YES];
+			[progressHUD progressUpdate:[NSNumber numberWithFloat:1.0f]];
+			[progressHUD progressEnd];
 			
 			// Check to see if there were errors downloading.
 			if ([storeIdsProcessed count] > 0)
@@ -248,7 +247,7 @@
 
 - (void)appStoreReviewsUpdated:(NSNotification *)notification
 {
-	[self performSelectorOnMainThread:@selector(updateReviews:) withObject:progressBarSheet waitUntilDone:YES];
+	[self performSelectorOnMainThread:@selector(updateReviews:) withObject:progressHUD waitUntilDone:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated

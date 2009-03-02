@@ -11,7 +11,7 @@
 #import "PSAppStoreApplication.h"
 #import "PSAppStoreReviews.h"
 #import "PSAppStore.h"
-#import "PSProgressBarSheet.h"
+#import "PSProgressHUD.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSLog.h"
 
@@ -128,11 +128,17 @@
 		// Validate appId against storeId by fetching reviews from store.
 		PSAppStoreReviews *appReviews = [[PSAppStoreReviews alloc] initWithAppId:appId.text storeId:self.defaultStore];
 		PSAppStore *store = [appDelegate storeForId:self.defaultStore];
-		PSProgressBarSheet *progressBarSheet = [[[PSProgressBarSheet alloc] initWithTitle:@"Verifying Application Identifier" parentView:self.view] autorelease];
-		[progressBarSheet progressBeginWithMessage:store.name];
+
+		PSProgressHUD *progressHUD = [[[PSProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
+		progressHUD.parentView = appDelegate.window;
+		progressHUD.titleLabel.text = @"Verifying Application Identifier";
+		progressHUD.bezelPosition = PSProgressHUDBezelPositionCenter;
+		progressHUD.bezelSize = CGSizeMake(240.0, 110.0);
+		// Show progress HUD.
+		[progressHUD progressBeginWithMessage:store.name];
+
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reviewsUpdated:) name:kPSAppStoreReviewsUpdatedNotification object:appReviews];
-		[self.navigationController setNavigationBarHidden:YES animated:YES];
-		[appReviews fetchReviews:progressBarSheet];
+		[appReviews fetchReviews:progressHUD];
 	}
 }
 
@@ -149,9 +155,6 @@
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// Restore the navigation bar.
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
 	
 	if (reviews)
 	{
