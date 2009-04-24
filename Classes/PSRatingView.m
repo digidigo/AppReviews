@@ -45,7 +45,7 @@ static UIImage *sHalfStarImage = nil;
     return self;
 }
 
-- (void)setRating:(float)inRating
+- (void)setRating:(double)inRating
 {
 	if (inRating > 5.0)
 		rating = 5.0;
@@ -60,8 +60,8 @@ static UIImage *sHalfStarImage = nil;
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-	int wholeStars = floorf(rating);
-	BOOL halfStar = ((rating - (float)wholeStars) > 0.45);
+	int wholeStars = floor(rating);
+	BOOL halfStar = ((rating - (double)wholeStars) > 0.45);
 	CGFloat xPos = 0.0;
 	CGFloat yPos = 0.0;
 	for (int i = 0; i < wholeStars; i++)

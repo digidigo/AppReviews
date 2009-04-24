@@ -11,25 +11,25 @@
 
 @implementation PSAppStore
 
-@synthesize name, storeId, enabled;
+@synthesize name, storeIdentifier, enabled;
 
 - (id)init
 {
-	return [self initWithName:nil storeId:nil];
+	return [self initWithName:nil storeIdentifier:nil];
 }
 
 // Designated initialiser.
-- (id)initWithName:(NSString *)inName storeId:(NSString *)inStoreId
+- (id)initWithName:(NSString *)inName storeIdentifier:(NSString *)inStoreIdentifier
 {
 	if (self = [super init])
 	{
 		self.name = inName;
-		self.storeId = inStoreId;
+		self.storeIdentifier = inStoreIdentifier;
 		enabled = NO;
-		if (storeId && [storeId length] > 0)
+		if (storeIdentifier && [storeIdentifier length] > 0)
 		{
 			// Set the enabled flag from the app preferences.
-			enabled = [[NSUserDefaults standardUserDefaults] boolForKey:storeId];
+			enabled = [[NSUserDefaults standardUserDefaults] boolForKey:storeIdentifier];
 		}
 	}
 	return self;
@@ -38,7 +38,7 @@
 - (void)dealloc
 {
 	[name release];
-	[storeId release];
+	[storeIdentifier release];
 	[super dealloc];
 }
 

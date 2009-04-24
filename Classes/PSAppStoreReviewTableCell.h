@@ -10,7 +10,7 @@
 
 
 @class PSRatingView;
-@class PSAppStoreReview;
+@class PSAppStoreApplicationReview;
 
 
 @interface PSAppStoreReviewTableCell : UITableViewCell
@@ -19,15 +19,15 @@
 	UILabel *authorLabel;
 	UILabel *detailLabel;
 	PSRatingView *ratingView;
-	PSAppStoreReview *review;
+	PSAppStoreApplicationReview *review;
 }
 
 @property (nonatomic, retain) UILabel *summaryLabel;
 @property (nonatomic, retain) UILabel *authorLabel;
 @property (nonatomic, retain) UILabel *detailLabel;
 @property (nonatomic, retain) PSRatingView *ratingView;
-@property (nonatomic, retain) PSAppStoreReview *review;
+@property (nonatomic, retain) PSAppStoreApplicationReview *review;
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreReview *)inReview;
++ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreApplicationReview *)inReview;
 
 @end

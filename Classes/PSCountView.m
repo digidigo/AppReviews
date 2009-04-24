@@ -83,7 +83,6 @@ static CGFloat sDefaultCountAlpha = 1.0;
 		CGRect textRect = myRect;
 		textRect.size.height = countSize.height;
 		textRect.origin.y += ((myRect.size.height - countSize.height) / 2.0);
-		//[countString drawInRect:myRect withFont:[UIFont systemFontOfSize:self.fontSize] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
 		[countString drawInRect:textRect withFont:[UIFont boldSystemFontOfSize:self.fontSize] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
     }
 }
@@ -112,7 +111,6 @@ static CGFloat sDefaultCountAlpha = 1.0;
 	NSString *countString = [NSString stringWithFormat:@"%d", theCount];
 	CGSize countSize = [countString sizeWithFont:[UIFont boldSystemFontOfSize:theFontSize]];
 	CGFloat totalHeight = floor(countSize.height * 1.05);
-	//totalHeight += ((NSUInteger)totalHeight % 2);	// Make sure height is an even number.
 	CGFloat radius = totalHeight / 2.0;
     float countWidth = countSize.width;
     countWidth += (2 * radius-6.0);

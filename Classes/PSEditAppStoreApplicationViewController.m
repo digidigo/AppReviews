@@ -8,8 +8,9 @@
 
 #import "PSEditAppStoreApplicationViewController.h"
 #import "PSSelectionListViewController.h"
+#import "PSAppReviewsStore.h"
 #import "PSAppStoreApplication.h"
-#import "PSAppStoreReviews.h"
+#import "PSAppStoreApplicationDetailsImporter.h"
 #import "PSAppStore.h"
 #import "PSProgressHUD.h"
 #import "AppCriticsAppDelegate.h"
@@ -55,7 +56,7 @@
 	
 	if (app)
 	{
-		appId.text = app.appId;
+		appId.text = app.appIdentifier;
 	}
 }
 
@@ -96,8 +97,8 @@
 	[app release];
 	app = inApp;
 	
-	appId.text = app.appId;
-	self.defaultStore = app.defaultStoreId;
+	appId.text = app.appIdentifier;
+	self.defaultStore = app.defaultStoreIdentifier;
 }
 
 - (IBAction)cancel:(id)sender
@@ -114,7 +115,7 @@
 	[appId resignFirstResponder];
 
 	// Check that new appId does already exist in app list.
-	PSAppStoreApplication *appForNewAppId = [appDelegate applicationForId:appId.text];
+	PSAppStoreApplication *appForNewAppId = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appId.text];
 	if (appForNewAppId && (appForNewAppId != app))
 	{
 		// Duplicate appId.
@@ -125,9 +126,9 @@
 	}
 	else
 	{
-		// Validate appId against storeId by fetching reviews from store.
-		PSAppStoreReviews *appReviews = [[PSAppStoreReviews alloc] initWithAppId:appId.text storeId:self.defaultStore];
-		PSAppStore *store = [appDelegate storeForId:self.defaultStore];
+		// Validate appId against storeId by fetching details from store.
+		PSAppStoreApplicationDetailsImporter *importer = [[PSAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appId.text storeIdentifier:self.defaultStore];
+		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:self.defaultStore];
 
 		PSProgressHUD *progressHUD = [[[PSProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 		progressHUD.parentView = appDelegate.window;
@@ -136,13 +137,13 @@
 		progressHUD.bezelSize = CGSizeMake(240.0, 110.0);
 		// Show progress HUD.
 		[progressHUD progressBeginWithMessage:store.name];
-
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reviewsUpdated:) name:kPSAppStoreReviewsUpdatedNotification object:appReviews];
-		[appReviews fetchReviews:progressHUD];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:importer];
+		[importer fetchDetails:progressHUD];
 	}
 }
 
-- (void)reviewsUpdated:(NSNotification *)notification
+- (void)detailsUpdated:(NSNotification *)notification
 {
 	// This is called on the same thread that sent the notification.
 	PSLog(@"Received notification: %@", notification.name);
@@ -150,48 +151,41 @@
 	[self performSelectorOnMainThread:@selector(validateApplication:) withObject:notification.object waitUntilDone:NO];
 }
 
-- (void)validateApplication:(PSAppStoreReviews *)reviews
+- (void)validateApplication:(PSAppStoreApplicationDetailsImporter *)detailsImporter
 {
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	if (reviews)
+	if (detailsImporter)
 	{
 		// Release the progress handler.
-		[reviews.downloadProgressHandler progressEnd];
-		reviews.downloadProgressHandler = nil;
+		[detailsImporter.downloadProgressHandler progressEnd];
+		detailsImporter.downloadProgressHandler = nil;
 		
 		if (!appDelegate.exiting)
 		{
-			if (reviews.appName && reviews.appCompany)
+			if (detailsImporter.appName && detailsImporter.appCompany)
 			{
 				// Name and Company were successfully retrieved.
 
 				// Remember the previous appId, so we can tell if it has been changed.
 				NSString *previousAppId = nil;
-				if (app.appId)
-					previousAppId = [app.appId copy];
+				if (app.appIdentifier)
+					previousAppId = [app.appIdentifier copy];
 				
 				// Save the new details into the application.			
-				app.appId = reviews.appId;
-				app.defaultStoreId = reviews.storeId;
-				app.name = reviews.appName;
-				app.company = reviews.appCompany;
+				app.appIdentifier = detailsImporter.appIdentifier;
+				app.defaultStoreIdentifier = detailsImporter.storeIdentifier;
+				app.name = detailsImporter.appName;
+				app.company = detailsImporter.appCompany;
 
 				if (previousAppId)
 				{
 					// We are editing an existing app, so check to see if the appId has changed.
-					if (![previousAppId isEqualToString:reviews.appId])
+					if (![previousAppId isEqualToString:detailsImporter.appIdentifier])
 					{
 						// AppId has been changed to a different Id, so delete all review data for old appId.
-						for (PSAppStoreReviews *oldReviews in [app.reviewsByStore allValues])
-						{
-							[oldReviews deleteReviews];
-						}
-						
-						// Finally, reset the reviews.
-						[app resetReviews];
+						[[PSAppReviewsStore sharedInstance] resetDetailsForApplication:app];
 					}
 					[previousAppId release];
 				}
@@ -199,11 +193,8 @@
 				{
 					// We are adding a new application.
 
-					// AppId has only just been set to its valid appId, so reset the reviews to pick it up.
-					[app resetReviews];
-					
 					// Add new application to list.
-					[appDelegate.appStoreApplications insertObject:app atIndex:0];
+					[[PSAppReviewsStore sharedInstance] addApplication:app atIndex:0];
 				}
 				
 				[self.navigationController popViewControllerAnimated:YES];
@@ -218,14 +209,12 @@
 				[alert release];
 			}
 		}
-		[reviews release];
+		[detailsImporter release];
 	}
 }
 
 - (IBAction)chooseDefaultStore:(id)sender
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-	
 	// Lazily create the SelectionList view.
 	if (selectionListViewController == nil)
 	{
@@ -242,11 +231,11 @@
 	NSMutableArray *listImages = [NSMutableArray array];
 	NSMutableArray *listValues = [NSMutableArray array];
 	NSMutableArray *listSelections = [NSMutableArray array];
-	for (PSAppStore *store in appDelegate.appStores)
+	for (PSAppStore *store in [[PSAppReviewsStore sharedInstance] appStores])
 	{
 		[listLabels addObject:store.name];
-		[listImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", store.storeId]]];
-		[listValues addObject:store.storeId];
+		[listImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", store.storeIdentifier]]];
+		[listValues addObject:store.storeIdentifier];
 		[listSelections addObject:[NSNumber numberWithBool:NO]];
 	}
 	NSUInteger selIndex = [listValues indexOfObject:self.defaultStore];

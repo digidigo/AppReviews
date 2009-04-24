@@ -17,12 +17,14 @@
 	UILabel *nameLabel;
 	PSImageView *flagView;
 	PSRatingView *ratingView;
+	UILabel *ratingCountLabel;
 	PSCountView *countView;
 }
 
 @property (nonatomic, retain) UILabel *nameLabel;
 @property (nonatomic, retain) PSImageView *flagView;
 @property (nonatomic, retain) PSRatingView *ratingView;
+@property (nonatomic, retain) UILabel *ratingCountLabel;
 @property (nonatomic, retain) PSCountView *countView;
 
 @end

@@ -14,7 +14,7 @@
 
 @implementation PSAppStoreTableCell
 
-@synthesize nameLabel, flagView, ratingView, countView;
+@synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,6 +37,16 @@
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:ratingView];
 		
+		ratingCountLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		ratingCountLabel.backgroundColor = [UIColor whiteColor];
+		ratingCountLabel.opaque = YES;
+		ratingCountLabel.textColor = [UIColor blackColor];
+		ratingCountLabel.highlightedTextColor = [UIColor colorWithRed:0.55 green:0.6 blue:0.7 alpha:1.0];
+		ratingCountLabel.font = [UIFont systemFontOfSize:14.0];
+		ratingCountLabel.textAlignment = UITextAlignmentLeft;
+		ratingCountLabel.lineBreakMode = UILineBreakModeTailTruncation;
+		[self.contentView addSubview:ratingCountLabel];
+		
 		countView = [[PSCountView alloc] initWithFrame:CGRectZero];
 		countView.fontSize = nameLabel.font.pointSize;
 		[self.contentView addSubview:countView];
@@ -49,6 +59,7 @@
 	[nameLabel release];
 	[flagView release];
 	[ratingView release];
+	[ratingCountLabel release];
 	[countView release];
     [super dealloc];
 }
@@ -72,7 +83,7 @@
 		backgroundColor = [UIColor whiteColor];
 	}
 	
-	NSArray *labelArray = [[NSArray alloc] initWithObjects:nameLabel, nil];
+	NSArray *labelArray = [[NSArray alloc] initWithObjects:nameLabel, ratingCountLabel, nil];
 	for (UILabel *label in labelArray)
 	{
 		label.backgroundColor = backgroundColor;
@@ -85,6 +96,7 @@
 - (void)layoutSubviews
 {
 #define MARGIN_X 5
+#define INNER_MARGIN_X 4
 #define MARGIN_Y 5
 #define UPPER_ROW_TOP 3
 #define LOWER_ROW_TOP 23
@@ -106,8 +118,14 @@
 	flagView.frame = frame;
 	
 	// Position rating view.
+	CGFloat realRatingWidth = (ratingView.rating * kStarWidth) + ((ceilf(ratingView.rating)-1.0) * kStarMargin);
 	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X, LOWER_ROW_TOP, kRatingWidth, kRatingHeight);
 	ratingView.frame = frame;
+	
+	// Position rating count label.
+	CGSize itemSize = [ratingCountLabel.text sizeWithFont:ratingCountLabel.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
+	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X + realRatingWidth + INNER_MARGIN_X, LOWER_ROW_TOP, contentRect.size.width-(IMAGE_SIZE+realRatingWidth+countBounds.size.width+INNER_MARGIN_X + (4*MARGIN_X)), itemSize.height);
+	ratingCountLabel.frame = frame;
 	
 	// Position count.
 	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (countBounds.size.width + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0), countBounds.size.width, countBounds.size.height);

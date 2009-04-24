@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class PSAppStoreApplication;
+@class PSAppStoreApplicationDetailsImporter;
+@class PSAppStoreApplicationReviewsImporter;
 @class PSProgressHUD;
 @class PSAppStoreReviewsViewController;
 
@@ -21,9 +23,12 @@
 	PSAppStoreReviewsViewController *appStoreReviewsViewController;
 	
 	// Members used when updating reviews.
+	PSAppStoreApplicationDetailsImporter *detailsImporter;
+	PSAppStoreApplicationReviewsImporter *reviewsImporter;
 	PSProgressHUD *progressHUD;
 	NSMutableArray *storeIdsProcessed;
 	NSMutableArray *storeIdsRemaining;
+	NSMutableArray *failedStoreNames;
 }
 
 @property (nonatomic, retain) PSAppStoreApplication *appStoreApplication;

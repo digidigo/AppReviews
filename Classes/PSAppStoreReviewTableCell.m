@@ -7,7 +7,7 @@
 //
 
 #import "PSAppStoreReviewTableCell.h"
-#import "PSAppStoreReview.h"
+#import "PSAppStoreApplicationReview.h"
 #import "PSRatingView.h"
 #import <UIKit/UIStringDrawing.h>
 
@@ -25,7 +25,12 @@ static UIFont *sDetailFont = nil;
 	sDetailFont = [[UIFont systemFontOfSize:13.0] retain];
 }
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreReview *)inReview
++ (NSString *)summaryTextForReview:(PSAppStoreApplicationReview *)review
+{
+	return [NSString stringWithFormat:@"%d. %@%@", review.index, review.summary, (review.appVersion?[NSString stringWithFormat:@" (%@)", review.appVersion]:@"")];
+}
+
++ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreApplicationReview *)inReview
 {
 #define MARGIN_X	5
 #define MARGIN_Y	5
@@ -35,7 +40,7 @@ static UIFont *sDetailFont = nil;
 	contentWidth -= (2 * MARGIN_X);
 	
 	// Summary label.
-	NSString *tmp = [NSString stringWithFormat:@"%d. %@", inReview.index, inReview.summary];
+	NSString *tmp = [self summaryTextForReview:inReview];
 	CGSize itemSize = [tmp sizeWithFont:sSummaryFont constrainedToSize:CGSizeMake(contentWidth,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
 	result += itemSize.height;
 	
@@ -104,7 +109,7 @@ static UIFont *sDetailFont = nil;
     [super dealloc];
 }
 
-- (void)setReview:(PSAppStoreReview *)inReview
+- (void)setReview:(PSAppStoreApplicationReview *)inReview
 {
 	[inReview retain];
 	[review release];
@@ -112,9 +117,9 @@ static UIFont *sDetailFont = nil;
 	
 	if (review)
 	{
-		self.summaryLabel.text = [NSString stringWithFormat:@"%d. %@", review.index, review.summary];
+		self.summaryLabel.text = [PSAppStoreReviewTableCell summaryTextForReview:review];
 		self.ratingView.rating = review.rating;
-		self.authorLabel.text = [NSString stringWithFormat:@"by %@", review.reviewer];
+		self.authorLabel.text = [NSString stringWithFormat:@"by %@%@", review.reviewer, (review.reviewDate?[NSString stringWithFormat:@" on %@", review.reviewDate]:@"")];
 		self.detailLabel.text = review.detail;
 	}
 	else
@@ -127,14 +132,6 @@ static UIFont *sDetailFont = nil;
 	
 	[self setNeedsLayout];
 	[self setNeedsDisplay];
-	/*[summaryLabel setNeedsLayout];
-	[summaryLabel setNeedsDisplay];
-	[ratingView setNeedsLayout];
-	[ratingView setNeedsDisplay];
-	[authorLabel setNeedsLayout];
-	[authorLabel setNeedsDisplay];
-	[detailLabel setNeedsLayout];
-	[detailLabel setNeedsDisplay];*/
 }
 
 - (void)layoutSubviews

@@ -80,6 +80,7 @@ typedef enum
 		appVersion = [[self infoValueForKey:@"CFBundleVersion"] retain];
 		copyright = [[self infoValueForKey:@"NSHumanReadableCopyright"] retain];
 		websiteURL = [[self infoValueForKey:@"PSWebsiteURL"] retain];
+		appURL = [[self infoValueForKey:@"PSApplicationURL"] retain];
 		releaseNotesURL = [[self infoValueForKey:@"PSReleaseNotesURL"] retain];
 		email = [[self infoValueForKey:@"PSContactEmail"] retain];
 		appId = [[self infoValueForKey:@"PSApplicationID"] retain];
@@ -103,6 +104,7 @@ typedef enum
 	[appVersion release];
 	[copyright release];
 	[websiteURL release];
+	[appURL release];
 	[releaseNotesURL release];
 	[email release];
 	[appId release];
@@ -276,7 +278,6 @@ typedef enum
 {
     
     static NSString *SimpleCellIdentifier = @"SimpleCell";
-    static NSString *TitleValueCellIdentifier = @"TitleValueCell";
     UITableViewCell *cell = nil;
 	
 	switch (indexPath.row)
@@ -299,10 +300,10 @@ typedef enum
 		case PSAboutVersionRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -315,10 +316,10 @@ typedef enum
 		case PSAboutCopyrightRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -331,10 +332,10 @@ typedef enum
 		case PSAboutWebsiteRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -347,10 +348,10 @@ typedef enum
 		case PSAboutFeedbackEmailRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -363,10 +364,10 @@ typedef enum
 		case PSAboutRecommendEmailRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:TitleValueCellIdentifier];
+			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
 			if (tvCell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:TitleValueCellIdentifier] autorelease];
+				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
 			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -447,7 +448,34 @@ typedef enum
 			{
 				// Ensure app data is saved before app quits.
 				NSString *subject = [NSString stringWithFormat:@"I thought you might be interested in %@", appName];
-				NSString *body = [NSString stringWithFormat:@"Available in the App Store:\nhttp://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@\n", appId];
+				NSString *body = nil;
+				if (appId && [appId length] > 0)
+				{
+					// We have the appId, provide a link to the app's page in the App Store.
+					body = [NSString stringWithFormat:@"Available in the App Store:\nhttp://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@\n", appId];
+				}
+				else if (appURL)
+				{
+					// We don't have the appId, provide a link to the app's home page.
+					NSURL *homeURL = [NSURL URLWithString:appURL];
+					if ([homeURL scheme] == nil)
+					{
+						// No URL scheme was specified, so assume http://
+						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", appURL]];
+					}
+					body = [homeURL absoluteString];					
+				}
+				else
+				{
+					// We don't have the appId or the app's home page, provide a link to the company's home page.
+					NSURL *homeURL = [NSURL URLWithString:websiteURL];
+					if ([homeURL scheme] == nil)
+					{
+						// No URL scheme was specified, so assume http://
+						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", websiteURL]];
+					}
+					body = [homeURL absoluteString];					
+				}
 				NSString *emailURL = [NSString stringWithFormat:@"mailto:?subject=%@&body=%@", [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 				url = [NSURL URLWithString:emailURL];
 			}

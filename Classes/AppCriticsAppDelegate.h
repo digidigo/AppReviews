@@ -9,20 +9,11 @@
 #import <UIKit/UIKit.h>
 
 
-#define kPSAppStoreReviewsUpdatedNotification @"PSAppStoreReviewsUpdatedNotification"
+#define kPSAppStoreApplicationDetailsUpdatedNotification @"PSAppStoreApplicationDetailsUpdatedNotification"
+#define kPSAppStoreApplicationReviewsUpdatedNotification @"PSAppStoreApplicationReviewsUpdatedNotification"
 
 
-typedef enum
-{
-	PSMostHelpfulSortOrder = 1,
-	PSMostRecentSortOrder,
-	PSBestReviewsSortOrder,
-	PSWorstReviewsSortOrder
-} PSReviewsSortOrder;
-
-
-@class PSAppStore;
-@class PSAppStoreApplication;
+@class PSAppReviewsStore;
 
 
 @interface AppCriticsAppDelegate : NSObject <UIApplicationDelegate>
@@ -31,21 +22,12 @@ typedef enum
 	UINavigationController *navigationController;
 	BOOL exiting;
 	NSUserDefaults *settings;
-	NSString *documentsPath;
-	NSArray *appStores;
-	NSMutableArray *appStoreApplications;
+	PSAppReviewsStore *appReviewsStore;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (assign) BOOL exiting;
 @property (nonatomic, retain) NSUserDefaults *settings;
-@property (nonatomic, copy) NSString *documentsPath;
-@property (retain) NSArray *appStores;
-@property (retain) NSMutableArray *appStoreApplications;
-
-- (PSAppStore *)storeForId:(NSString *)storeId;
-- (PSAppStoreApplication *)applicationForId:(NSString *)appId;
-- (void)saveData;
 
 @end
 

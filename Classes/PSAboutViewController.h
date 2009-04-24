@@ -20,6 +20,7 @@
 	NSString *appVersion;
 	NSString *copyright;
 	NSString *websiteURL;
+	NSString *appURL;
 	NSString *releaseNotesURL;
 	NSString *email;
 	NSString *appId;

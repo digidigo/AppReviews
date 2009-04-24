@@ -6,11 +6,14 @@
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
+#import "PSAppReviewsStore.h"
 #import "PSAppStoreCountriesViewController.h"
 #import "PSAppStoreReviewsViewController.h"
 #import "PSAppStoreApplication.h"
 #import "PSAppStore.h"
-#import "PSAppStoreReviews.h"
+#import "PSAppStoreApplicationDetails.h"
+#import "PSAppStoreApplicationDetailsImporter.h"
+#import "PSAppStoreApplicationReviewsImporter.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSProgressHUD.h"
 #import "PSAppStoreTableCell.h"
@@ -26,18 +29,21 @@
 @property (nonatomic, retain) NSMutableArray *displayedStores;
 @property (nonatomic, retain) UIBarButtonItem *updateButton;
 @property (nonatomic, retain) PSAppStoreReviewsViewController *appStoreReviewsViewController;
-@property (nonatomic, retain) PSProgressHUD *progressHUD;
+@property (retain) PSAppStoreApplicationDetailsImporter *detailsImporter;
+@property (retain) PSAppStoreApplicationReviewsImporter *reviewsImporter;
+@property (retain) PSProgressHUD *progressHUD;
 @property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
 @property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
+@property (nonatomic, retain) NSMutableArray *failedStoreNames;
 
 - (void)updateDisplayedStores;
-- (void)updateReviews:(PSProgressHUD *)inProgressBarSheet;
+- (void)updateDetails:(PSProgressHUD *)inProgressBarSheet;
 
 @end
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, progressHUD, storeIdsProcessed, storeIdsRemaining;
+@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, failedStoreNames;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,9 +52,11 @@
 	{
 		self.title = @"Countries";
 		self.appStoreReviewsViewController = nil;
+		self.detailsImporter = nil;
+		self.reviewsImporter = nil;
 
 		// Add the Update button.
-		self.updateButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateAllReviews:)] autorelease];
+		self.updateButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateAllDetails:)] autorelease];
 		self.navigationItem.rightBarButtonItem = self.updateButton;
 
 		// Set the back button title.
@@ -63,6 +71,7 @@
 
 		self.storeIdsProcessed = [NSMutableArray array];
 		self.storeIdsRemaining = [NSMutableArray array];
+		self.failedStoreNames = [NSMutableArray array];
 		self.enabledStores = [NSMutableArray array];
 		self.displayedStores = [NSMutableArray array];
     }
@@ -71,11 +80,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
 	// Build up a list of enabled stores.
 	[enabledStores removeAllObjects];
-	for (PSAppStore *store in appDelegate.appStores)
+	for (PSAppStore *store in [[PSAppReviewsStore sharedInstance] appStores])
 	{
 		if (store.enabled)
 		{
@@ -97,9 +104,12 @@
 	[appStoreApplication release];
 	[updateButton release];
 	[appStoreReviewsViewController release];
+	[detailsImporter release];
+	[reviewsImporter release];
 	[progressHUD release];
 	[storeIdsProcessed release];
 	[storeIdsRemaining release];
+	[failedStoreNames release];
 	[enabledStores release];
 	[displayedStores release];
     [super dealloc];
@@ -114,7 +124,7 @@
 	if (appStoreApplication.name)
 		self.title = appStoreApplication.name;
 	else
-		self.title = appStoreApplication.appId;
+		self.title = appStoreApplication.appIdentifier;
 }
 
 - (void)updateDisplayedStores
@@ -123,9 +133,9 @@
 	[displayedStores removeAllObjects];
 	for (PSAppStore *appStore in enabledStores)
 	{
-		PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
-		// Only add store if it has reviews OR we are not hiding empty stores.
-		if ((storeReviews && storeReviews.countTotal > 0) ||
+		PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+		// Only add store if it has any ratings/reviews OR we are not hiding empty stores.
+		if ((details && (details.reviewCountAll + details.reviewCountCurrent + details.ratingCountAll + details.ratingCountCurrent) > 0) ||
 			([[NSUserDefaults standardUserDefaults] boolForKey:@"hideEmptyCountries"] == NO))
 		{
 			[displayedStores addObject:appStore];
@@ -136,21 +146,22 @@
 	[self.tableView reloadData];
 }
 
-- (void)updateAllReviews:(id)sender
+- (void)updateAllDetails:(id)sender
 {
 	// Build array of all storeIds for processing.
 	[storeIdsProcessed removeAllObjects];
 	[storeIdsRemaining removeAllObjects];
+	[failedStoreNames removeAllObjects];
 	for (PSAppStore *appStore in enabledStores)
 	{
 		// Only add this store if it is enabled for this app.
 		if (appStore.enabled)
 		{
 			// Make sure that the "home store" for this is first in the list.
-			if ([appStore.storeId isEqualToString:appStoreApplication.defaultStoreId])
-				[storeIdsRemaining insertObject:appStore.storeId atIndex:0];
+			if ([appStore.storeIdentifier isEqualToString:appStoreApplication.defaultStoreIdentifier])
+				[storeIdsRemaining insertObject:appStore.storeIdentifier atIndex:0];
 			else
-				[storeIdsRemaining addObject:appStore.storeId];
+				[storeIdsRemaining addObject:appStore.storeIdentifier];
 		}
 	}
 	
@@ -158,12 +169,12 @@
 	[progressHUD progressBeginWithMessage:@"Connecting"];
 	
 	// Start processing first entry in storeIds array.
-	[self updateReviews:progressHUD];
+	[self updateDetails:progressHUD];
 }
 
 // Always call on main thread.
 // Called when a store download/parse has completed, or been cancelled, or failed.
-- (void)updateReviews:(PSProgressHUD *)inProgressBarSheet
+- (void)updateDetails:(PSProgressHUD *)inProgressBarSheet
 {
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
@@ -182,7 +193,8 @@
 		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [storeIdsProcessed count] > 0)
 		{
 			NSString *lastStoreIdProcessed = [storeIdsProcessed lastObject];
-			PSAppStoreReviews *lastStoreProcessed = [appStoreApplication.reviewsByStore objectForKey:lastStoreIdProcessed];
+			PSAppStore *lastStore = [[PSAppReviewsStore sharedInstance] storeForIdentifier:lastStoreIdProcessed];
+			PSAppStoreApplicationDetails *lastStoreProcessed = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:lastStore];
 			if (lastStoreProcessed.appName && [lastStoreProcessed.appName length] > 0)
 			{
 				appStoreApplication.name = lastStoreProcessed.appName;
@@ -195,17 +207,32 @@
 			}
 		}
 
+		// See if the last store failed.
+		if ([storeIdsProcessed count] > 0)
+		{
+			if (!((detailsImporter.importState == DetailsImportStateComplete) && (reviewsImporter.importState == ReviewsImportStateComplete)))
+			{
+				// This store failed to download/parse.
+				PSAppStore *failedStore = [[PSAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
+				[failedStoreNames addObject:failedStore.name];
+			}
+		}
+
 		// See if we still have stores to process.
 		if ([storeIdsRemaining count] > 0)
 		{
 			// We still have stores to process.
-			NSString *thisStore = [storeIdsRemaining objectAtIndex:0];
-			PSAppStoreReviews *appStoreReviews = [appStoreApplication.reviewsByStore objectForKey:thisStore];
+			NSString *thisStoreId = [storeIdsRemaining objectAtIndex:0];
+			PSAppStore *thisStore = [[PSAppReviewsStore sharedInstance] storeForIdentifier:thisStoreId];
+			PSAppStoreApplicationDetails *appStoreDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:thisStore];
 			float progress = ((float)([enabledStores count]-[storeIdsRemaining count])/(float)[enabledStores count]);
-			[progressHUD progressUpdateMessage:[[appDelegate storeForId:appStoreReviews.storeId] name]];
+			[progressHUD progressUpdateMessage:[[[PSAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier] name]];
 			[progressHUD progressUpdate:[NSNumber numberWithFloat:progress]];
-			[appStoreReviews fetchReviews:progressHUD];
-			[storeIdsProcessed addObject:thisStore];
+			
+			self.detailsImporter = [[[PSAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appStoreApplication.appIdentifier storeIdentifier:thisStore.storeIdentifier] autorelease];
+			[detailsImporter fetchDetails:progressHUD];
+			
+			[storeIdsProcessed addObject:thisStoreId];
 			[storeIdsRemaining removeObjectAtIndex:0];
 		}
 		else
@@ -217,42 +244,84 @@
 			// Check to see if there were errors downloading.
 			if ([storeIdsProcessed count] > 0)
 			{
-				NSMutableArray *failedStoreNames = [[NSMutableArray alloc] init];
-				for (NSString *aStoreId in storeIdsProcessed)
-				{
-					PSAppStoreReviews *storeProcessed = [appStoreApplication.reviewsByStore objectForKey:aStoreId];
-					if (storeProcessed.appName==nil && storeProcessed.appCompany==nil)
-					{
-						// This store failed to download.
-						PSAppStore *failedStore = [appDelegate storeForId:aStoreId];
-						[failedStoreNames addObject:failedStore.name];
-					}
-				}
 				if ([failedStoreNames count] > 0)
 				{
 					// We have some failed stores.
-					NSString *msg = @"AppCritics could not download reviews from any App Stores. Please check network connection before trying again.";
+					NSString *msg = @"AppCritics could not fetch reviews from any App Stores. Please check network connection before trying again.";
 					if ([failedStoreNames count] != [enabledStores count])
-						msg = [NSString stringWithFormat:@"AppCritics could not download reviews from the following stores:\n%@\nPlease check network connection before trying again.", [failedStoreNames componentsJoinedByString:@"\n"]];
+						msg = [NSString stringWithFormat:@"AppCritics could not fetch reviews from the following stores:\n%@\nPlease check network connection before trying again.", [failedStoreNames componentsJoinedByString:@"\n"]];
 					
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:msg delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 					[alert show];
 					[alert release];
 				}
-				[failedStoreNames release];
 			}
 		}
 	}
 }
 
+// Called on same thread that sent notification.
+- (void)appStoreDetailsUpdated:(NSNotification *)notification
+{
+	PSLogDebug(@"-->");
+	if (detailsImporter.importState == DetailsImportStateComplete)
+	{
+		// Imported details OK, now start importing reviews for this app/store.
+		[self performSelectorOnMainThread:@selector(updateReviews) withObject:nil waitUntilDone:NO];
+	}
+	else
+	{
+		// Something went wrong, move on to next store.
+		[self performSelectorOnMainThread:@selector(updateDetails:) withObject:progressHUD waitUntilDone:NO];
+	}
+	PSLogDebug(@"<--");
+}
+
+// Called on main thread
+- (void)updateReviews
+{
+	PSLogDebug(@"-->");
+	// Imported details OK, now start importing reviews for this app/store.
+	self.reviewsImporter = [[[PSAppStoreApplicationReviewsImporter alloc] initWithAppIdentifier:appStoreApplication.appIdentifier storeIdentifier:detailsImporter.storeIdentifier] autorelease];
+	[self.reviewsImporter fetchReviews];
+	PSLogDebug(@"<--");
+}
+
+// Called on same thread that sent notification.
 - (void)appStoreReviewsUpdated:(NSNotification *)notification
 {
-	[self performSelectorOnMainThread:@selector(updateReviews:) withObject:progressHUD waitUntilDone:YES];
+	PSLogDebug(@"-->");
+	if (reviewsImporter.importState == ReviewsImportStateComplete)
+	{
+		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
+		PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+		if (storeDetails)
+		{
+			// Save details info for this app/store.
+			NSUInteger oldRatingsCount = storeDetails.ratingCountAll;
+			NSUInteger oldReviewsCount = storeDetails.reviewCountAll;
+			[detailsImporter copyDetailsTo:storeDetails];
+			NSUInteger newRatingsCount = storeDetails.ratingCountAll;
+			NSUInteger newReviewsCount = storeDetails.reviewCountAll;
+			if (newRatingsCount != oldRatingsCount)
+				storeDetails.hasNewRatings = YES;
+			if (newReviewsCount != oldReviewsCount)
+				storeDetails.hasNewReviews = YES;
+			[storeDetails save];
+
+			// Save reviews for this app/store.
+			NSArray *reviews = [reviewsImporter reviews];
+			[[PSAppReviewsStore sharedInstance] setReviews:reviews forApplication:appStoreApplication inStore:store];
+		}
+	}
+	[self performSelectorOnMainThread:@selector(updateDetails:) withObject:progressHUD waitUntilDone:YES];
+	PSLogDebug(@"<--");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreReviewsUpdatedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreDetailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreApplicationReviewsUpdatedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -267,8 +336,8 @@
 - (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
-	PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
-	if (storeReviews)
+	PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	if (storeDetails)
 	{
 		return UITableViewCellAccessoryDisclosureIndicator;
 	}
@@ -279,7 +348,7 @@
 {
 	// Display reviews for store.	
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
-	PSAppStoreReviews *appStoreReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
+	PSAppStoreApplicationDetails *appStoreDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	// Lazily create countries view controller.
 	if (self.appStoreReviewsViewController == nil)
 	{
@@ -287,7 +356,8 @@
 		self.appStoreReviewsViewController = viewController;
 		[viewController release];
 	}
-	self.appStoreReviewsViewController.appStoreReviews = appStoreReviews;
+	[appStoreDetails hydrate];
+	self.appStoreReviewsViewController.appStoreDetails = appStoreDetails;
 	[self.navigationController pushViewController:self.appStoreReviewsViewController animated:YES];
 }
 
@@ -324,13 +394,27 @@
     // Configure the cell
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	cell.nameLabel.text = appStore.name;
-	cell.flagView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", appStore.storeId]];
-	PSAppStoreReviews *storeReviews = (PSAppStoreReviews *) [appStoreApplication.reviewsByStore objectForKey:appStore.storeId];
-	if (storeReviews)
+	cell.flagView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", appStore.storeIdentifier]];
+	PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	if (storeDetails)
 	{
-		cell.countView.count = storeReviews.countTotal;
-		cell.ratingView.rating = storeReviews.averageRating;
-		if (storeReviews.hasNewReviews)
+		cell.countView.count = storeDetails.reviewCountAll;
+		cell.ratingView.rating = storeDetails.ratingAll;
+		if (storeDetails.ratingCountAll > 0)
+			cell.ratingCountLabel.text = [NSString stringWithFormat:@"in %d rating%@", storeDetails.ratingCountAll, (storeDetails.ratingCountAll==1?@"":@"s")];
+		else
+			cell.ratingCountLabel.text = nil;
+		
+		if (storeDetails.hasNewRatings)
+		{
+			[cell.ratingCountLabel setTextColor:[UIColor colorWithRed:142.0/255.0 green:217.0/255.0 blue:255.0/255.0 alpha:1.0]];
+		}
+		else
+		{
+			[cell.ratingCountLabel setTextColor:[UIColor colorWithRed:0.55 green:0.6 blue:0.7 alpha:1.0]];
+		}
+
+		if (storeDetails.hasNewReviews)
 		{
 			[cell.countView setLozengeColor:[UIColor colorWithRed:142.0/255.0 green:217.0/255.0 blue:255.0/255.0 alpha:1.0]];
 		}

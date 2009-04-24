@@ -6,20 +6,20 @@
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 
 @interface PSAppStore : NSObject
 {
 	NSString *name;
-	NSString *storeId;
+	NSString *storeIdentifier;
 	BOOL enabled;
 }
 
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *storeId;
+@property (nonatomic, copy) NSString *storeIdentifier;
 @property (nonatomic, readonly) BOOL enabled;
 
-- (id)initWithName:(NSString *)inName storeId:(NSString *)inStoreId;
+- (id)initWithName:(NSString *)inName storeIdentifier:(NSString *)inStoreIdentifier;
 
 @end

@@ -1,30 +1,31 @@
 //
-//  PSAppStoreApplication.h
+//  PSAppStoreApplicationReview.h
 //  AppCritics
 //
-//  Created by Charles Gamble on 22/10/2008.
-//  Copyright 2008 Charles Gamble. All rights reserved.
+//  Created by Charles Gamble on 09/04/2009.
+//  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 
-// Default to the US store as the apps "home store" (for looking up name, company, etc).
-#define kDefaultStoreId	@"143441"
-
-
 @class FMDatabase;
 
 
-@interface PSAppStoreApplication : NSObject
+@interface PSAppStoreApplicationReview : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;
-	NSInteger position;
+	NSString *storeIdentifier;
+	NSUInteger index;
+	double rating;
+
 	// Persistent members (dehydrated).
-	NSString *name;
-	NSString *company;
-	NSString *defaultStoreIdentifier;
+	NSString *reviewer;
+	NSString *summary;
+	NSString *detail;
+	NSString *appVersion;
+	NSString *reviewDate;
 
     // Opaque reference to the underlying database.
     FMDatabase *database;
@@ -36,17 +37,18 @@
     BOOL dirty;
 }
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *company;
 @property (nonatomic, copy) NSString *appIdentifier;
-@property (nonatomic, copy) NSString *defaultStoreIdentifier;
-@property (nonatomic, assign) NSInteger position;
+@property (nonatomic, copy) NSString *storeIdentifier;
+@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, copy) NSString *reviewer;
+@property (nonatomic, assign) double rating;
+@property (nonatomic, copy) NSString *summary;
+@property (nonatomic, copy) NSString *detail;
+@property (nonatomic, copy) NSString *appVersion;
+@property (nonatomic, copy) NSString *reviewDate;
 @property (nonatomic, assign, readonly) NSInteger primaryKey;
 
-- (id)init;
-- (id)initWithAppIdentifier:(NSString *)inAppIdentifier;
-- (id)initWithName:(NSString *)inName appIdentifier:(NSString *)inAppIdentifier;
-- (id)initWithName:(NSString *)inName company:(NSString *)inCompany appIdentifier:(NSString *)inAppIdentifier defaultStoreIdentifier:(NSString *)inStoreIdentifier;
+- (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;
 
 // Creates the object with primary key and non-hydration members are brought into memory.
 - (id)initWithPrimaryKey:(NSInteger)pk database:(FMDatabase *)db;

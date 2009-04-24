@@ -36,7 +36,7 @@
 			<key>Key</key>
 			<string>sortOrder</string>
 			<key>DefaultValue</key>
-			<string>2</string>
+			<string>4</string>
 			<key>Values</key>
 			<array>
 				<string>1</string>
@@ -47,9 +47,9 @@
 			<key>Titles</key>
 			<array>
 				<string>Most Helpful</string>
+				<string>Most Favorable</string>
+				<string>Most Critical</string>
 				<string>Most Recent</string>
-				<string>Best Reviews</string>
-				<string>Worst Reviews</string>
 			</array>
 		</dict>
 		<dict>

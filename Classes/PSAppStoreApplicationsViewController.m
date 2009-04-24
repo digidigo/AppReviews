@@ -9,8 +9,9 @@
 #import "PSAppStoreApplicationsViewController.h"
 #import "PSAppStoreCountriesViewController.h"
 #import "PSAppStoreApplicationTableCell.h"
+#import "PSAppReviewsStore.h"
 #import "PSAppStoreApplication.h"
-#import "PSAppStoreReviews.h"
+//#import "PSAppStoreReviews.h"
 #import "PSEditAppStoreApplicationViewController.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSAboutViewController.h"
@@ -118,10 +119,8 @@
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-	
 	PSLog(@"Tapped on disclosure for row %d", indexPath.row);
-	PSAppStoreApplication *app = [appDelegate.appStoreApplications objectAtIndex:indexPath.row];
+	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create edit view.
 	if (editAppStoreApplicationViewController == nil)
 	{
@@ -136,9 +135,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
-	PSAppStoreApplication *app = [appDelegate.appStoreApplications objectAtIndex:indexPath.row];
+	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create countries view controller.
 	if (self.appStoreCountriesViewController == nil)
 	{
@@ -163,15 +160,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    return [appDelegate.appStoreApplications count];
+    return [[PSAppReviewsStore sharedInstance] applicationCount];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AppCell";
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
     PSAppStoreApplicationTableCell *cell = (PSAppStoreApplicationTableCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
@@ -179,9 +174,9 @@
         cell = [[[PSAppStoreApplicationTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	PSAppStoreApplication *app = [appDelegate.appStoreApplications objectAtIndex:indexPath.row];
+	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	if (app.name==nil || [app.name length]==0)
-		cell.nameLabel.text = app.appId;
+		cell.nameLabel.text = app.appIdentifier;
 	else
 		cell.nameLabel.text = app.name;
 	
@@ -205,21 +200,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
 	if (editingStyle == UITableViewCellEditingStyleDelete)
 	{
 		PSLog(@"Deleting row %d", indexPath.row);
-		PSAppStoreApplication *app = (PSAppStoreApplication *)[appDelegate.appStoreApplications objectAtIndex:indexPath.row];
-		// Delete any data files for the dead appId.
-		for (PSAppStoreReviews *reviews in [app.reviewsByStore allValues])
-		{
-			[reviews deleteReviews];
-		}
-		// Remove app from master apps array.
-		[appDelegate.appStoreApplications removeObject:app];
-		// Save apps array.
-		[appDelegate saveData];
+		PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+		[[PSAppReviewsStore sharedInstance] removeApplication:app];
+		[[PSAppReviewsStore sharedInstance] save];
 		
 		// Confirm back to GUI that row has been deleted from model.
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -228,38 +214,31 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-
 	if (fromIndexPath.row != toIndexPath.row)
 	{
 		PSLog(@"Moving row %d to %d", fromIndexPath.row, toIndexPath.row);
-		PSAppStoreApplication *app;
 #ifdef DEBUG
 		// Print out apps list BEFORE reorder.
-		int appIndex = 0;
+		NSUInteger appIndex;
 		PSLog(@"Apps list BEFORE reorder:");
-		for (PSAppStoreApplication *anApp in appDelegate.appStoreApplications)
+		for (appIndex = 0; appIndex < [[PSAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
+			PSAppStoreApplication *anApp = [[PSAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
-			appIndex++;
 		}
 #endif
 		// Move array elements to match moved rows.
-		app = [[appDelegate.appStoreApplications objectAtIndex:fromIndexPath.row] retain];
-		[appDelegate.appStoreApplications removeObjectAtIndex:fromIndexPath.row];
-		[appDelegate.appStoreApplications insertObject:app atIndex:toIndexPath.row];
-		[app release];
+		[[PSAppReviewsStore sharedInstance] moveApplicationAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
 #ifdef DEBUG
 		// Print out apps list AFTER reorder.
-		appIndex = 0;
 		PSLog(@"Apps list AFTER reorder:");
-		for (PSAppStoreApplication *anApp in appDelegate.appStoreApplications)
+		for (appIndex = 0; appIndex < [[PSAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
+			PSAppStoreApplication *anApp = [[PSAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
-			appIndex++;
 		}
 #endif
-		[appDelegate saveData];
+		[[PSAppReviewsStore sharedInstance] save];
 	}
 }
 

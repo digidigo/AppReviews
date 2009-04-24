@@ -17,9 +17,9 @@
 
 @interface PSRatingView : UIView
 {
-	float rating;
+	double rating;
 }
 
-@property (nonatomic, assign) float rating;
+@property (nonatomic, assign) double rating;
 
 @end

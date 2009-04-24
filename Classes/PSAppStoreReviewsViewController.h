@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSAppStoreReviews;
+@class PSAppStoreApplicationDetails;
 
 
 @interface PSAppStoreReviewsViewController : UITableViewController
 {
-	PSAppStoreReviews *appStoreReviews;
+	PSAppStoreApplicationDetails *appStoreDetails;
 	NSArray *userReviews;
 }
 
-@property (nonatomic, retain) PSAppStoreReviews *appStoreReviews;
+@property (nonatomic, retain) PSAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, retain) NSArray *userReviews;
 
 @end

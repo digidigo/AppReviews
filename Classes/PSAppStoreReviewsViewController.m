@@ -6,9 +6,10 @@
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
+#import "PSAppReviewsStore.h"
 #import "PSAppStoreReviewsViewController.h"
-#import "PSAppStoreReviews.h"
-#import "PSAppStoreReview.h"
+#import "PSAppStoreApplicationDetails.h"
+#import "PSAppStoreApplicationReview.h"
 #import "PSAppStore.h"
 #import "PSAppStoreReviewsHeaderTableCell.h"
 #import "PSAppStoreReviewTableCell.h"
@@ -23,7 +24,7 @@ static UIColor *sAlternateRowColor = nil;
 
 @implementation PSAppStoreReviewsViewController
 
-@synthesize appStoreReviews, userReviews;
+@synthesize appStoreDetails, userReviews;
 
 + (void)initialize
 {
@@ -39,7 +40,7 @@ static UIColor *sAlternateRowColor = nil;
 		self.title = @"Reviews";
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		
-		self.appStoreReviews = nil;
+		self.appStoreDetails = nil;
 		self.userReviews = nil;
     }
     return self;
@@ -47,27 +48,19 @@ static UIColor *sAlternateRowColor = nil;
 
 - (void)dealloc
 {
-	[appStoreReviews release];
+	[appStoreDetails release];
 	[userReviews release];
     [super dealloc];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	NSAssert(appStoreReviews, @"appStoreReviews must be set");
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+	NSAssert(appStoreDetails, @"appStoreDetails must be set");
 	
-	// Load reviews lazily for this app/store.
-	if (appStoreReviews.reviews == nil)
-		[appStoreReviews loadReviews];
-	
-	if (appStoreReviews.reviews)
-		self.userReviews = [NSArray arrayWithArray:appStoreReviews.reviews];
-	else
-		self.userReviews = [NSArray array];
-
     [super viewWillAppear:animated];
-	PSAppStore *store = [appDelegate storeForId:appStoreReviews.storeId];
+	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
+	PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier];
+	self.userReviews = [[PSAppReviewsStore sharedInstance] reviewsForApplication:app inStore:store];
 	self.title = store.name;
 	[self.tableView reloadData];
 	
@@ -76,13 +69,13 @@ static UIColor *sAlternateRowColor = nil;
 	[dateFormatter setCalendar:[NSCalendar currentCalendar]];			
 	[dateFormatter setDateStyle:NSDateFormatterNoStyle];
 	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-	NSString *timeValue = [dateFormatter stringFromDate:appStoreReviews.lastUpdated];
+	NSString *timeValue = [dateFormatter stringFromDate:appStoreDetails.lastUpdated];
 	[dateFormatter release];
 	NSString *lastUpdated = @"Never";
 	// Has this app/store ever been updated?
-	if ([appStoreReviews.lastUpdated compare:[NSDate distantPast]] != NSOrderedSame)
+	if ([appStoreDetails.lastUpdated compare:[NSDate distantPast]] != NSOrderedSame)
 	{
-		lastUpdated = [NSString stringWithFormat:@"%@ at %@", [appStoreReviews.lastUpdated friendlyMediumDateStringAllowingWords:YES], timeValue];
+		lastUpdated = [NSString stringWithFormat:@"%@ at %@", [appStoreDetails.lastUpdated friendlyMediumDateStringAllowingWords:YES], timeValue];
 	}
 	self.navigationItem.prompt = [NSString stringWithFormat:@"Last updated: %@", lastUpdated];
 
@@ -95,7 +88,7 @@ static UIColor *sAlternateRowColor = nil;
 	// See if the sortOrder preference has changed since these reviews were downloaded.
 	if ([userReviews count] > 0)
 	{
-		if ([[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"] != appStoreReviews.lastSortOrder)
+		if ([[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"] != appStoreDetails.lastSortOrder)
 		{
 			// Sort order preference has changed since reviews were downloaded.
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:@"The Sort Order setting has been changed since these reviews were downloaded. Reviews must be updated for the new setting to take effect." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
@@ -111,11 +104,11 @@ static UIColor *sAlternateRowColor = nil;
 	self.userReviews = nil;
 }
 
-- (void)setAppStoreReviews:(PSAppStoreReviews *)inReviews
+- (void)setAppStoreReviews:(PSAppStoreApplicationDetails *)inDetails
 {
-	[inReviews retain];
-	[appStoreReviews release];
-	appStoreReviews = inReviews;
+	[inDetails retain];
+	[appStoreDetails release];
+	appStoreDetails = inDetails;
 	
 	self.userReviews = nil;
 }
@@ -129,14 +122,17 @@ static UIColor *sAlternateRowColor = nil;
 	if (indexPath.row == 0)
 	{
 		// Header row.
-		return 108.0;
+		return 194.0;
 	}
 	else if (indexPath.row > 0)
 	{
 		NSUInteger reviewIndex = indexPath.row - 1;
-		PSAppStoreReview *review = (PSAppStoreReview *) [userReviews objectAtIndex:reviewIndex];
+		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
 		if (review)
+		{
+			[review hydrate];
 			return [PSAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
+		}
 	}
 	
 	return 0.0;
@@ -190,7 +186,7 @@ static UIColor *sAlternateRowColor = nil;
 			headerCell = [[[PSAppStoreReviewsHeaderTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:HeaderCellIdentifier] autorelease];
 		}
 		// Configure the cell
-		headerCell.appReviews = self.appStoreReviews;
+		headerCell.appDetails = self.appStoreDetails;
 		
 		cell = headerCell;
 	}
@@ -203,7 +199,8 @@ static UIColor *sAlternateRowColor = nil;
 			reviewCell = [[[PSAppStoreReviewTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:ReviewCellIdentifier] autorelease];
 		}
 		// Configure the cell
-		PSAppStoreReview *review = (PSAppStoreReview *) [userReviews objectAtIndex:reviewIndex];
+		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
+		[review hydrate];
 		reviewCell.review = review;
 		
 		// Use alternate colours for rows.

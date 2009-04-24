@@ -17,14 +17,23 @@
 		FB445BAB0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */; };
 		FB445BFC0ED609FB00D89246 /* PSAppStoreReviewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */; };
 		FB445D770ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */; };
+		FB7909C90F6A47F000E1593F /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C40F6A47F000E1593F /* FMDatabase.m */; };
+		FB7909CA0F6A47F000E1593F /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C60F6A47F000E1593F /* FMDatabaseAdditions.m */; };
+		FB7909CB0F6A47F000E1593F /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C80F6A47F000E1593F /* FMResultSet.m */; };
+		FB7909E40F6A4A1B00E1593F /* PSAppReviewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909E30F6A4A1B00E1593F /* PSAppReviewsStore.m */; };
+		FB790A580F6B179B00E1593F /* FmdbMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A530F6B179B00E1593F /* FmdbMigration.m */; };
+		FB790A590F6B179B00E1593F /* FmdbMigrationColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A550F6B179B00E1593F /* FmdbMigrationColumn.m */; };
+		FB790A5A0F6B179B00E1593F /* FmdbMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A570F6B179B00E1593F /* FmdbMigrationManager.m */; };
+		FB790A620F6B1F1100E1593F /* AppCritics.sql in Resources */ = {isa = PBXBuildFile; fileRef = FB790A610F6B1F1100E1593F /* AppCritics.sql */; };
+		FB790EA00F6C875600E1593F /* PSAppStoreApplicationDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790E9F0F6C875600E1593F /* PSAppStoreApplicationDetails.m */; };
+		FB79103F0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FB79103E0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m */; };
 		FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2C70EAF35750061B88B /* PSCountView.m */; };
 		FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CB0EAF35750061B88B /* PSImageView.m */; };
 		FB81A2D60EAF39B10061B88B /* PSAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2D50EAF39B10061B88B /* PSAppStore.m */; };
 		FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */; };
 		FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */; };
 		FB81A33E0EAF55060061B88B /* PSAppStoreCountriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */; };
-		FB81A3780EAF5E6B0061B88B /* PSAppStoreReviews.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */; };
-		FB81A5AA0EB0776F0061B88B /* PSAppStoreReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */; };
+		FB81A5AA0EB0776F0061B88B /* PSAppStoreApplicationReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* PSAppStoreApplicationReview.m */; };
 		FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */; };
 		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
 		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
@@ -39,6 +48,7 @@
 		FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4539D0ED0348300A04B1F /* PSRatingView.m */; };
 		FBB454100ED084B500A04B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4540F0ED084B500A04B1F /* Default.png */; };
 		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
+		FBBC91D30F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */; };
 		FBCDDE410F44CEA7003756D4 /* 143441.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE030F44CEA7003756D4 /* 143441.png */; };
 		FBCDDE420F44CEA7003756D4 /* 143442.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE040F44CEA7003756D4 /* 143442.png */; };
 		FBCDDE430F44CEA7003756D4 /* 143443.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE050F44CEA7003756D4 /* 143443.png */; };
@@ -108,6 +118,20 @@
 		FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		FB790A2C0F6A9ED700E1593F /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.sql";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(TARGET_BUILD_DIR)/$(INPUT_FILE_BASE).db",
+			);
+			script = ./sqlbuildrule.sh;
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppCriticsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCriticsAppDelegate.h; sourceTree = "<group>"; };
@@ -127,6 +151,26 @@
 		FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewTableCell.m; sourceTree = "<group>"; };
 		FB445D750ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviewsHeaderTableCell.h; sourceTree = "<group>"; };
 		FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewsHeaderTableCell.m; sourceTree = "<group>"; };
+		FB7909C30F6A47F000E1593F /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = FMDB/FMDatabase.h; sourceTree = "<group>"; };
+		FB7909C40F6A47F000E1593F /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = FMDB/FMDatabase.m; sourceTree = "<group>"; };
+		FB7909C50F6A47F000E1593F /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = FMDB/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		FB7909C60F6A47F000E1593F /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = FMDB/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		FB7909C70F6A47F000E1593F /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = FMDB/FMResultSet.h; sourceTree = "<group>"; };
+		FB7909C80F6A47F000E1593F /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = FMDB/FMResultSet.m; sourceTree = "<group>"; };
+		FB7909E10F6A495300E1593F /* PSSynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSynthesizeSingleton.h; sourceTree = "<group>"; };
+		FB7909E20F6A4A1B00E1593F /* PSAppReviewsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppReviewsStore.h; sourceTree = "<group>"; };
+		FB7909E30F6A4A1B00E1593F /* PSAppReviewsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppReviewsStore.m; sourceTree = "<group>"; };
+		FB790A520F6B179B00E1593F /* FmdbMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigration.h; path = FMDB/FmdbMigration.h; sourceTree = "<group>"; };
+		FB790A530F6B179B00E1593F /* FmdbMigration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FmdbMigration.m; path = FMDB/FmdbMigration.m; sourceTree = "<group>"; };
+		FB790A540F6B179B00E1593F /* FmdbMigrationColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigrationColumn.h; path = FMDB/FmdbMigrationColumn.h; sourceTree = "<group>"; };
+		FB790A550F6B179B00E1593F /* FmdbMigrationColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FmdbMigrationColumn.m; path = FMDB/FmdbMigrationColumn.m; sourceTree = "<group>"; };
+		FB790A560F6B179B00E1593F /* FmdbMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigrationManager.h; path = FMDB/FmdbMigrationManager.h; sourceTree = "<group>"; };
+		FB790A570F6B179B00E1593F /* FmdbMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FmdbMigrationManager.m; path = FMDB/FmdbMigrationManager.m; sourceTree = "<group>"; };
+		FB790A610F6B1F1100E1593F /* AppCritics.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppCritics.sql; sourceTree = "<group>"; };
+		FB790E9E0F6C875600E1593F /* PSAppStoreApplicationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationDetails.h; sourceTree = "<group>"; };
+		FB790E9F0F6C875600E1593F /* PSAppStoreApplicationDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationDetails.m; sourceTree = "<group>"; };
+		FB79103D0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationDetailsImporter.h; sourceTree = "<group>"; };
+		FB79103E0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationDetailsImporter.m; sourceTree = "<group>"; };
 		FB81A2C60EAF35750061B88B /* PSCountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCountView.h; sourceTree = "<group>"; };
 		FB81A2C70EAF35750061B88B /* PSCountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCountView.m; sourceTree = "<group>"; };
 		FB81A2CA0EAF35750061B88B /* PSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageView.h; sourceTree = "<group>"; };
@@ -141,10 +185,8 @@
 		FB81A2F80EAF501C0061B88B /* PSAppStoreApplicationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationsViewController.m; sourceTree = "<group>"; };
 		FB81A33C0EAF55060061B88B /* PSAppStoreCountriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreCountriesViewController.h; sourceTree = "<group>"; };
 		FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreCountriesViewController.m; sourceTree = "<group>"; };
-		FB81A3760EAF5E6B0061B88B /* PSAppStoreReviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviews.h; sourceTree = "<group>"; };
-		FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviews.m; sourceTree = "<group>"; };
-		FB81A5A80EB0776F0061B88B /* PSAppStoreReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReview.h; sourceTree = "<group>"; };
-		FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReview.m; sourceTree = "<group>"; };
+		FB81A5A80EB0776F0061B88B /* PSAppStoreApplicationReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationReview.h; sourceTree = "<group>"; };
+		FB81A5A90EB0776F0061B88B /* PSAppStoreApplicationReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationReview.m; sourceTree = "<group>"; };
 		FB81A5AE0EB087A90061B88B /* PSAppStoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreTableCell.h; sourceTree = "<group>"; };
 		FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreTableCell.m; sourceTree = "<group>"; };
 		FB81A6910EB12C400061B88B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -168,6 +210,8 @@
 		FBB4540F0ED084B500A04B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FBB4555C0ED0E6BE00A04B1F /* PSSelectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSelectionListViewController.h; sourceTree = "<group>"; };
 		FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSelectionListViewController.m; sourceTree = "<group>"; };
+		FBBC91D10F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationReviewsImporter.h; sourceTree = "<group>"; };
+		FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationReviewsImporter.m; sourceTree = "<group>"; };
 		FBCDDE030F44CEA7003756D4 /* 143441.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143441.png; path = Resources/143441.png; sourceTree = "<group>"; };
 		FBCDDE040F44CEA7003756D4 /* 143442.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143442.png; path = Resources/143442.png; sourceTree = "<group>"; };
 		FBCDDE050F44CEA7003756D4 /* 143443.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143443.png; path = Resources/143443.png; sourceTree = "<group>"; };
@@ -261,7 +305,7 @@
 			children = (
 				FB81A4390EAF79410061B88B /* ThirdParty */,
 				FB81A2BA0EAF34A80061B88B /* Common */,
-				FB81A2D70EAF3A180061B88B /* Models */,
+				FB7909B90F6A473300E1593F /* Models */,
 				FB81A5FB0EB1152A0061B88B /* Views */,
 				FBB453860ECF93BA00A04B1F /* Controllers */,
 				FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */,
@@ -296,6 +340,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				FB790A610F6B1F1100E1593F /* AppCritics.sql */,
 				32CA4F630368D1EE00C91783 /* AppCritics_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
@@ -389,6 +434,46 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FB7909B90F6A473300E1593F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB7909E20F6A4A1B00E1593F /* PSAppReviewsStore.h */,
+				FB7909E30F6A4A1B00E1593F /* PSAppReviewsStore.m */,
+				FB81A2D40EAF39B10061B88B /* PSAppStore.h */,
+				FB81A2D50EAF39B10061B88B /* PSAppStore.m */,
+				FB81A2F00EAF3FAA0061B88B /* PSAppStoreApplication.h */,
+				FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */,
+				FB790E9E0F6C875600E1593F /* PSAppStoreApplicationDetails.h */,
+				FB790E9F0F6C875600E1593F /* PSAppStoreApplicationDetails.m */,
+				FB79103D0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.h */,
+				FB79103E0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m */,
+				FB81A5A80EB0776F0061B88B /* PSAppStoreApplicationReview.h */,
+				FB81A5A90EB0776F0061B88B /* PSAppStoreApplicationReview.m */,
+				FBBC91D10F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.h */,
+				FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FB7909CC0F6A480000E1593F /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				FB790A520F6B179B00E1593F /* FmdbMigration.h */,
+				FB790A530F6B179B00E1593F /* FmdbMigration.m */,
+				FB790A540F6B179B00E1593F /* FmdbMigrationColumn.h */,
+				FB790A550F6B179B00E1593F /* FmdbMigrationColumn.m */,
+				FB790A560F6B179B00E1593F /* FmdbMigrationManager.h */,
+				FB790A570F6B179B00E1593F /* FmdbMigrationManager.m */,
+				FB7909C30F6A47F000E1593F /* FMDatabase.h */,
+				FB7909C40F6A47F000E1593F /* FMDatabase.m */,
+				FB7909C50F6A47F000E1593F /* FMDatabaseAdditions.h */,
+				FB7909C60F6A47F000E1593F /* FMDatabaseAdditions.m */,
+				FB7909C70F6A47F000E1593F /* FMResultSet.h */,
+				FB7909C80F6A47F000E1593F /* FMResultSet.m */,
+			);
+			name = FMDB;
+			sourceTree = "<group>";
+		};
 		FB81A2BA0EAF34A80061B88B /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +484,7 @@
 				FB81A2CC0EAF35750061B88B /* PSLog.h */,
 				FBE098870F5B4CFB00CDBBA9 /* PSProgressHUD.h */,
 				FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */,
+				FB7909E10F6A495300E1593F /* PSSynthesizeSingleton.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -435,24 +521,10 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		FB81A2D70EAF3A180061B88B /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				FB81A2D40EAF39B10061B88B /* PSAppStore.h */,
-				FB81A2D50EAF39B10061B88B /* PSAppStore.m */,
-				FB81A2F00EAF3FAA0061B88B /* PSAppStoreApplication.h */,
-				FB81A2F10EAF3FAA0061B88B /* PSAppStoreApplication.m */,
-				FB81A3760EAF5E6B0061B88B /* PSAppStoreReviews.h */,
-				FB81A3770EAF5E6B0061B88B /* PSAppStoreReviews.m */,
-				FB81A5A80EB0776F0061B88B /* PSAppStoreReview.h */,
-				FB81A5A90EB0776F0061B88B /* PSAppStoreReview.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		FB81A4390EAF79410061B88B /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				FB7909CC0F6A480000E1593F /* FMDB */,
 				FB445A6D0ED2F36000D89246 /* Reachability.h */,
 				FB445A6E0ED2F36000D89246 /* Reachability.m */,
 				FB81A6920EB12C520061B88B /* GTMRegex.h */,
@@ -517,6 +589,7 @@
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
+				FB790A2C0F6A9ED700E1593F /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -616,6 +689,7 @@
 				FBCDDE7C0F44CEA7003756D4 /* 143505.png in Resources */,
 				FBCDDE7D0F44CEA7003756D4 /* 143506.png in Resources */,
 				FBCDDE7E0F44CEA7003756D4 /* 143507.png in Resources */,
+				FB790A620F6B1F1100E1593F /* AppCritics.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,8 +708,7 @@
 				FB81A2F20EAF3FAA0061B88B /* PSAppStoreApplication.m in Sources */,
 				FB81A2F90EAF501C0061B88B /* PSAppStoreApplicationsViewController.m in Sources */,
 				FB81A33E0EAF55060061B88B /* PSAppStoreCountriesViewController.m in Sources */,
-				FB81A3780EAF5E6B0061B88B /* PSAppStoreReviews.m in Sources */,
-				FB81A5AA0EB0776F0061B88B /* PSAppStoreReview.m in Sources */,
+				FB81A5AA0EB0776F0061B88B /* PSAppStoreApplicationReview.m in Sources */,
 				FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */,
 				FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */,
 				FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */,
@@ -652,6 +725,16 @@
 				FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */,
 				FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */,
 				FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */,
+				FB7909C90F6A47F000E1593F /* FMDatabase.m in Sources */,
+				FB7909CA0F6A47F000E1593F /* FMDatabaseAdditions.m in Sources */,
+				FB7909CB0F6A47F000E1593F /* FMResultSet.m in Sources */,
+				FB7909E40F6A4A1B00E1593F /* PSAppReviewsStore.m in Sources */,
+				FB790A580F6B179B00E1593F /* FmdbMigration.m in Sources */,
+				FB790A590F6B179B00E1593F /* FmdbMigrationColumn.m in Sources */,
+				FB790A5A0F6B179B00E1593F /* FmdbMigrationManager.m in Sources */,
+				FB790EA00F6C875600E1593F /* PSAppStoreApplicationDetails.m in Sources */,
+				FB79103F0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m in Sources */,
+				FBBC91D30F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +753,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lz",
+				);
 				PRODUCT_NAME = AppCritics;
 				PROVISIONING_PROFILE = "21444E31-6F10-467C-A81F-293A9FC14417";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
@@ -686,6 +773,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lz",
+				);
 				PRODUCT_NAME = AppCritics;
 				PROVISIONING_PROFILE = "48F5A0CA-63D9-4055-8FEF-F0C7571754BF";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "48F5A0CA-63D9-4055-8FEF-F0C7571754BF";
@@ -751,6 +842,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lz",
+				);
 				PRODUCT_NAME = AppCritics;
 				PROVISIONING_PROFILE = "9C807E1C-0938-426C-A0AC-4ED7AF8F3956";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C807E1C-0938-426C-A0AC-4ED7AF8F3956";
@@ -784,6 +879,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-lsqlite3",
+					"-lz",
+				);
 				PRODUCT_NAME = AppCritics;
 				PROVISIONING_PROFILE = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
