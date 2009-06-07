@@ -17,6 +17,7 @@
 {
 	PSEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
 	PSAppStoreCountriesViewController *appStoreCountriesViewController;
+	NSNumber *savedEditingState;
 }
 
 @property (nonatomic, retain) PSEditAppStoreApplicationViewController *editAppStoreApplicationViewController;

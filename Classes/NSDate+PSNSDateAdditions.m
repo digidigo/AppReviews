@@ -66,14 +66,14 @@
 - (NSString *)friendlyDateStringWithFormat:(NSString *)format allowingWords:(BOOL)words
 {
 	NSString *result = nil;
-	
+
 	NSCalendar *currCalendar = [NSCalendar currentCalendar];
 	unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-	
+
 	// Get my date, ignoring time values.
 	NSDateComponents *dateComps = [currCalendar components:unitFlags fromDate:self];
 	NSDate *selfDate = [currCalendar dateFromComponents:dateComps];
-	
+
 	// Build friendly-word if required.
 	if (words)
 	{
@@ -111,19 +111,19 @@
 			}
 		}
 	}
-	
+
 	// Build a date string if not resolved to a common word yet.
 	if (result == nil)
 	{
 		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setCalendar:[NSCalendar currentCalendar]];			
+		[dateFormatter setCalendar:[NSCalendar currentCalendar]];
 		[dateFormatter setDateStyle:NSDateFormatterNoStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 		[dateFormatter setDateFormat:format];
 		result = [dateFormatter stringFromDate:selfDate];
 		[dateFormatter release];
 	}
-		
+
 	return result;
 }
 

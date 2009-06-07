@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 
 /**
  * Generic "About" view that shows the application name, icon, version and company details.
  * Fetches information from the Info.plist file. Allows user to visit website or send feedback email.
  */
-@interface PSAboutViewController : UITableViewController <UIActionSheetDelegate>
+@interface PSAboutViewController : UITableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
 	NSString *appName;
 	UIImage *appIcon;

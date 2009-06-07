@@ -73,7 +73,7 @@
 	{
         primaryKey = pk;
         self.database = db;
-		
+
 		FMResultSet *row = [db executeQuery:@"SELECT app_identifier, position FROM application WHERE id=?", [NSNumber numberWithInteger:pk]];
 		if (row && [row next])
 		{
@@ -125,7 +125,7 @@
 			PSLogError(message);
 			NSAssert(0, message);
 		}
-		
+
         // Update the object state with respect to unwritten changes.
         dirty = NO;
     }
@@ -137,7 +137,7 @@
     // Check if action is necessary.
     if (hydrated)
 		return;
-	
+
 	FMResultSet *row = [database executeQuery:@"SELECT name, company, default_store_identifier FROM application WHERE id=?", [NSNumber numberWithInteger:primaryKey]];
 	if (row && [row next])
 	{
@@ -163,8 +163,8 @@
 {
 	// Write any changes to the database.
 	[self save];
-	
-    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them 
+
+    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them
     // if dehydrate is called multiple times.
 	[name release];
 	name = nil;
@@ -205,15 +205,15 @@
 // logic or steps for synchronization. The "set" accessors attempt to verify that the new value is definitely
 // different from the old value, to minimize the amount of work done. Any "set" which actually results in changing
 // data will mark the object as "dirty" - i.e., possessing data that has not been written to the database.
-// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers, 
-// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate 
+// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers,
+// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate
 // the encapsulation of the owning object.
 
 - (void)setName:(NSString *)aString
 {
     if ((!name && !aString) || (name && aString && [name isEqualToString:aString]))
 		return;
-	
+
     dirty = YES;
     [name release];
     name = [aString copy];
@@ -223,7 +223,7 @@
 {
     if ((!company && !aString) || (company && aString && [company isEqualToString:aString]))
 		return;
-	
+
     dirty = YES;
     [company release];
     company = [aString copy];
@@ -233,7 +233,7 @@
 {
     if ((!appIdentifier && !aString) || (appIdentifier && aString && [appIdentifier isEqualToString:aString]))
 		return;
-	
+
     dirty = YES;
     [appIdentifier release];
     appIdentifier = [aString copy];
@@ -243,7 +243,7 @@
 {
     if ((!defaultStoreIdentifier && !aString) || (defaultStoreIdentifier && aString && [defaultStoreIdentifier isEqualToString:aString]))
 		return;
-	
+
     dirty = YES;
     [defaultStoreIdentifier release];
     defaultStoreIdentifier = [aString copy];
@@ -253,7 +253,7 @@
 {
 	if (position == anInt)
 		return;
-	
+
     dirty = YES;
 	position = anInt;
 }

@@ -2,7 +2,7 @@
 #import "sqlite3.h"
 #import "FMResultSet.h"
 
-@interface FMDatabase : NSObject 
+@interface FMDatabase : NSObject
 {
 	sqlite3*    db;
 	NSString*   databasePath;

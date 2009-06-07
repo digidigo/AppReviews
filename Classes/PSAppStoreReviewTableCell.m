@@ -34,20 +34,21 @@ static UIFont *sDetailFont = nil;
 {
 #define MARGIN_X	5
 #define MARGIN_Y	5
-	
+
 	CGFloat result = (4 * MARGIN_Y) + kRatingHeight;
-	CGFloat contentWidth = tableView.contentSize.width;
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	CGFloat contentWidth = screenBounds.size.width;
 	contentWidth -= (2 * MARGIN_X);
-	
+
 	// Summary label.
 	NSString *tmp = [self summaryTextForReview:inReview];
 	CGSize itemSize = [tmp sizeWithFont:sSummaryFont constrainedToSize:CGSizeMake(contentWidth,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
 	result += itemSize.height;
-	
+
 	// Detail label.
 	itemSize = [inReview.detail sizeWithFont:sDetailFont constrainedToSize:CGSizeMake(contentWidth,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
 	result += itemSize.height;
-	
+
 	return result;
 }
 
@@ -57,7 +58,7 @@ static UIFont *sDetailFont = nil;
 	{
         // Initialization code
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		
+
 		summaryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		summaryLabel.backgroundColor = [UIColor clearColor];
 		summaryLabel.opaque = YES;
@@ -68,8 +69,8 @@ static UIFont *sDetailFont = nil;
 		summaryLabel.lineBreakMode = UILineBreakModeWordWrap;
 		summaryLabel.numberOfLines = 0;
 		[self.contentView addSubview:summaryLabel];
-		
-		
+
+
 		authorLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		authorLabel.backgroundColor = [UIColor clearColor];
 		authorLabel.opaque = YES;
@@ -93,7 +94,7 @@ static UIFont *sDetailFont = nil;
 
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:ratingView];
-		
+
 		self.review = nil;
     }
     return self;
@@ -114,7 +115,7 @@ static UIFont *sDetailFont = nil;
 	[inReview retain];
 	[review release];
 	review = inReview;
-	
+
 	if (review)
 	{
 		self.summaryLabel.text = [PSAppStoreReviewTableCell summaryTextForReview:review];
@@ -129,7 +130,7 @@ static UIFont *sDetailFont = nil;
 		self.authorLabel.text = @"";
 		self.detailLabel.text = @"";
 	}
-	
+
 	[self setNeedsLayout];
 	[self setNeedsDisplay];
 }
@@ -138,15 +139,15 @@ static UIFont *sDetailFont = nil;
 {
 #define MARGIN_X	5
 #define MARGIN_Y	5
-	
+
     [super layoutSubviews];
     CGRect contentRect = self.contentView.bounds;
-	
+
 	CGFloat boundsX = contentRect.origin.x;
 	CGFloat boundsY = contentRect.origin.y;
 	CGFloat posX, posY, itemWidth, itemHeight;
 	CGRect frame;
-	
+
 	// Position summary label.
 	posX = boundsX + MARGIN_X;
 	posY = boundsY + MARGIN_Y;
@@ -156,7 +157,7 @@ static UIFont *sDetailFont = nil;
 	summaryLabel.numberOfLines = (int)itemHeight / (int)summaryLabel.font.pointSize;
 	frame = CGRectMake(posX, posY, itemWidth, itemHeight);
 	summaryLabel.frame = frame;
-	
+
 	// Position rating view.
 	posX = boundsX + MARGIN_X;
 	posY += (itemHeight + MARGIN_Y);
@@ -164,7 +165,7 @@ static UIFont *sDetailFont = nil;
 	itemHeight = kRatingHeight;
 	frame = CGRectMake(posX, posY, itemWidth, itemHeight);
 	ratingView.frame = frame;
-	
+
 	// Position author label.
 	CGFloat realRatingWidth = (ratingView.rating * kStarWidth) + ((ceilf(ratingView.rating)-1.0) * kStarMargin);
 	posX += (realRatingWidth + MARGIN_X);
@@ -172,7 +173,7 @@ static UIFont *sDetailFont = nil;
 	itemHeight = kRatingHeight;
 	frame = CGRectMake(posX, posY, itemWidth, itemHeight);
 	authorLabel.frame = frame;
-	
+
 	// Position detail label.
 	posX = boundsX + MARGIN_X;
 	posY += (itemHeight + MARGIN_Y);
@@ -181,7 +182,7 @@ static UIFont *sDetailFont = nil;
 	itemHeight = itemSize.height;
 	detailLabel.numberOfLines = (int)itemHeight / (int)detailLabel.font.pointSize;
 	frame = CGRectMake(posX, posY, itemWidth, itemHeight);
-	detailLabel.frame = frame;	
+	detailLabel.frame = frame;
 }
 
 @end

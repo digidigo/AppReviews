@@ -88,7 +88,7 @@
 	// images: optional, can be nil.
 	// At least one of either labels or images must not be nil.
 	// selections: optional, can be nil.
-	if (values && 
+	if (values &&
 		((labels == nil) || (labels && ([labels count] == [values count]))) &&
 		((images == nil) || (images && ([images count] == [values count]))) &&
 		(labels || images) &&
@@ -97,21 +97,21 @@
 		[[values retain] autorelease];
 		[listValues release];
 		listValues = [values copy];
-		
+
 		[[labels retain] autorelease];
 		[listLabels release];
 		if (labels)
 			listLabels = [labels copy];
 		else
 			listLabels = nil;
-		
+
 		[[images retain] autorelease];
 		[listImages release];
 		if (images)
 			listImages = [images copy];
 		else
 			listImages = nil;
-		
+
 		if (selections)
 		{
 			[[selections retain] autorelease];
@@ -129,7 +129,7 @@
 			}
 		}
 	}
-	
+
 	// Refresh table data.
 	[self.tableView reloadData];
 }
@@ -140,13 +140,13 @@
 - (NSUInteger)selectionCount
 {
 	NSUInteger result = 0;
-	
+
 	for (NSNumber *selected in listSelections)
 	{
 		if ([selected boolValue])
 			result++;
 	}
-	
+
 	return result;
 }
 
@@ -171,17 +171,17 @@
 - (BOOL)isValid
 {
 	NSUInteger numSelections = [self selectionCount];
-	
+
 	// Check minimum number of selections have been made.
 	if (numSelections < minimumRequiredSelections)
 		return NO;
 	// Check maximum number of selections has not been breached.
 	if (numSelections > maximumRequiredSelections)
 		return NO;
-	
+
 	if (!allowMultipleSelections && (numSelections > 1))
 		return NO;
-	
+
 	// All looks OK.
 	return YES;
 }
@@ -191,15 +191,15 @@
     [super viewWillAppear:animated];
 	self.navigationItem.prompt = self.listPrompt;
 	self.navigationItem.title = self.listTitle;
-	
+
 	// Enable/disable Save button as appropriate.
 	if ([self isValid])
 		saveButton.enabled = YES;
 	else
 		saveButton.enabled = NO;
-	
+
 	[self.tableView reloadData];
-	
+
 	// Auto-scroll to show required row.
 	if (initialScrollPosition)
 	{
@@ -243,7 +243,7 @@
 		if (allowMultipleSelections)
 		{
 			// Multiple-selection mode.
-			
+
 			// Toggle selection status of this row.
 			UITableViewCell *thisCell = [self.tableView cellForRowAtIndexPath:indexPath];
 			NSNumber *thisRow = (NSNumber *) [listSelections objectAtIndex:indexPath.row];
@@ -251,15 +251,15 @@
 			{
 				// This row *is* already selected - toggle it.
 				thisCell.accessoryType = UITableViewCellAccessoryNone;
-				thisCell.textColor = [UIColor blackColor];
-				[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];			
+				thisCell.textLabel.textColor = [UIColor blackColor];
+				[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
 			}
 			else
 			{
 				// This row *not* already selected - toggle it.
 				thisCell.accessoryType = UITableViewCellAccessoryCheckmark;
-				thisCell.textColor = [UIColor tableCellTextBlue];
-				[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];			
+				thisCell.textLabel.textColor = [UIColor tableCellTextBlue];
+				[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
 			}
 		}
 		else
@@ -269,19 +269,19 @@
 			if (![thisRow boolValue])
 			{
 				// This row *not* already selected.
-				
+
 				// Deselect old row.
 				NSUInteger oldRow = [listSelections indexOfObject:[NSNumber numberWithBool:YES]];
 				NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:oldRow inSection:0];
 				UITableViewCell *oldCell = [self.tableView cellForRowAtIndexPath:oldIndexPath];
 				oldCell.accessoryType = UITableViewCellAccessoryNone;
-				oldCell.textColor = [UIColor blackColor];
-				[listSelections replaceObjectAtIndex:oldRow withObject:[NSNumber numberWithBool:NO]];			
-				
+				oldCell.textLabel.textColor = [UIColor blackColor];
+				[listSelections replaceObjectAtIndex:oldRow withObject:[NSNumber numberWithBool:NO]];
+
 				// Select this row.
 				UITableViewCell *thisCell = [self.tableView cellForRowAtIndexPath:indexPath];
 				thisCell.accessoryType = UITableViewCellAccessoryCheckmark;
-				thisCell.textColor = [UIColor tableCellTextBlue];
+				thisCell.textLabel.textColor = [UIColor tableCellTextBlue];
 				[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
 			}
 		}
@@ -291,16 +291,16 @@
 		// List currently has no selected items - Select this row.
 		UITableViewCell *thisCell = [self.tableView cellForRowAtIndexPath:indexPath];
 		thisCell.accessoryType = UITableViewCellAccessoryCheckmark;
-		thisCell.textColor = [UIColor tableCellTextBlue];
+		thisCell.textLabel.textColor = [UIColor tableCellTextBlue];
 		[listSelections replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
 	}
-	
+
 	// Enable/disable Save button as appropriate.
 	if ([self isValid])
 		saveButton.enabled = YES;
 	else
 		saveButton.enabled = NO;
-	
+
 	// Deselect row.
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -320,35 +320,35 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     static NSString *CellIdentifier = @"ListCell";
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
 	if (listLabels)
-		cell.text = [listLabels objectAtIndex:indexPath.row];
+		cell.textLabel.text = [listLabels objectAtIndex:indexPath.row];
 	else
-		cell.text = nil;
-	
+		cell.textLabel.text = nil;
+
 	if (listImages)
-		cell.image = [listImages objectAtIndex:indexPath.row];
+		cell.imageView.image = [listImages objectAtIndex:indexPath.row];
 	else
-		cell.image = nil;
-	
+		cell.imageView.image = nil;
+
 	NSNumber *selected = (NSNumber *) [listSelections objectAtIndex:indexPath.row];
 	if ([selected boolValue])
 	{
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
-		cell.textColor = [UIColor tableCellTextBlue];
+		cell.textLabel.textColor = [UIColor tableCellTextBlue];
 	}
 	else
 	{
 		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.textColor = [UIColor blackColor];
+		cell.textLabel.textColor = [UIColor blackColor];
 	}
     return cell;
 }

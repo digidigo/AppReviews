@@ -30,13 +30,13 @@
 		nameLabel.textAlignment = UITextAlignmentLeft;
 		nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		[self.contentView addSubview:nameLabel];
-		
+
 		flagView = [[PSImageView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:flagView];
-		
+
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:ratingView];
-		
+
 		ratingCountLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		ratingCountLabel.backgroundColor = [UIColor whiteColor];
 		ratingCountLabel.opaque = YES;
@@ -46,7 +46,7 @@
 		ratingCountLabel.textAlignment = UITextAlignmentLeft;
 		ratingCountLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		[self.contentView addSubview:ratingCountLabel];
-		
+
 		countView = [[PSCountView alloc] initWithFrame:CGRectZero];
 		countView.fontSize = nameLabel.font.pointSize;
 		[self.contentView addSubview:countView];
@@ -69,10 +69,10 @@
 	/*
 	 Views are drawn most efficiently when they are opaque and do not have a clear background,
 	 so in newLabelForMainText: the labels are made opaque and given a white background.
-	 To show selection properly, however, the views need to be transparent (so that the selection color shows through).  
+	 To show selection properly, however, the views need to be transparent (so that the selection color shows through).
     */
 	[super setSelected:selected animated:animated];
-	
+
 	UIColor *backgroundColor = nil;
 	if (selected)
 	{
@@ -82,7 +82,7 @@
 	{
 		backgroundColor = [UIColor whiteColor];
 	}
-	
+
 	NSArray *labelArray = [[NSArray alloc] initWithObjects:nameLabel, ratingCountLabel, nil];
 	for (UILabel *label in labelArray)
 	{
@@ -104,7 +104,7 @@
 
     [super layoutSubviews];
     CGRect contentRect = self.contentView.bounds;
-	
+
 	CGFloat boundsX = contentRect.origin.x;
 	CGRect frame;
 	CGRect countBounds = [PSCountView boundsForCount:[countView count] usingFontSize:nameLabel.font.pointSize];
@@ -116,17 +116,17 @@
 	// Position flag view.
 	frame = CGRectMake(boundsX + MARGIN_X, floorf((contentRect.size.height-IMAGE_SIZE)/2.0), IMAGE_SIZE, IMAGE_SIZE);
 	flagView.frame = frame;
-	
+
 	// Position rating view.
 	CGFloat realRatingWidth = (ratingView.rating * kStarWidth) + ((ceilf(ratingView.rating)-1.0) * kStarMargin);
 	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X, LOWER_ROW_TOP, kRatingWidth, kRatingHeight);
 	ratingView.frame = frame;
-	
+
 	// Position rating count label.
 	CGSize itemSize = [ratingCountLabel.text sizeWithFont:ratingCountLabel.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
 	frame = CGRectMake(boundsX + MARGIN_X + IMAGE_SIZE + MARGIN_X + realRatingWidth + INNER_MARGIN_X, LOWER_ROW_TOP, contentRect.size.width-(IMAGE_SIZE+realRatingWidth+countBounds.size.width+INNER_MARGIN_X + (4*MARGIN_X)), itemSize.height);
 	ratingCountLabel.frame = frame;
-	
+
 	// Position count.
 	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (countBounds.size.width + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0), countBounds.size.width, countBounds.size.height);
 	countView.frame = frame;

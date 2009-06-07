@@ -24,9 +24,9 @@
 	{
 		self.opaque = NO;
 		self.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
-		
+
 		parentView = nil;
-		
+
 		// Setup a progress view (for determinate progress).
 		progressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
 		[progressView setProgressViewStyle:UIProgressViewStyleBar];
@@ -53,7 +53,7 @@
 		messageLabel.textAlignment = UITextAlignmentCenter;
 		messageLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		[self addSubview:messageLabel];
-		
+
 		// Setup default colors.
 		self.textColor = [UIColor whiteColor];
 		self.bezelColor = [UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:1.0];
@@ -84,7 +84,7 @@
 	[inColor retain];
 	[textColor release];
 	textColor = inColor;
-	
+
 	titleLabel.textColor = textColor;
 	messageLabel.textColor = textColor;
 }
@@ -105,7 +105,7 @@
 			bezelBounds.origin.y = (screenBounds.origin.y + screenBounds.size.height) - bezelSize.height;
 			break;
 	}
-	
+
 	return bezelBounds;
 }
 
@@ -116,12 +116,12 @@
 #define kTitleHeight 19.0
 #define kMessageHeight 18.0
 #define kProgressHeight 10.0
-	
+
 	[super layoutSubviews];
-	
+
 	CGRect frame;
 	CGRect bezelBounds = [self rectForBezel];
-	
+
 	// Position progress view.
 	frame = CGRectMake(bezelBounds.origin.x + kProgressMargin, bezelBounds.origin.y + floorf((bezelBounds.size.height/2.0) - (kProgressHeight/2.0)), bezelBounds.size.width-(2.0*kProgressMargin), kProgressHeight);
 	progressView.frame = frame;
@@ -139,7 +139,7 @@
 - (void)fillRoundedRect:(CGRect)rect inContext:(CGContextRef)context
 {
     float radius = 10.0f;
-    
+
     CGContextBeginPath(context);
 	CGContextSetFillColorWithColor(context, bezelColor.CGColor);
 	CGContextMoveToPoint(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect));
@@ -147,7 +147,7 @@
     CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMaxY(rect) - radius, radius, 0, M_PI / 2, 0);
     CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMaxY(rect) - radius, radius, M_PI / 2, M_PI, 0);
     CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect) + radius, radius, M_PI, 3 * M_PI / 2, 0);
-	
+
     CGContextClosePath(context);
     CGContextFillPath(context);
 }
@@ -156,8 +156,8 @@
 {
 	[super drawRect:rect];
 	CGRect bezelBounds = [self rectForBezel];
-	
-    CGContextRef context = UIGraphicsGetCurrentContext();	
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
 	[self fillRoundedRect:bezelBounds inContext:context];
 }
 
@@ -176,9 +176,9 @@
 	progressView.hidden = YES;
 	progressView.progress = 0.0;
 	[activityView startAnimating];
-	
+
 	[self progressUpdateMessage:inMessage];
-	
+
 	// Fade view in.
 	self.alpha = 0.0;
 	[parentView addSubview:self];
@@ -192,7 +192,7 @@
 {
 	// Whatever it is has finished, dismiss sheet.
 	[activityView stopAnimating];
-	
+
 	// Fade view out.
 	[UIView beginAnimations:kPSHideProgressHUDAnimationID context:NULL];
 	[UIView setAnimationDuration:0.4];

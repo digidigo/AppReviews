@@ -8,19 +8,24 @@
 
 #import "PSAppStoreApplicationsViewController.h"
 #import "PSAppStoreCountriesViewController.h"
-#import "PSAppStoreApplicationTableCell.h"
 #import "PSAppReviewsStore.h"
 #import "PSAppStoreApplication.h"
-//#import "PSAppStoreReviews.h"
 #import "PSEditAppStoreApplicationViewController.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSAboutViewController.h"
 #import "PSLog.h"
 
 
+@interface PSAppStoreApplicationsViewController ()
+
+@property (nonatomic, retain) NSNumber *savedEditingState;
+
+@end
+
+
 @implementation PSAppStoreApplicationsViewController
 
-@synthesize editAppStoreApplicationViewController, appStoreCountriesViewController;
+@synthesize editAppStoreApplicationViewController, appStoreCountriesViewController, savedEditingState;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,7 +33,6 @@
     if (self = [super initWithStyle:style])
 	{
 		self.title = @"Applications";
-		self.appStoreCountriesViewController = nil;
     }
     return self;
 }
@@ -37,57 +41,72 @@
 {
 	[editAppStoreApplicationViewController release];
 	[appStoreCountriesViewController release];
+	[savedEditingState release];
     [super dealloc];
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-	[super loadView];
-	
+	PSLogDebug(@"");
+	[super viewDidLoad];
+
 	// Add the "Edit" button to the navigation bar
 	UINavigationItem *navItem = self.navigationItem;
 	[navItem setRightBarButtonItem:[self editButtonItem] animated:YES];
 	// Set the back button title.
 	navItem.backBarButtonItem =	[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Apps", @"Apps") style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
-	
-	self.editing = NO;
+
+	// Restore the editing state if it was previously saved during an unload.
+	if (self.savedEditingState)
+	{
+		[self setEditing:[self.savedEditingState boolValue] animated:NO];
+		self.savedEditingState = nil;
+	}
+	else
+		self.editing = NO;
+}
+
+- (void)viewDidUnload
+{
+	PSLogDebug(@"");
+	[super viewDidUnload];
+
+	// Store the editing state in case we get re-created after being unloaded.
+	self.savedEditingState = [NSNumber numberWithBool:self.editing];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	// Deselect any selected row.
-	NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
-	if (selectedRow)
-		[self.tableView deselectRowAtIndexPath:selectedRow animated:NO];
-	
+	[super viewWillAppear:animated];
+
 	[self.tableView reloadData];
 }
 
-- (void)setEditing:(BOOL)flag animated:(BOOL)animated 
-{ 
+- (void)setEditing:(BOOL)flag animated:(BOOL)animated
+{
 	UINavigationItem *navItem = self.navigationItem;
 	PSLogDebug(@"editing=%d, animated=%d", flag, animated);
-	
-	[super setEditing:flag animated:animated]; 
+
+	[super setEditing:flag animated:animated];
 	if (flag == YES)
 	{
-		// Change view to an editable view 
-		
+		// Change view to an editable view
+
 		// Remove the "About" button from the navigation bar, replace with an Add button.
 		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAppStoreApplication:)];
 		[navItem setLeftBarButtonItem:button animated:YES];
 		[button release];
-	} 
+	}
 	else
-	{ 
-		// Save the changes if needed and change view to non-editable 
-		
+	{
+		// Save the changes if needed and change view to non-editable
+
 		// Add the "About" button to the navigation bar
 		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(showAbout:)];
 		[navItem setLeftBarButtonItem:button animated:YES];
 		[button release];
 	}
-} 
+}
 
 - (void)addAppStoreApplication:(id)sender
 {
@@ -111,11 +130,6 @@
 
 #pragma mark -
 #pragma mark UITableViewDelegate methods
-
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellAccessoryDetailDisclosureButton;
-}
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
@@ -167,23 +181,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AppCell";
-    
-    PSAppStoreApplicationTableCell *cell = (PSAppStoreApplicationTableCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[PSAppStoreApplicationTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
 	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	if (app.name==nil || [app.name length]==0)
-		cell.nameLabel.text = app.appIdentifier;
+		cell.textLabel.text = app.appIdentifier;
 	else
-		cell.nameLabel.text = app.name;
-	
+		cell.textLabel.text = app.name;
+
 	if (app.company)
-		cell.companyLabel.text = app.company;
+		cell.detailTextLabel.text = app.company;
 	else
-		cell.companyLabel.text = @"Waiting for first update";
+		cell.detailTextLabel.text = @"Waiting for first update";
+
+	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
     return cell;
 }
@@ -206,7 +222,7 @@
 		PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 		[[PSAppReviewsStore sharedInstance] removeApplication:app];
 		[[PSAppReviewsStore sharedInstance] save];
-		
+
 		// Confirm back to GUI that row has been deleted from model.
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	}

@@ -15,18 +15,19 @@
 
 @interface PSEditAppStoreApplicationViewController : UIViewController
 {
-	IBOutlet UITextField *appId;
-	IBOutlet UILabel *label;
-	IBOutlet UIButton *defaultStoreButton;
-	IBOutlet UIBarButtonItem *saveButton;
+	UITextField *appId;
+	UILabel *label;
+	UIButton *defaultStoreButton;
+	UIBarButtonItem *saveButton;
 	NSString *defaultStore;
 	PSAppStoreApplication *app;
 	PSSelectionListViewController *selectionListViewController;
 }
 
-@property (nonatomic, retain) UITextField *appId;
-@property (nonatomic, retain) UILabel *label;
-@property (nonatomic, retain) UIButton *defaultStoreButton;
+@property (nonatomic, retain) IBOutlet UITextField *appId;
+@property (nonatomic, retain) IBOutlet UILabel *label;
+@property (nonatomic, retain) IBOutlet UIButton *defaultStoreButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, retain) NSString *defaultStore;
 @property (nonatomic, retain) PSAppStoreApplication *app;
 @property (nonatomic, retain) PSSelectionListViewController *selectionListViewController;

@@ -21,7 +21,7 @@
 	NSMutableArray *enabledStores;
 	NSMutableArray *displayedStores;
 	PSAppStoreReviewsViewController *appStoreReviewsViewController;
-	
+
 	// Members used when updating reviews.
 	PSAppStoreApplicationDetailsImporter *detailsImporter;
 	PSAppStoreApplicationReviewsImporter *reviewsImporter;

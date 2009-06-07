@@ -51,13 +51,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @class Reachability;
 
 @interface Reachability : NSObject {
-    
+
 @private
 	BOOL _networkStatusNotificationsEnabled;
-	
+
 	NSString *_hostName;
 	NSString *_address;
-    
+
 	NSMutableDictionary *_reachabilityQueries;
 }
 

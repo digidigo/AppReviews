@@ -19,7 +19,7 @@
  */
 + (NSString *)documentsPath
 {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	return [paths objectAtIndex:0];
 }
 

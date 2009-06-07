@@ -44,11 +44,11 @@
 	{
 		// Create root view controller.
 		PSAppStoreApplicationsViewController *appsController = [[PSAppStoreApplicationsViewController alloc] initWithStyle:UITableViewStylePlain];
-		
+
 		// Create a navigation controller using the new controller.
 		navigationController = [[UINavigationController alloc] initWithRootViewController:appsController];
 		[appsController release];
-		
+
 		// Add the navigation controller's view to the window.
 		[window addSubview:[navigationController view]];
 
@@ -83,7 +83,7 @@
 	PSLogDebug(@"");
 	// Wind down background tasks while we are exiting.
 	self.exiting = YES;
-	
+
 	// Save data.
 	[appReviewsStore save];
 	[appReviewsStore close];
@@ -110,17 +110,17 @@
 /*- (void)saveData
 {
 	PSLogDebug(@"-->");
-	
+
 	// Build filename.
 	NSString *documentFilename = [self.documentsPath stringByAppendingPathComponent:@"appsList.archive"];
-	
+
 	// Delete existing file.
 	BOOL isDirectory = NO;
 	if ( [[NSFileManager defaultManager] fileExistsAtPath:documentFilename isDirectory:&isDirectory] )
 	{
 		[[NSFileManager defaultManager] removeItemAtPath:documentFilename error:NULL];
 	}
-	
+
 	// Write new file.
 	PSLog(@"Saving apps list to: %@", documentFilename);
 	if ([NSKeyedArchiver archiveRootObject:appStoreApplications toFile:documentFilename])
@@ -138,7 +138,7 @@
 	{
 		PSLogError(@"Could not save apps list");
 	}
-	
+
 	PSLogDebug(@"<--");
 }*/
 
@@ -146,16 +146,16 @@
 {
 	PSLogDebug(@"-->");
 	BOOL loaded = NO;
-	
+
 	// Build filename.
 	NSString *documentFilename = [self.documentsPath stringByAppendingPathComponent:@"appsList.archive"];
-	
+
 	// Does file exist?
 	BOOL isDirectory = NO;
 	if ( [[NSFileManager defaultManager] fileExistsAtPath:documentFilename isDirectory:&isDirectory] )
 	{
 		NSMutableArray *newApps;
-		
+
 		PSLog(@"Loading apps list from: %@", documentFilename);
 		newApps = [NSKeyedUnarchiver unarchiveObjectWithFile:documentFilename];
 		if (newApps)
@@ -178,7 +178,7 @@
 		{
 			PSLogError(@"Failed to load apps list");
 		}
-		
+
 		PSLog(@"Loaded %d apps", [appStoreApplications count]);
 	}
 	else
@@ -189,10 +189,10 @@
 #endif
 		// Start new user off with some default applications.
 		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];	
+		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
 		PSLog(@"Added %d apps", [appStoreApplications count]);
 	}
-	
+
 	PSLogDebug(@"<--");
 }*/
 
@@ -207,7 +207,7 @@
 		NSString *bundle = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Settings.bundle/Root.plist"];
 		NSDictionary *plist = [[NSDictionary dictionaryWithContentsOfFile:bundle] objectForKey:@"PreferenceSpecifiers"];
 		NSMutableDictionary *defaults = [NSMutableDictionary new];
-		
+
 		// Loop through the bundle settings preferences and pull out the key/default pairs.
 		for (NSDictionary* setting in plist)
 		{
@@ -215,13 +215,13 @@
 			if (key)
 				[defaults setObject:[setting objectForKey:@"DefaultValue"] forKey:key];
 		}
-		
+
 		// Persist the newly initialized default settings and reload them.
 		[tmpSettings setPersistentDomain:defaults forName:[[NSBundle mainBundle] bundleIdentifier]];
 		tmpSettings = [NSUserDefaults standardUserDefaults];
 	}
-	
-	return tmpSettings;	
+
+	return tmpSettings;
 }
 
 @end

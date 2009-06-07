@@ -45,13 +45,13 @@ static CGGradientRef sGradient = NULL;
 {
 #define TITLE_FONT_SIZE 24.0
 #define DETAIL_FONT_SIZE 14.0
-	
+
     if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier])
 	{
         // Initialization code
 		self.clearsContextBeforeDrawing = YES;
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
-		
+
 		appName = [[UILabel alloc] initWithFrame:CGRectZero];
 		appName.backgroundColor = [UIColor clearColor];
 		appName.opaque = NO;
@@ -64,7 +64,7 @@ static CGGradientRef sGradient = NULL;
 		appName.minimumFontSize = 10.0;
 		appName.numberOfLines = 1;
 		[self.contentView addSubview:appName];
-		
+
 		appCompany = [[UILabel alloc] initWithFrame:CGRectZero];
 		appCompany.backgroundColor = [UIColor clearColor];
 		appCompany.opaque = NO;
@@ -77,7 +77,7 @@ static CGGradientRef sGradient = NULL;
 		appCompany.minimumFontSize = 10.0;
 		appCompany.numberOfLines = 1;
 		[self.contentView addSubview:appCompany];
-		
+
 		priceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		priceLabel.backgroundColor = [UIColor clearColor];
 		priceLabel.opaque = NO;
@@ -100,7 +100,7 @@ static CGGradientRef sGradient = NULL;
 		priceValue.lineBreakMode = UILineBreakModeTailTruncation;
 		priceValue.numberOfLines = 1;
 		[self.contentView addSubview:priceValue];
-		
+
 		dateLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		dateLabel.backgroundColor = [UIColor clearColor];
 		dateLabel.opaque = NO;
@@ -112,7 +112,7 @@ static CGGradientRef sGradient = NULL;
 		dateLabel.numberOfLines = 1;
 		dateLabel.text = @"Released:";
 		[self.contentView addSubview:dateLabel];
-		
+
 		dateValue = [[UILabel alloc] initWithFrame:CGRectZero];
 		dateValue.backgroundColor = [UIColor clearColor];
 		dateValue.opaque = NO;
@@ -135,7 +135,7 @@ static CGGradientRef sGradient = NULL;
 		currentTitle.numberOfLines = 1;
 		currentTitle.text = @" Current Version";
 		[self.contentView addSubview:currentTitle];
-		
+
 		currentRatingsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		currentRatingsLabel.backgroundColor = [UIColor clearColor];
 		currentRatingsLabel.opaque = NO;
@@ -196,7 +196,7 @@ static CGGradientRef sGradient = NULL;
 		allTitle.numberOfLines = 1;
 		allTitle.text = @" All Versions";
 		[self.contentView addSubview:allTitle];
-		
+
 		allRatingsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		allRatingsLabel.backgroundColor = [UIColor clearColor];
 		allRatingsLabel.opaque = NO;
@@ -257,7 +257,7 @@ static CGGradientRef sGradient = NULL;
 		versionLabel.numberOfLines = 1;
 		versionLabel.text = @"Version:";
 		[self.contentView addSubview:versionLabel];
-		
+
 		versionValue = [[UILabel alloc] initWithFrame:CGRectZero];
 		versionValue.backgroundColor = [UIColor clearColor];
 		versionValue.opaque = NO;
@@ -268,7 +268,7 @@ static CGGradientRef sGradient = NULL;
 		versionValue.lineBreakMode = UILineBreakModeTailTruncation;
 		versionValue.numberOfLines = 1;
 		[self.contentView addSubview:versionValue];
-		
+
 		sizeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		sizeLabel.backgroundColor = [UIColor clearColor];
 		sizeLabel.opaque = NO;
@@ -280,7 +280,7 @@ static CGGradientRef sGradient = NULL;
 		sizeLabel.numberOfLines = 1;
 		sizeLabel.text = @"Size:";
 		[self.contentView addSubview:sizeLabel];
-		
+
 		sizeValue = [[UILabel alloc] initWithFrame:CGRectZero];
 		sizeValue.backgroundColor = [UIColor clearColor];
 		sizeValue.opaque = NO;
@@ -291,7 +291,7 @@ static CGGradientRef sGradient = NULL;
 		sizeValue.lineBreakMode = UILineBreakModeTailTruncation;
 		sizeValue.numberOfLines = 1;
 		[self.contentView addSubview:sizeValue];
-		
+
 		self.appDetails = nil;
     }
     return self;
@@ -360,7 +360,7 @@ static CGGradientRef sGradient = NULL;
 	CGSize itemSize = [appName.text sizeWithFont:appName.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
 	frame = CGRectMake(posX, posY, contentRect.size.width-(2*MARGIN_X), itemSize.height);
 	appName.frame = frame;
-	
+
 	// App company label.
 	posY += (itemSize.height + INNER_MARGIN_Y);
 	itemSize = [appCompany.text sizeWithFont:appCompany.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
@@ -387,7 +387,7 @@ static CGGradientRef sGradient = NULL;
 	posX -= (itemSize.width + INNER_MARGIN_X);
 	frame = CGRectMake(posX, posY, itemSize.width, itemSize.height);
 	versionLabel.frame = frame;
-	
+
 	// Date label.
 	posX = boundsX + MARGIN_X;
 	posY += (itemSize.height + INNER_MARGIN_Y);
@@ -409,7 +409,7 @@ static CGGradientRef sGradient = NULL;
 	posX -= (itemSize.width + INNER_MARGIN_X);
 	frame = CGRectMake(posX, posY, itemSize.width, itemSize.height);
 	sizeLabel.frame = frame;
-	
+
 	// Current title.
 	posX = boundsX + MARGIN_X;
 	posY += (itemSize.height + INNER_MARGIN_Y);
@@ -462,7 +462,7 @@ static CGGradientRef sGradient = NULL;
 	itemSize = CGSizeMake(screenBounds.size.width, 18.0);
 	frame = CGRectMake(0.0, posY, itemSize.width, itemSize.height);
 	allTitle.frame = frame;
-	
+
 	// All rating label.
 	posX = boundsX + MARGIN_X;
 	posY += (itemSize.height + INNER_MARGIN_Y);
@@ -488,7 +488,7 @@ static CGGradientRef sGradient = NULL;
 	itemSize = [allRatingsValue.text sizeWithFont:allRatingsValue.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
 	frame = CGRectMake(posX, posY, itemSize.width, itemSize.height);
 	allRatingsValue.frame = frame;
-	
+
 	// All reviews label.
 	posX = boundsX + MARGIN_X;
 	posY += (itemSize.height + INNER_MARGIN_Y);
@@ -507,7 +507,7 @@ static CGGradientRef sGradient = NULL;
 	[inDetails retain];
 	[appDetails release];
 	appDetails = inDetails;
-	
+
 	if (appDetails)
 	{
 		PSAppStoreApplication *theApp = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
@@ -521,29 +521,29 @@ static CGGradientRef sGradient = NULL;
 			appCompany.text = @"Waiting for first update";
 		priceValue.text = (appDetails.localPrice ? appDetails.localPrice : @"Unknown");
 		dateValue.text = (appDetails.released ? appDetails.released : @"Unknown");
-		
+
 		currentRatingsView.rating = appDetails.ratingCurrent;
 		if (appDetails.ratingCountCurrent > 0)
 			currentRatingsValue.text = [NSString stringWithFormat:@"in %d rating%@", appDetails.ratingCountCurrent, (appDetails.ratingCountCurrent==1?@"":@"s")];
 		else
 			currentRatingsValue.text = @"No ratings";
-		
+
 		if (appDetails.reviewCountCurrent > 0)
 			currentReviewsValue.text = [NSString stringWithFormat:@"%d review%@", appDetails.reviewCountCurrent, (appDetails.reviewCountCurrent==1?@"":@"s")];
 		else
 			currentReviewsValue.text = @"No reviews";
-		
+
 		allRatingsView.rating = appDetails.ratingAll;
 		if (appDetails.ratingCountAll > 0)
 			allRatingsValue.text = [NSString stringWithFormat:@"in %d rating%@", appDetails.ratingCountAll, (appDetails.ratingCountAll==1?@"":@"s")];
 		else
 			allRatingsValue.text = @"No ratings";
-		
+
 		if (appDetails.reviewCountAll > 0)
 			allReviewsValue.text = [NSString stringWithFormat:@"%d review%@", appDetails.reviewCountAll, (appDetails.reviewCountAll==1?@"":@"s")];
 		else
 			allReviewsValue.text = @"No reviews";
-		
+
 		versionValue.text = (appDetails.appVersion ? appDetails.appVersion : @"Unknown");
 		sizeValue.text = (appDetails.appSize ? appDetails.appSize : @"Unknown");
 	}
@@ -562,7 +562,7 @@ static CGGradientRef sGradient = NULL;
 		versionValue.text = @"";
 		sizeValue.text = @"";
 	}
-	
+
 	[self setNeedsLayout];
 	[self setNeedsDisplay];
 }

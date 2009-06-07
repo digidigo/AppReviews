@@ -36,10 +36,9 @@
 		FB81A5AA0EB0776F0061B88B /* PSAppStoreApplicationReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* PSAppStoreApplicationReview.m */; };
 		FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */; };
 		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
+		FB9CA0B40FD8887D009D1542 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9CA0B30FD8887D009D1542 /* MessageUI.framework */; };
 		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
-		FBB44ED60ECCEB6700A04B1F /* PSTitleValueTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */; };
 		FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB44EF50ECCF24700A04B1F /* Icon.png */; };
-		FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */; };
 		FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBB451C80ECF150400A04B1F /* Settings.bundle */; };
 		FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536C0ECF8DD800A04B1F /* halfstar.png */; };
 		FBB4536F0ECF8DD800A04B1F /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536D0ECF8DD800A04B1F /* star.png */; };
@@ -192,13 +191,10 @@
 		FB81A6910EB12C400061B88B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		FB81A6920EB12C520061B88B /* GTMRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMRegex.h; sourceTree = "<group>"; };
 		FB81A6930EB12C520061B88B /* GTMRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMRegex.m; sourceTree = "<group>"; };
+		FB9CA0B30FD8887D009D1542 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAboutViewController.h; sourceTree = "<group>"; };
 		FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAboutViewController.m; sourceTree = "<group>"; };
-		FBB44ED40ECCEB6700A04B1F /* PSTitleValueTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTitleValueTableCell.h; sourceTree = "<group>"; };
-		FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTitleValueTableCell.m; sourceTree = "<group>"; };
 		FBB44EF50ECCF24700A04B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		FBB450D40ECE451800A04B1F /* PSAppStoreApplicationTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationTableCell.h; sourceTree = "<group>"; };
-		FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationTableCell.m; sourceTree = "<group>"; };
 		FBB451C80ECF150400A04B1F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FBB4536C0ECF8DD800A04B1F /* halfstar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = halfstar.png; path = Resources/halfstar.png; sourceTree = "<group>"; };
 		FBB4536D0ECF8DD800A04B1F /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Resources/star.png; sourceTree = "<group>"; };
@@ -294,6 +290,7 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				FB445AA90ED2F42400D89246 /* SystemConfiguration.framework in Frameworks */,
+				FB9CA0B40FD8887D009D1542 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +423,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB9CA0B30FD8887D009D1542 /* MessageUI.framework */,
 				FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -511,8 +509,6 @@
 		FB81A2BF0EAF34E70061B88B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FBB44ED40ECCEB6700A04B1F /* PSTitleValueTableCell.h */,
-				FBB44ED50ECCEB6700A04B1F /* PSTitleValueTableCell.m */,
 				FB81A2C60EAF35750061B88B /* PSCountView.h */,
 				FB81A2C70EAF35750061B88B /* PSCountView.m */,
 				FB81A2CA0EAF35750061B88B /* PSImageView.h */,
@@ -537,8 +533,6 @@
 		FB81A5FB0EB1152A0061B88B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FBB450D40ECE451800A04B1F /* PSAppStoreApplicationTableCell.h */,
-				FBB450D50ECE451800A04B1F /* PSAppStoreApplicationTableCell.m */,
 				FB81A5AE0EB087A90061B88B /* PSAppStoreTableCell.h */,
 				FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */,
 				FBB4539C0ED0348300A04B1F /* PSRatingView.h */,
@@ -712,8 +706,6 @@
 				FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */,
 				FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */,
 				FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */,
-				FBB44ED60ECCEB6700A04B1F /* PSTitleValueTableCell.m in Sources */,
-				FBB450D60ECE451800A04B1F /* PSAppStoreApplicationTableCell.m in Sources */,
 				FBB453890ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m in Sources */,
 				FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */,
 				FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */,
@@ -745,8 +737,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Charles Gamble";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -758,8 +748,6 @@
 					"-lz",
 				);
 				PRODUCT_NAME = AppCritics;
-				PROVISIONING_PROFILE = "21444E31-6F10-467C-A81F-293A9FC14417";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
 			};
 			name = Debug;
 		};
@@ -767,8 +755,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Charles Gamble";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
@@ -778,8 +764,6 @@
 					"-lz",
 				);
 				PRODUCT_NAME = AppCritics;
-				PROVISIONING_PROFILE = "48F5A0CA-63D9-4055-8FEF-F0C7571754BF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "48F5A0CA-63D9-4055-8FEF-F0C7571754BF";
 			};
 			name = Release;
 		};
@@ -787,7 +771,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -795,8 +779,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "653547E2-11E5-4782-B533-43C719A66CBA";
-				SDKROOT = iphoneos2.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -804,14 +788,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Charles Gamble";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21444E31-6F10-467C-A81F-293A9FC14417";
-				SDKROOT = iphoneos2.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
 		};
@@ -826,8 +810,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE9982A7-DAF9-49B4-9702-F75D2397D090";
-				SDKROOT = iphoneos2.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A787FB06-C456-434D-B8FF-1123A74D4980";
+				SDKROOT = iphoneos3.0;
 			};
 			name = "Ad Hoc Distribution";
 		};
@@ -836,8 +820,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
@@ -847,8 +829,6 @@
 					"-lz",
 				);
 				PRODUCT_NAME = AppCritics;
-				PROVISIONING_PROFILE = "9C807E1C-0938-426C-A0AC-4ED7AF8F3956";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C807E1C-0938-426C-A0AC-4ED7AF8F3956";
 			};
 			name = "Ad Hoc Distribution";
 		};
@@ -863,9 +843,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "77E78568-B4FB-4A72-AF4F-6F564003F6E4";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E78568-B4FB-4A72-AF4F-6F564003F6E4";
-				SDKROOT = iphoneos2.1;
+				PROVISIONING_PROFILE = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
+				SDKROOT = iphoneos3.0;
 			};
 			name = Distribution;
 		};
@@ -873,8 +853,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
@@ -884,8 +862,6 @@
 					"-lz",
 				);
 				PRODUCT_NAME = AppCritics;
-				PROVISIONING_PROFILE = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
 			};
 			name = Distribution;
 		};

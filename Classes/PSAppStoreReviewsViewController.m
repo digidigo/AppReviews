@@ -14,6 +14,7 @@
 #import "PSAppStoreReviewsHeaderTableCell.h"
 #import "PSAppStoreReviewTableCell.h"
 #import "PSRatingView.h"
+#import "PSLog.h"
 #import "NSDate+PSNSDateAdditions.h"
 #import "AppCriticsAppDelegate.h"
 
@@ -39,7 +40,7 @@ static UIColor *sAlternateRowColor = nil;
 	{
 		self.title = @"Reviews";
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		
+
 		self.appStoreDetails = nil;
 		self.userReviews = nil;
     }
@@ -56,17 +57,17 @@ static UIColor *sAlternateRowColor = nil;
 - (void)viewWillAppear:(BOOL)animated
 {
 	NSAssert(appStoreDetails, @"appStoreDetails must be set");
-	
+
     [super viewWillAppear:animated];
 	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
 	PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier];
 	self.userReviews = [[PSAppReviewsStore sharedInstance] reviewsForApplication:app inStore:store];
 	self.title = store.name;
 	[self.tableView reloadData];
-	
+
 	// Display the last-updated time as a prompt.
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setCalendar:[NSCalendar currentCalendar]];			
+	[dateFormatter setCalendar:[NSCalendar currentCalendar]];
 	[dateFormatter setDateStyle:NSDateFormatterNoStyle];
 	[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 	NSString *timeValue = [dateFormatter stringFromDate:appStoreDetails.lastUpdated];
@@ -80,11 +81,13 @@ static UIColor *sAlternateRowColor = nil;
 	self.navigationItem.prompt = [NSString stringWithFormat:@"Last updated: %@", lastUpdated];
 
 	if ([self.tableView numberOfRowsInSection:0] > 0)
-		[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];	
+		[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+
 	// See if the sortOrder preference has changed since these reviews were downloaded.
 	if ([userReviews count] > 0)
 	{
@@ -100,6 +103,8 @@ static UIColor *sAlternateRowColor = nil;
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+	[super viewDidDisappear:animated];
+
 	// Release cached data while offscreen.
 	self.userReviews = nil;
 }
@@ -109,7 +114,7 @@ static UIColor *sAlternateRowColor = nil;
 	[inDetails retain];
 	[appStoreDetails release];
 	appStoreDetails = inDetails;
-	
+
 	self.userReviews = nil;
 }
 
@@ -119,10 +124,11 @@ static UIColor *sAlternateRowColor = nil;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	CGFloat result = 0.0;
 	if (indexPath.row == 0)
 	{
 		// Header row.
-		return 194.0;
+		result = 194.0;
 	}
 	else if (indexPath.row > 0)
 	{
@@ -131,16 +137,12 @@ static UIColor *sAlternateRowColor = nil;
 		if (review)
 		{
 			[review hydrate];
-			return [PSAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
+			result = [PSAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
 		}
 	}
-	
-	return 0.0;
-}
 
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellAccessoryNone;
+	PSLog(@"%@ returning %g", indexPath, result);
+	return result;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -161,10 +163,10 @@ static UIColor *sAlternateRowColor = nil;
 {
 	// Always have a header row.
 	NSInteger rowCount = 1;
-	
+
 	if (userReviews)
 		rowCount += [userReviews count];
-	
+
     return rowCount;
 }
 
@@ -172,13 +174,13 @@ static UIColor *sAlternateRowColor = nil;
 {
     static NSString *HeaderCellIdentifier = @"HeaderCell";
     static NSString *ReviewCellIdentifier = @"ReviewCell";
-	
+
 	UITableViewCell *cell = nil;
-	
+
 	if (indexPath.row == 0)
 	{
 		// Header row.
-		
+
 		// Obtain the cell;
 		PSAppStoreReviewsHeaderTableCell *headerCell = (PSAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
 		if (headerCell == nil)
@@ -187,7 +189,7 @@ static UIColor *sAlternateRowColor = nil;
 		}
 		// Configure the cell
 		headerCell.appDetails = self.appStoreDetails;
-		
+
 		cell = headerCell;
 	}
 	else if (indexPath.row > 0)
@@ -202,7 +204,7 @@ static UIColor *sAlternateRowColor = nil;
 		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
 		[review hydrate];
 		reviewCell.review = review;
-		
+
 		// Use alternate colours for rows.
 		if (reviewIndex % 2 == 0)
 		{
@@ -216,6 +218,7 @@ static UIColor *sAlternateRowColor = nil;
 		}
 		cell = reviewCell;
 	}
+	cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
 

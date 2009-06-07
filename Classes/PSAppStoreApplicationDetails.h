@@ -40,7 +40,7 @@
 	NSUInteger reviewCountCurrent;
 	PSReviewsSortOrder lastSortOrder;
 	NSDate *lastUpdated;
-	
+
 	// Persistent members (dehydrated).
 	NSString *released;
 	NSString *appVersion;

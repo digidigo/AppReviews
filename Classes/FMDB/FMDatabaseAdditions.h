@@ -11,10 +11,10 @@
 
 
 - (int) intForQuery:(NSString*)objs, ...;
-- (long) longForQuery:(NSString*)objs, ...; 
+- (long) longForQuery:(NSString*)objs, ...;
 - (BOOL) boolForQuery:(NSString*)objs, ...;
 - (double) doubleForQuery:(NSString*)objs, ...;
-- (NSString*) stringForQuery:(NSString*)objs, ...; 
+- (NSString*) stringForQuery:(NSString*)objs, ...;
 - (NSData*) dataForQuery:(NSString*)objs, ...;
 
 // Notice that there's no dataNoCopyForQuery:.

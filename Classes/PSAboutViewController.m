@@ -7,14 +7,11 @@
 //
 
 #import "PSAboutViewController.h"
-#import "PSTitleValueTableCell.h"
 #import "PSLog.h"
 
 
 #define kOpenWebsiteURLTagValue			1
 #define kOpenReleaseNotesURLTagValue	2
-#define kFeedbackEmailTagValue			3
-#define kRecommendEmailTagValue			4
 
 
 typedef enum
@@ -31,6 +28,16 @@ typedef enum
 
 @interface PSAboutViewController ()
 
+@property (nonatomic, retain) NSString *appName;
+@property (nonatomic, retain) UIImage *appIcon;
+@property (nonatomic, retain) NSString *appVersion;
+@property (nonatomic, retain) NSString *copyright;
+@property (nonatomic, retain) NSString *websiteURL;
+@property (nonatomic, retain) NSString *appURL;
+@property (nonatomic, retain) NSString *releaseNotesURL;
+@property (nonatomic, retain) NSString *email;
+@property (nonatomic, retain) NSString *appId;
+
 - (id)infoValueForKey:(NSString*)key;
 - (NSString *)pathForIcon;
 
@@ -39,7 +46,7 @@ typedef enum
 
 @implementation PSAboutViewController
 
-@synthesize applicationNameFontSize, parentViewForConfirmation;
+@synthesize appName, appIcon, appVersion, copyright, websiteURL, appURL, releaseNotesURL, email, appId, applicationNameFontSize, parentViewForConfirmation;
 
 
 /**
@@ -72,25 +79,49 @@ typedef enum
 - (id)initWithParentViewForConfirmation:(UIView *)parentView style:(UITableViewStyle)style
 {
 	NSAssert(style==UITableViewStyleGrouped, @"PSAboutViewController only supports UITableViewStyleGrouped");
-	
+
     if (self = [super initWithStyle:style])
 	{
-		self.title = @"About";
-		appName = [[self infoValueForKey:@"CFBundleDisplayName"] retain];
-		appVersion = [[self infoValueForKey:@"CFBundleVersion"] retain];
-		copyright = [[self infoValueForKey:@"NSHumanReadableCopyright"] retain];
-		websiteURL = [[self infoValueForKey:@"PSWebsiteURL"] retain];
-		appURL = [[self infoValueForKey:@"PSApplicationURL"] retain];
-		releaseNotesURL = [[self infoValueForKey:@"PSReleaseNotesURL"] retain];
-		email = [[self infoValueForKey:@"PSContactEmail"] retain];
-		appId = [[self infoValueForKey:@"PSApplicationID"] retain];
-		NSString *iconFilePath = [self pathForIcon];
-		if (iconFilePath && [iconFilePath length] > 0)
-			appIcon = [[UIImage imageWithContentsOfFile:iconFilePath] retain];
-		applicationNameFontSize = 28.0;
 		self.parentViewForConfirmation = parentView;
     }
     return self;
+}
+
+- (void)viewDidLoad
+{
+	PSLogDebug(@"");
+	[super viewDidLoad];
+
+	self.title = NSLocalizedString(@"About", @"About");
+	self.appName = [self infoValueForKey:@"CFBundleDisplayName"];
+	self.appVersion = [self infoValueForKey:@"CFBundleVersion"];
+	self.copyright = [self infoValueForKey:@"NSHumanReadableCopyright"];
+	self.websiteURL = [self infoValueForKey:@"PSWebsiteURL"];
+	self.appURL = [self infoValueForKey:@"PSApplicationURL"];
+	self.releaseNotesURL = [self infoValueForKey:@"PSReleaseNotesURL"];
+	self.email = [self infoValueForKey:@"PSContactEmail"];
+	self.appId = [self infoValueForKey:@"PSApplicationID"];
+	NSString *iconFilePath = [self pathForIcon];
+	if (iconFilePath && [iconFilePath length] > 0)
+		self.appIcon = [UIImage imageWithContentsOfFile:iconFilePath];
+	self.applicationNameFontSize = 28.0;
+}
+
+- (void)viewDidUnload
+{
+	PSLogDebug(@"");
+	[super viewDidUnload];
+
+	// Release IBOutlets and items which can be recreated in viewDidLoad.
+	self.appName = nil;
+	self.appVersion = nil;
+	self.copyright = nil;
+	self.websiteURL = nil;
+	self.appURL = nil;
+	self.releaseNotesURL = nil;
+	self.email = nil;
+	self.appId = nil;
+	self.appIcon = nil;
 }
 
 /**
@@ -143,7 +174,7 @@ typedef enum
 		// App has a plain icon, look for a specific icon for the About view.
 		iconFile = [[self infoValueForKey:@"PSAboutIconFile"] retain];
 	}
-	
+
 	if (iconFile == nil)
 	{
 		// Use default app icon if nothing better found.
@@ -171,7 +202,7 @@ typedef enum
 		case PSAboutRecommendEmailRow:
 			return indexPath;
 	}
-	
+
     return nil;
 }
 
@@ -182,48 +213,106 @@ typedef enum
 	return 44.0;
 }
 
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	switch (indexPath.row)
-	{
-		case PSAboutWebsiteRow:
-		case PSAboutVersionRow:
-		case PSAboutFeedbackEmailRow:
-		case PSAboutRecommendEmailRow:
-			return UITableViewCellAccessoryDisclosureIndicator;
-	}
-	
-	return UITableViewCellAccessoryNone;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UIActionSheet *sheet = nil;
-	
+
 	switch (indexPath.row)
 	{
 		case PSAboutWebsiteRow:
 		{
-			sheet = [[UIActionSheet alloc] initWithTitle:websiteURL delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Visit Website", nil];
+			sheet = [[UIActionSheet alloc] initWithTitle:websiteURL delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Visit Website", @"Visit Website"), nil];
 			sheet.tag = kOpenWebsiteURLTagValue;
 			break;
 		}
 		case PSAboutVersionRow:
 		{
-			sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Release Notes", nil];
+			sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"View Release Notes", @"View Release Notes"), nil];
 			sheet.tag = kOpenReleaseNotesURLTagValue;
 			break;
 		}
 		case PSAboutFeedbackEmailRow:
 		{
-			sheet = [[UIActionSheet alloc] initWithTitle:email delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send Feedback", nil];
-			sheet.tag = kFeedbackEmailTagValue;
+			// Check that email is configured on device
+			if ([MFMailComposeViewController canSendMail])
+			{
+				MFMailComposeViewController *mailVC = [[[MFMailComposeViewController alloc] init] autorelease];
+				mailVC.mailComposeDelegate = self;
+				[mailVC setSubject:[NSString stringWithFormat:@"%@ Feedback (version %@)", appName, appVersion]];
+				[mailVC setToRecipients:[NSArray arrayWithObject:email]];
+				[self presentModalViewController:mailVC animated:YES];
+			}
+			else
+			{
+				// Email not configured on device.
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+																message:NSLocalizedString(@"Email has not been configured on this device!", @"Email has not been configured on this device!")
+															   delegate:self
+													  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"Dismiss")
+													  otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+			}
 			break;
 		}
 		case PSAboutRecommendEmailRow:
 		{
-			sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Send Email", nil];
-			sheet.tag = kRecommendEmailTagValue;
+			// Check that email is configured on device
+			if ([MFMailComposeViewController canSendMail])
+			{
+				NSString *subject = [NSString stringWithFormat:NSLocalizedString(@"I thought you might be interested in %@", @"I thought you might be interested in %@"), appName];
+				NSString *body = nil;
+				if (appId && [appId length] > 0)
+				{
+					// We have the appId, provide a link to the app's page in the App Store.
+					NSURL *homeURL = [NSURL URLWithString:appURL];
+					if ([homeURL scheme] == nil)
+					{
+						// No URL scheme was specified, so assume http://
+						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", appURL]];
+					}
+
+					body = [NSString stringWithFormat:@"%@:\nhttp://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@\n\n%@:\n%@", NSLocalizedString(@"Available in the App Store", @"Available in the App Store"), appId, NSLocalizedString(@"For more information",@"For more information"), [homeURL absoluteString]];
+				}
+				else if (appURL)
+				{
+					// We don't have the appId, provide a link to the app's home page.
+					NSURL *homeURL = [NSURL URLWithString:appURL];
+					if ([homeURL scheme] == nil)
+					{
+						// No URL scheme was specified, so assume http://
+						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", appURL]];
+					}
+					body = [homeURL absoluteString];
+				}
+				else
+				{
+					// We don't have the appId or the app's home page, provide a link to the company's home page.
+					NSURL *homeURL = [NSURL URLWithString:websiteURL];
+					if ([homeURL scheme] == nil)
+					{
+						// No URL scheme was specified, so assume http://
+						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", websiteURL]];
+					}
+					body = [homeURL absoluteString];
+				}
+				MFMailComposeViewController *mailVC = [[[MFMailComposeViewController alloc] init] autorelease];
+				mailVC.mailComposeDelegate = self;
+				[mailVC setSubject:subject];
+				[mailVC setMessageBody:body isHTML:NO];
+				[self presentModalViewController:mailVC animated:YES];
+			}
+			else
+			{
+				// Email not configured on device.
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+																message:NSLocalizedString(@"Email has not been configured on this device!", @"Email has not been configured on this device!")
+															   delegate:self
+													  cancelButtonTitle:NSLocalizedString(@"Dismiss", @"Dismiss")
+													  otherButtonTitles:nil];
+				[alert show];
+				[alert release];
+			}
 			break;
 		}
 		default:
@@ -233,17 +322,14 @@ typedef enum
 			break;
 		}
 	}
-	
+
 	if (sheet)
 	{
-		// Hide navigation bar (UIActionSheet not truly modal, so prevents user navigating off-screen).
-		[self.navigationController setNavigationBarHidden:YES animated:YES];
-
 		// Determine what the parent view is, for the UIActionSheet.
 		UIView *parentView = self.parentViewForConfirmation;
 		if (parentView == nil)
 			parentView = self.tableView;
-		
+
 		if ([parentView isKindOfClass:[UITabBar class]])
 		{
 			[sheet showFromTabBar:(UITabBar *)parentView];
@@ -276,105 +362,102 @@ typedef enum
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    static NSString *SimpleCellIdentifier = @"SimpleCell";
+
+    static NSString *kPSSimpleCellIdentifier = @"PSSimpleCellIdentifier";
+    static NSString *kPSTitleValueTableCellID = @"PSTitleValueTableCellID";
     UITableViewCell *cell = nil;
-	
+
 	switch (indexPath.row)
 	{
 		case PSAboutApplicationRow:
 		{
 			// Obtain the cell.
-			cell = [tableView dequeueReusableCellWithIdentifier:SimpleCellIdentifier];
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSSimpleCellIdentifier];
 			if (cell == nil)
 			{
-				cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:SimpleCellIdentifier] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kPSSimpleCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
-			cell.font = [UIFont boldSystemFontOfSize:applicationNameFontSize];
-			cell.text = appName;
-			cell.image = appIcon;
+			cell.textLabel.font = [UIFont boldSystemFontOfSize:applicationNameFontSize];
+			cell.textLabel.text = appName;
+			cell.imageView.image = appIcon;
+			cell.accessoryType = UITableViewCellAccessoryNone;
 			break;
 		}
 		case PSAboutVersionRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
-			if (tvCell == nil)
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
-			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
-			tvCell.titleWidth = 80;
-			tvCell.titleLabel.text = @"Version";
-			tvCell.valueLabel.text = appVersion;
-			cell = tvCell;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.textLabel.text = NSLocalizedString(@"Version", @"Version");
+			cell.detailTextLabel.text = appVersion;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			break;
 		}
 		case PSAboutCopyrightRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
-			if (tvCell == nil)
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
-			tvCell.selectionStyle = UITableViewCellSelectionStyleNone;
-			tvCell.titleWidth = 80;
-			tvCell.titleLabel.text = @"Copyright";
-			tvCell.valueLabel.text = copyright;
-			cell = tvCell;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			cell.textLabel.text = NSLocalizedString(@"Copyright", @"Copyright");
+			cell.detailTextLabel.text = copyright;
+			cell.accessoryType = UITableViewCellAccessoryNone;
 			break;
 		}
 		case PSAboutWebsiteRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
-			if (tvCell == nil)
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
-			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
-			tvCell.titleWidth = 80;
-			tvCell.titleLabel.text = @"Website";
-			tvCell.valueLabel.text = websiteURL;
-			cell = tvCell;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.textLabel.text = NSLocalizedString(@"Website", @"Website");
+			cell.detailTextLabel.text = websiteURL;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			break;
 		}
 		case PSAboutFeedbackEmailRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
-			if (tvCell == nil)
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
-			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
-			tvCell.titleWidth = 50;
-			tvCell.titleLabel.text = @"Email";
-			tvCell.valueLabel.text = email;
-			cell = tvCell;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.textLabel.text = NSLocalizedString(@"Email", @"Email");
+			cell.detailTextLabel.text = email;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			break;
 		}
 		case PSAboutRecommendEmailRow:
 		{
 			// Obtain the cell.
-			PSTitleValueTableCell *tvCell = (PSTitleValueTableCell *) [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
-			if (tvCell == nil)
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
 			{
-				tvCell = [[[PSTitleValueTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
 			}
 			// Configure the cell.
-			tvCell.selectionStyle = UITableViewCellSelectionStyleBlue;
-			tvCell.titleWidth = 200;
-			tvCell.titleLabel.text = @"Send To Friend";
-			tvCell.valueLabel.text = nil;
-			cell = tvCell;
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.textLabel.text = NSLocalizedString(@"Send To Friend", @"Send To Friend");
+			cell.detailTextLabel.text = nil;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			break;
 		}
 	}
@@ -391,16 +474,13 @@ typedef enum
 	// Deselect table row.
 	NSIndexPath *tableSelection = [self.tableView indexPathForSelectedRow];
 	[self.tableView deselectRowAtIndexPath:tableSelection animated:NO];
-
-	// Restore navigation bar.
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	PSLogDebug(@"buttonIndex=%d: (%@)", buttonIndex, [actionSheet buttonTitleAtIndex:buttonIndex]);
 	NSURL *url = nil;
-	
+
 	switch (actionSheet.tag)
 	{
 		case kOpenWebsiteURLTagValue:
@@ -413,6 +493,11 @@ typedef enum
 				{
 					// No URL scheme was specified, so assume http://
 					url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", websiteURL]];
+					if (url)
+					{
+						PSLogDebug(@"Opening URL: %@", [url description]);
+						[[UIApplication sharedApplication] openURL:url];
+					}
 				}
 			}
 			break;
@@ -427,67 +512,31 @@ typedef enum
 				{
 					// No URL scheme was specified, so assume http://
 					url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", releaseNotesURL]];
-				}
-			}
-			break;
-		}
-		case kFeedbackEmailTagValue:
-		{
-			if (buttonIndex == 0)
-			{
-				// Ensure app data is saved before app quits.
-				NSString *subject = [NSString stringWithFormat:@"%@ Feedback (version %@)", appName, appVersion];
-				NSString *emailURL = [NSString stringWithFormat:@"mailto:%@?subject=%@", email, [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-				url = [NSURL URLWithString:emailURL];
-			}
-			break;
-		}
-		case kRecommendEmailTagValue:
-		{
-			if (buttonIndex == 0)
-			{
-				// Ensure app data is saved before app quits.
-				NSString *subject = [NSString stringWithFormat:@"I thought you might be interested in %@", appName];
-				NSString *body = nil;
-				if (appId && [appId length] > 0)
-				{
-					// We have the appId, provide a link to the app's page in the App Store.
-					body = [NSString stringWithFormat:@"Available in the App Store:\nhttp://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@\n", appId];
-				}
-				else if (appURL)
-				{
-					// We don't have the appId, provide a link to the app's home page.
-					NSURL *homeURL = [NSURL URLWithString:appURL];
-					if ([homeURL scheme] == nil)
+					if (url)
 					{
-						// No URL scheme was specified, so assume http://
-						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", appURL]];
+						PSLogDebug(@"Opening URL: %@", [url description]);
+						[[UIApplication sharedApplication] openURL:url];
 					}
-					body = [homeURL absoluteString];					
 				}
-				else
-				{
-					// We don't have the appId or the app's home page, provide a link to the company's home page.
-					NSURL *homeURL = [NSURL URLWithString:websiteURL];
-					if ([homeURL scheme] == nil)
-					{
-						// No URL scheme was specified, so assume http://
-						homeURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", websiteURL]];
-					}
-					body = [homeURL absoluteString];					
-				}
-				NSString *emailURL = [NSString stringWithFormat:@"mailto:?subject=%@&body=%@", [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-				url = [NSURL URLWithString:emailURL];
 			}
 			break;
 		}
 	}
-	
-	if (url)
+}
+
+
+#pragma mark -
+#pragma mark MFMailComposeViewControllerDelegate methods
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	if (error)
 	{
-		PSLogDebug(@"Opening URL: %@", [url description]);
-		[[UIApplication sharedApplication] openURL:url];
+		PSLogError(@"Error sending email: %@", [error localizedDescription]);
 	}
+
+	// Dismiss mail interface.
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 @end

@@ -50,8 +50,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 + (void)initialize
 {
     // The application ships with a default database in its bundle. If anything in the application
-    // bundle is altered, the code sign will fail. We want the database to be editable by users, 
-    // so we need to create a copy of it in the application's Documents directory.     
+    // bundle is altered, the code sign will fail. We want the database to be editable by users,
+    // so we need to create a copy of it in the application's Documents directory.
 
     // First, test for existence.
     BOOL success;
@@ -81,7 +81,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 		if ([self open])
 		{
 			[self setupAppStores];
-			
+
 			applications = [[NSMutableArray array] retain];
 			appDetails = [[NSMutableDictionary dictionary] retain];
 			appReviews = [[NSMutableDictionary dictionary] retain];
@@ -140,7 +140,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 		for (NSMutableArray *reviewsArray in [storeReviewsDictionary allValues])
 		{
 			// reviewsArray is array(review).
-			[reviewsArray makeObjectsPerformSelector:@selector(save)];			
+			[reviewsArray makeObjectsPerformSelector:@selector(save)];
 		}
 	}
 	return YES;
@@ -222,7 +222,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 
 	// Remove any existing PSAppStoreApplicationDetails for this app.
 	[self removeDetailsForApplication:app];
-	
+
 	// Remove app from database.
 	[app deleteFromDatabase];
 	// Remove app from apps array.
@@ -234,10 +234,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 {
 	// STEP 1: Delete actual reviews for this app.
 	[self removeReviewsForApplication:app];
-	
+
 	// STEP 2: Remove any existing PSAppStoreApplicationDetails for this app.
 	[self removeDetailsForApplication:app];
-	
+
 	// STEP 3: Create a new PSAppStoreApplicationDetails instance for this app, one for each store.
 	NSMutableDictionary *storeDetailsDictionary = [NSMutableDictionary dictionary];
 	for (PSAppStore *appStore in appStores)
@@ -259,10 +259,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 		[self loadDetailsForApplication:app];
 		storeDetailsDictionary = [appDetails objectForKey:app.appIdentifier];
 	}
-	
+
 	if (storeDetailsDictionary)
 		return [storeDetailsDictionary objectForKey:store.storeIdentifier];
-	
+
 	return nil;
 }
 
@@ -330,20 +330,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 	NSMutableDictionary *storeReviewsDictionary = [appReviews objectForKey:app.appIdentifier];
 	if (storeReviewsDictionary)
 		reviewsForAppStore = [storeReviewsDictionary objectForKey:store.storeIdentifier];
-	
+
 	if (reviewsForAppStore == nil)
 	{
 		// Reviews for this app/store are not loaded yet, load now and try again.
 		[self loadReviewsForApplication:app inStore:store];
-		
+
 		storeReviewsDictionary = [appReviews objectForKey:app.appIdentifier];
 		if (storeReviewsDictionary)
 			reviewsForAppStore = [storeReviewsDictionary objectForKey:store.storeIdentifier];
 	}
-	
+
 	if (reviewsForAppStore)
 		return [NSArray arrayWithArray:reviewsForAppStore];
-	
+
 	return nil;
 }
 
@@ -441,16 +441,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 	[ids close];
 	[applications addObjectsFromArray:[tmpArray sortedArrayUsingSelector:@selector(compareByPosition:)]];
 	PSLog(@"Loaded %d apps", [applications count]);
-	
+
 	if ([applications count] == 0)
 	{
 		NSUInteger countBefore = [applications count];
 #ifdef DEBUG
 		[self setupTestData];
-#endif		
+#endif
 		// Start new user off with some default applications.
 		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
-		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];	
+		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
 		PSLog(@"Added %d apps", [applications count]-countBefore);
 	}
 }
@@ -490,7 +490,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 		storeReviewsDictionary = [NSMutableDictionary dictionary];
 		[appReviews setObject:storeReviewsDictionary forKey:app.appIdentifier];
 	}
-	
+
 	[storeReviewsDictionary setObject:tmpArray forKey:store.storeIdentifier];
 }
 
@@ -504,8 +504,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 {
 	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
 	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Lux Touch" appIdentifier:@"292538570"] autorelease]];
-	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Remote" appIdentifier:@"284417350"] autorelease]];	
-	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Texas Hold'em" appIdentifier:@"284602850"] autorelease]];	
+	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Remote" appIdentifier:@"284417350"] autorelease]];
+	[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Texas Hold'em" appIdentifier:@"284602850"] autorelease]];
 }
 
 #endif

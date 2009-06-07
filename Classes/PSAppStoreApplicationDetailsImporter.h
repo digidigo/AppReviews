@@ -147,7 +147,7 @@ typedef enum
 	long long downloadFileSize;
 	NSMutableData *downloadFileContents;
 	NSString *downloadErrorMessage;
-	
+
 	// Members used during XML parsing.
 	DetailsXMLState xmlState;
 	BOOL skippingCollapsedDisclosure;

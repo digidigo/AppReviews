@@ -109,7 +109,7 @@
         self.database = db;
 		self.hasNewRatings = NO;
 		self.hasNewReviews = NO;
-		
+
 		FMResultSet *row = [db executeQuery:@"SELECT app_identifier, store_identifier, category, category_identifier, rating_count_all, rating_count_all_5stars, rating_count_all_4stars, rating_count_all_3stars, rating_count_all_2stars, rating_count_all_1star, rating_count_current, rating_count_current_5stars, rating_count_current_4stars, rating_count_current_3stars, rating_count_current_2stars, rating_count_current_1star, rating_all, rating_current, review_count_all, review_count_current, last_sort_order, last_updated FROM application_details WHERE id=?", [NSNumber numberWithInteger:pk]];
 		if (row && [row next])
 		{
@@ -173,7 +173,7 @@
 - (void)insertIntoDatabase:(FMDatabase *)db
 {
 	self.database = db;
-	
+
 	if ([db executeUpdate:@"INSERT INTO application_details (app_identifier, store_identifier, category, category_identifier, rating_count_all, rating_count_all_5stars, rating_count_all_4stars, rating_count_all_3stars, rating_count_all_2stars, rating_count_all_1star, rating_count_current, rating_count_current_5stars, rating_count_current_4stars, rating_count_current_3stars, rating_count_current_2stars, rating_count_current_1star, rating_all, rating_current, review_count_all, review_count_current, last_sort_order, last_updated, released, version, size, price, name, company, company_url, company_url_title, support_url, support_url_title) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 		 appIdentifier,
 		 storeIdentifier,
@@ -216,7 +216,7 @@
 		PSLogError(message);
         NSAssert(0, message);
 	}
-	
+
     // All data for the application is already in memory, but has not been written to the database.
     // Mark as hydrated to prevent empty/default values from overwriting what is in memory.
     hydrated = YES;
@@ -266,7 +266,7 @@
 			PSLogError(message);
 			NSAssert(0, message);
 		}
-		
+
         // Update the object state with respect to unwritten changes.
         dirty = NO;
     }
@@ -308,7 +308,7 @@
 		self.supportURLTitle = nil;
 	}
 	[row close];
-	
+
     // Update object state with respect to hydration.
     hydrated = YES;
 }
@@ -318,8 +318,8 @@
 {
 	// Write any changes to the database.
 	[self save];
-	
-    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them 
+
+    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them
     // if dehydrate is called multiple times.
 	[released release];
 	released = nil;
@@ -364,15 +364,15 @@
 // logic or steps for synchronization. The "set" accessors attempt to verify that the new value is definitely
 // different from the old value, to minimize the amount of work done. Any "set" which actually results in changing
 // data will mark the object as "dirty" - i.e., possessing data that has not been written to the database.
-// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers, 
-// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate 
+// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers,
+// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate
 // the encapsulation of the owning object.
 
 - (void)setAppIdentifier:(NSString *)aString
 {
 	if ((!appIdentifier && !aString) || (appIdentifier && aString && [appIdentifier isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appIdentifier release];
 	appIdentifier = [aString copy];
@@ -382,7 +382,7 @@
 {
 	if ((!storeIdentifier && !aString) || (storeIdentifier && aString && [storeIdentifier isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[storeIdentifier release];
 	storeIdentifier = [aString copy];
@@ -392,7 +392,7 @@
 {
 	if ((!category && !aString) || (category && aString && [category isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[category release];
 	category = [aString copy];
@@ -402,7 +402,7 @@
 {
 	if ((!categoryIdentifier && !aString) || (categoryIdentifier && aString && [categoryIdentifier isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[categoryIdentifier release];
 	categoryIdentifier = [aString copy];
@@ -412,7 +412,7 @@
 {
 	if (ratingCountAll == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll = anInt;
 }
@@ -421,7 +421,7 @@
 {
 	if (ratingCountAll5Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll5Stars = anInt;
 }
@@ -430,7 +430,7 @@
 {
 	if (ratingCountAll4Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll4Stars = anInt;
 }
@@ -439,7 +439,7 @@
 {
 	if (ratingCountAll3Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll3Stars = anInt;
 }
@@ -448,7 +448,7 @@
 {
 	if (ratingCountAll2Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll2Stars = anInt;
 }
@@ -457,7 +457,7 @@
 {
 	if (ratingCountAll1Star == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountAll1Star = anInt;
 }
@@ -466,7 +466,7 @@
 {
 	if (ratingCountCurrent == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent = anInt;
 }
@@ -475,7 +475,7 @@
 {
 	if (ratingCountCurrent5Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent5Stars = anInt;
 }
@@ -484,7 +484,7 @@
 {
 	if (ratingCountCurrent4Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent4Stars = anInt;
 }
@@ -493,7 +493,7 @@
 {
 	if (ratingCountCurrent3Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent3Stars = anInt;
 }
@@ -502,7 +502,7 @@
 {
 	if (ratingCountCurrent2Stars == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent2Stars = anInt;
 }
@@ -511,7 +511,7 @@
 {
 	if (ratingCountCurrent1Star == anInt)
 		return;
-	
+
 	dirty = YES;
 	ratingCountCurrent1Star = anInt;
 }
@@ -532,7 +532,7 @@
 {
 	if (reviewCountAll == anInt)
 		return;
-	
+
 	dirty = YES;
 	reviewCountAll = anInt;
 }
@@ -541,7 +541,7 @@
 {
 	if (reviewCountCurrent == anInt)
 		return;
-	
+
 	dirty = YES;
 	reviewCountCurrent = anInt;
 }
@@ -550,7 +550,7 @@
 {
 	if (lastSortOrder == aSortOrder)
 		return;
-	
+
 	dirty = YES;
 	lastSortOrder = aSortOrder;
 }
@@ -559,7 +559,7 @@
 {
 	if ((!lastUpdated && !aDate) || (lastUpdated && aDate && [lastUpdated isEqualToDate:aDate]))
 		return;
-	
+
 	dirty = YES;
 	[lastUpdated release];
 	lastUpdated = [aDate copy];
@@ -569,7 +569,7 @@
 {
 	if ((!released && !aString) || (released && aString && [released isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[released release];
 	released = [aString copy];
@@ -579,7 +579,7 @@
 {
 	if ((!appVersion && !aString) || (appVersion && aString && [appVersion isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appVersion release];
 	appVersion = [aString copy];
@@ -589,7 +589,7 @@
 {
 	if ((!appSize && !aString) || (appSize && aString && [appSize isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appSize release];
 	appSize = [aString copy];
@@ -599,7 +599,7 @@
 {
 	if ((!localPrice && !aString) || (localPrice && aString && [localPrice isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[localPrice release];
 	localPrice = [aString copy];
@@ -609,7 +609,7 @@
 {
 	if ((!appName && !aString) || (appName && aString && [appName isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appName release];
 	appName = [aString copy];
@@ -619,7 +619,7 @@
 {
 	if ((!appCompany && !aString) || (appCompany && aString && [appCompany isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appCompany release];
 	appCompany = [aString copy];
@@ -629,7 +629,7 @@
 {
 	if ((!companyURL && !aString) || (companyURL && aString && [companyURL isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[companyURL release];
 	companyURL = [aString copy];
@@ -639,7 +639,7 @@
 {
 	if ((!companyURLTitle && !aString) || (companyURLTitle && aString && [companyURLTitle isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[companyURLTitle release];
 	companyURLTitle = [aString copy];
@@ -649,7 +649,7 @@
 {
 	if ((!supportURL && !aString) || (supportURL && aString && [supportURL isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[supportURL release];
 	supportURL = [aString copy];
@@ -659,7 +659,7 @@
 {
 	if ((!supportURLTitle && !aString) || (supportURLTitle && aString && [supportURLTitle isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[supportURLTitle release];
 	supportURLTitle = [aString copy];

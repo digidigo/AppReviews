@@ -80,6 +80,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
 	// Build up a list of enabled stores.
 	[enabledStores removeAllObjects];
 	for (PSAppStore *store in [[PSAppReviewsStore sharedInstance] appStores])
@@ -89,12 +91,7 @@
 			[enabledStores addObject:store];
 		}
 	}
-	
-	// Deselect any selected row.
-	NSIndexPath *selectedRow = [self.tableView indexPathForSelectedRow];
-	if (selectedRow)
-		[self.tableView deselectRowAtIndexPath:selectedRow animated:NO];
-	
+
 	[self updateDisplayedStores];
 }
 
@@ -120,7 +117,7 @@
 	[inAppStoreApplication retain];
 	[appStoreApplication release];
 	appStoreApplication = inAppStoreApplication;
-	
+
 	if (appStoreApplication.name)
 		self.title = appStoreApplication.name;
 	else
@@ -141,7 +138,7 @@
 			[displayedStores addObject:appStore];
 		}
 	}
-	
+
 	// Refresh table.
 	[self.tableView reloadData];
 }
@@ -164,10 +161,10 @@
 				[storeIdsRemaining addObject:appStore.storeIdentifier];
 		}
 	}
-	
+
 	// Show progress view.
 	[progressHUD progressBeginWithMessage:@"Connecting"];
-	
+
 	// Start processing first entry in storeIds array.
 	[self updateDetails:progressHUD];
 }
@@ -188,7 +185,7 @@
 	{
 		// Update table to show any store's reviews that were just completed.
 		[self updateDisplayedStores];
-		
+
 		// Fill in missing app details if we have them available in last processed store reviews.
 		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [storeIdsProcessed count] > 0)
 		{
@@ -228,10 +225,10 @@
 			float progress = ((float)([enabledStores count]-[storeIdsRemaining count])/(float)[enabledStores count]);
 			[progressHUD progressUpdateMessage:[[[PSAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier] name]];
 			[progressHUD progressUpdate:[NSNumber numberWithFloat:progress]];
-			
+
 			self.detailsImporter = [[[PSAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appStoreApplication.appIdentifier storeIdentifier:thisStore.storeIdentifier] autorelease];
 			[detailsImporter fetchDetails:progressHUD];
-			
+
 			[storeIdsProcessed addObject:thisStoreId];
 			[storeIdsRemaining removeObjectAtIndex:0];
 		}
@@ -240,7 +237,7 @@
 			// No more stores to process.
 			[progressHUD progressUpdate:[NSNumber numberWithFloat:1.0f]];
 			[progressHUD progressEnd];
-			
+
 			// Check to see if there were errors downloading.
 			if ([storeIdsProcessed count] > 0)
 			{
@@ -250,7 +247,7 @@
 					NSString *msg = @"AppCritics could not fetch reviews from any App Stores. Please check network connection before trying again.";
 					if ([failedStoreNames count] != [enabledStores count])
 						msg = [NSString stringWithFormat:@"AppCritics could not fetch reviews from the following stores:\n%@\nPlease check network connection before trying again.", [failedStoreNames componentsJoinedByString:@"\n"]];
-					
+
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:msg delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 					[alert show];
 					[alert release];
@@ -320,12 +317,16 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreDetailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreApplicationReviewsUpdatedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -333,20 +334,9 @@
 #pragma mark -
 #pragma mark UITableViewDelegate methods
 
-- (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
-	PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
-	if (storeDetails)
-	{
-		return UITableViewCellAccessoryDisclosureIndicator;
-	}
-	return UITableViewCellAccessoryNone;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	// Display reviews for store.	
+	// Display reviews for store.
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	PSAppStoreApplicationDetails *appStoreDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	// Lazily create countries view controller.
@@ -383,9 +373,9 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     static NSString *CellIdentifier = @"AppStoreCell";
-    
+
     PSAppStoreTableCell *cell = (PSAppStoreTableCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
@@ -398,13 +388,14 @@
 	PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	if (storeDetails)
 	{
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.countView.count = storeDetails.reviewCountAll;
 		cell.ratingView.rating = storeDetails.ratingAll;
 		if (storeDetails.ratingCountAll > 0)
 			cell.ratingCountLabel.text = [NSString stringWithFormat:@"in %d rating%@", storeDetails.ratingCountAll, (storeDetails.ratingCountAll==1?@"":@"s")];
 		else
 			cell.ratingCountLabel.text = nil;
-		
+
 		if (storeDetails.hasNewRatings)
 		{
 			[cell.ratingCountLabel setTextColor:[UIColor colorWithRed:142.0/255.0 green:217.0/255.0 blue:255.0/255.0 alpha:1.0]];
@@ -425,11 +416,12 @@
 	}
 	else
 	{
+		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.countView.count = 0;
 		cell.ratingView.rating = 0.0;
 		[cell.countView setLozengeColor:nil];
 	}
-	
+
     return cell;
 }
 

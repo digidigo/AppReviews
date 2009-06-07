@@ -7,7 +7,7 @@
 @interface FMResultSet : NSObject {
     FMDatabase *parentDB;
     FMStatement *statement;
-    
+
     NSString *query;
     NSMutableDictionary *columnNameToIndexMap;
     BOOL columnNamesSetup;

@@ -61,7 +61,7 @@ static CGFloat sDefaultCountAlpha = 1.0;
     if (count > 0)
 	{
 		CGContextRef context = UIGraphicsGetCurrentContext();
-		
+
         CGRect myRect = self.bounds;
 
 		NSString *countString = [NSString stringWithFormat:@"%d", self.count];
@@ -77,7 +77,7 @@ static CGFloat sDefaultCountAlpha = 1.0;
 		CGContextAddLineToPoint(context, myRect.origin.x + myRect.size.width - radius, myRect.origin.y + radius);
 		CGContextStrokePath(context);
 		CGContextRestoreGState(context);
-		
+
 		// Draw text.
 		CGContextSetRGBFillColor(context, countRed, countGreen, countBlue, countAlpha);
 		CGRect textRect = myRect;
@@ -106,7 +106,7 @@ static CGFloat sDefaultCountAlpha = 1.0;
 	{
         return CGRectZero;
     }
-    
+
 	// Calculate size of count.
 	NSString *countString = [NSString stringWithFormat:@"%d", theCount];
 	CGSize countSize = [countString sizeWithFont:[UIFont boldSystemFontOfSize:theFontSize]];
@@ -116,14 +116,14 @@ static CGFloat sDefaultCountAlpha = 1.0;
     countWidth += (2 * radius-6.0);
     if (countWidth < kPSCounterMinWidth)
         countWidth = kPSCounterMinWidth;
-    
+
 	// Calculate frame of count within the parent cell.
     CGRect result;
     result.origin.x = 0;
     result.origin.y = 0;
     result.size.width = countWidth;
 	result.size.height = totalHeight;
-    
+
     return result;
 }
 
@@ -189,7 +189,7 @@ static CGFloat sDefaultCountAlpha = 1.0;
 			const CGFloat *components = CGColorGetComponents(colorRef);
 			CGFloat all = components[0];
 			CGFloat alpha = components[1];
-			
+
 			[self setLozengeRed:all green:all blue:all alpha:alpha];
 		}
 		else
@@ -224,7 +224,7 @@ static CGFloat sDefaultCountAlpha = 1.0;
 			const CGFloat *components = CGColorGetComponents(colorRef);
 			CGFloat all = components[0];
 			CGFloat alpha = components[1];
-			
+
 			[self setCountRed:all green:all blue:all alpha:alpha];
 		}
 		else

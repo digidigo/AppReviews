@@ -65,7 +65,7 @@
 	{
         primaryKey = pk;
         self.database = db;
-		
+
 		FMResultSet *row = [db executeQuery:@"SELECT app_identifier, store_identifier, review_index, rating FROM application_review WHERE id=?", [NSNumber numberWithInteger:pk]];
 		if (row && [row next])
 		{
@@ -93,7 +93,7 @@
 - (void)insertIntoDatabase:(FMDatabase *)db
 {
 	self.database = db;
-	
+
 	if ([db executeUpdate:@"INSERT INTO application_review (app_identifier, store_identifier, review_index, rating, reviewer, summary, detail, app_version, review_date) VALUES (?,?,?,?,?,?,?,?,?)",
 		 appIdentifier,
 		 storeIdentifier,
@@ -113,7 +113,7 @@
 		PSLogError(message);
         NSAssert(0, message);
 	}
-	
+
     // All data for the application is already in memory, but has not been written to the database.
     // Mark as hydrated to prevent empty/default values from overwriting what is in memory.
     hydrated = YES;
@@ -140,7 +140,7 @@
 			PSLogError(message);
 			NSAssert(0, message);
 		}
-		
+
         // Update the object state with respect to unwritten changes.
         dirty = NO;
     }
@@ -152,7 +152,7 @@
     // Check if action is necessary.
     if (hydrated)
 		return;
-	
+
 	FMResultSet *row = [database executeQuery:@"SELECT reviewer, summary, detail, app_version, review_date FROM application_review WHERE id=?", [NSNumber numberWithInteger:primaryKey]];
 	if (row && [row next])
 	{
@@ -172,7 +172,7 @@
 		self.reviewDate = nil;
 	}
 	[row close];
-	
+
     // Update object state with respect to hydration.
     hydrated = YES;
 }
@@ -182,8 +182,8 @@
 {
 	// Write any changes to the database.
 	[self save];
-	
-    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them 
+
+    // Release member variables to reclaim memory. Set to nil to avoid over-releasing them
     // if dehydrate is called multiple times.
 	[reviewer release];
 	reviewer = nil;
@@ -218,15 +218,15 @@
 // logic or steps for synchronization. The "set" accessors attempt to verify that the new value is definitely
 // different from the old value, to minimize the amount of work done. Any "set" which actually results in changing
 // data will mark the object as "dirty" - i.e., possessing data that has not been written to the database.
-// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers, 
-// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate 
+// All the "set" accessors copy data, rather than retain it. This is common for value objects - strings, numbers,
+// dates, data buffers, etc. This ensures that subsequent changes to either the original or the copy don't violate
 // the encapsulation of the owning object.
 
 - (void)setAppIdentifier:(NSString *)aString
 {
 	if ((!appIdentifier && !aString) || (appIdentifier && aString && [appIdentifier isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appIdentifier release];
 	appIdentifier = [aString copy];
@@ -236,7 +236,7 @@
 {
 	if ((!storeIdentifier && !aString) || (storeIdentifier && aString && [storeIdentifier isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[storeIdentifier release];
 	storeIdentifier = [aString copy];
@@ -246,7 +246,7 @@
 {
 	if (index == anInt)
 		return;
-	
+
 	dirty = YES;
 	index = anInt;
 }
@@ -261,7 +261,7 @@
 {
 	if ((!reviewer && !aString) || (reviewer && aString && [reviewer isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[reviewer release];
 	reviewer = [aString copy];
@@ -271,7 +271,7 @@
 {
 	if ((!summary && !aString) || (summary && aString && [summary isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[summary release];
 	summary = [aString copy];
@@ -281,7 +281,7 @@
 {
 	if ((!detail && !aString) || (detail && aString && [detail isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[detail release];
 	detail = [aString copy];
@@ -291,7 +291,7 @@
 {
 	if ((!appVersion && !aString) || (appVersion && aString && [appVersion isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[appVersion release];
 	appVersion = [aString copy];
@@ -301,7 +301,7 @@
 {
 	if ((!reviewDate && !aString) || (reviewDate && aString && [reviewDate isEqualToString:aString]))
 		return;
-	
+
 	dirty = YES;
 	[reviewDate release];
 	reviewDate = [aString copy];

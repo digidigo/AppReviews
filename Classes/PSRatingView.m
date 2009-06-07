@@ -20,7 +20,7 @@ static UIImage *sHalfStarImage = nil;
 + (void)initialize
 {
 	NSString *path = nil;
-	
+
 	path = [[NSBundle mainBundle] pathForResource:@"star" ofType:@"png"];
 	NSAssert(path, @"Cannot find resource star.png");
 	sStarImage = [[UIImage imageWithContentsOfFile:path] retain];
@@ -39,7 +39,7 @@ static UIImage *sHalfStarImage = nil;
 		self.userInteractionEnabled = NO;
 		self.opaque = NO;
 		self.clearsContextBeforeDrawing = YES;
-		
+
 		rating = 0;
     }
     return self;
@@ -53,7 +53,7 @@ static UIImage *sHalfStarImage = nil;
 		rating = 0.0;
 	else
 		rating = inRating;
-	
+
 	[self setNeedsDisplay];
 }
 
@@ -69,7 +69,7 @@ static UIImage *sHalfStarImage = nil;
 		xPos = (i * (kStarWidth + kStarMargin));
 		[sStarImage drawAtPoint:CGPointMake(xPos, yPos)];
 	}
-	
+
 	// Draw a half-star on the right if necessary.
 	if (halfStar)
 	{
