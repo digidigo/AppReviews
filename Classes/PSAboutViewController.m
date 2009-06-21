@@ -168,17 +168,17 @@ typedef enum
 	NSString *iconFile = nil;
 
 	//UIPrerenderedIcon
-	CFBooleanRef prerenderedFlag = (CFBooleanRef) [[self infoValueForKey:@"UIPrerenderedIcon"] retain];
+	CFBooleanRef prerenderedFlag = (CFBooleanRef) [self infoValueForKey:@"UIPrerenderedIcon"];
 	if ((prerenderedFlag == nil) || (CFBooleanGetValue(prerenderedFlag) == false))
 	{
 		// App has a plain icon, look for a specific icon for the About view.
-		iconFile = [[self infoValueForKey:@"PSAboutIconFile"] retain];
+		iconFile = [self infoValueForKey:@"PSAboutIconFile"];
 	}
 
 	if (iconFile == nil)
 	{
 		// Use default app icon if nothing better found.
-		iconFile = [[self infoValueForKey:@"CFBundleIconFile"] retain];
+		iconFile = [self infoValueForKey:@"CFBundleIconFile"];
 	}
 
 	NSString *iconExt = [iconFile pathExtension];

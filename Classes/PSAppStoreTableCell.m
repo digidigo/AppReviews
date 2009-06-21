@@ -16,9 +16,9 @@
 
 @synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self = [super initWithFrame:frame reuseIdentifier:(NSString *)reuseIdentifier])
+    if (self = [super initWithStyle:style reuseIdentifier:(NSString *)reuseIdentifier])
 	{
         // Initialization code here.
 		nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];

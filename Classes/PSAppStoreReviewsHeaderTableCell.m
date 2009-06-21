@@ -41,12 +41,11 @@ static CGGradientRef sGradient = NULL;
 	CGColorSpaceRelease(myColorspace);
 }
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
 #define TITLE_FONT_SIZE 24.0
 #define DETAIL_FONT_SIZE 14.0
-
-    if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier])
+    if (self = [super initWithStyle:style reuseIdentifier:(NSString *)reuseIdentifier])
 	{
         // Initialization code
 		self.clearsContextBeforeDrawing = YES;

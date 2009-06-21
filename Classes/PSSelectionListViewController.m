@@ -34,12 +34,6 @@
     if (self = [super initWithStyle:style])
 	{
 		self.returnTarget = nil;
-		self.cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButton:)] autorelease];
-		self.saveButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButton:)] autorelease];
-		self.navigationItem.hidesBackButton = YES;
-		self.navigationItem.leftBarButtonItem = self.cancelButton;
-		self.navigationItem.rightBarButtonItem = self.saveButton;
-
 		self.allowMultipleSelections = NO;
 		self.minimumRequiredSelections = 1;
 		self.maximumRequiredSelections = INT32_MAX;
@@ -71,6 +65,28 @@
 	[listValues release];
 	[listSelections release];
     [super dealloc];
+}
+
+- (void)viewDidLoad
+{
+	PSLogDebug(@"");
+	[super viewDidLoad];
+
+	self.cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButton:)] autorelease];
+	self.saveButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveButton:)] autorelease];
+	self.navigationItem.hidesBackButton = YES;
+	self.navigationItem.leftBarButtonItem = self.cancelButton;
+	self.navigationItem.rightBarButtonItem = self.saveButton;
+}
+
+- (void)viewDidUnload
+{
+	PSLogDebug(@"");
+	[super viewDidUnload];
+
+	// Release IBOutlets and items which can be recreated in viewDidLoad.
+	self.cancelButton = nil;
+	self.saveButton = nil;
 }
 
 /**

@@ -24,12 +24,14 @@ typedef enum
 	DetailsImportStateDownloadFailed,
 	DetailsImportStateParsing,
 	DetailsImportStateParseFailed,
+	DetailsImportStateUnavailable,
 	DetailsImportStateComplete
 } DetailsImportState;
 
 
 typedef enum
 {
+	DetailsCheckingAvailability,
 	DetailsSeekingAppGenre,
 	DetailsSeekingCategory,
 	DetailsSeekingReleased,

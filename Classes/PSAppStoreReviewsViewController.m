@@ -185,7 +185,7 @@ static UIColor *sAlternateRowColor = nil;
 		PSAppStoreReviewsHeaderTableCell *headerCell = (PSAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
 		if (headerCell == nil)
 		{
-			headerCell = [[[PSAppStoreReviewsHeaderTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:HeaderCellIdentifier] autorelease];
+			headerCell = [[[PSAppStoreReviewsHeaderTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier] autorelease];
 		}
 		// Configure the cell
 		headerCell.appDetails = self.appStoreDetails;
@@ -198,7 +198,7 @@ static UIColor *sAlternateRowColor = nil;
 		PSAppStoreReviewTableCell *reviewCell = (PSAppStoreReviewTableCell *) [tableView dequeueReusableCellWithIdentifier:ReviewCellIdentifier];
 		if (reviewCell == nil)
 		{
-			reviewCell = [[[PSAppStoreReviewTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:ReviewCellIdentifier] autorelease];
+			reviewCell = [[[PSAppStoreReviewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReviewCellIdentifier] autorelease];
 		}
 		// Configure the cell
 		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];

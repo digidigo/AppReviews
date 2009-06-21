@@ -174,7 +174,7 @@
 	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:downloadFileContents];
 	xmlParser.delegate = self;
 	xmlParser.shouldResolveExternalEntities = NO;
-	xmlState = DetailsSeekingAppGenre;
+	xmlState = DetailsCheckingAvailability;
 	[currentString setString:@""];
 
 	// Parse XML content.
@@ -188,7 +188,8 @@
 	else
 	{
 		PSLog(@"Failed to parse XML document");
-		self.importState = DetailsImportStateParseFailed;
+		if (self.importState == DetailsImportStateParsing)
+			self.importState = DetailsImportStateParseFailed;
 	}
 
 	[self downloadEnded];
@@ -243,7 +244,29 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
 	NSString *elementNameLower = [elementName lowercaseString];
-	if ([elementNameLower isEqualToString:@"b"] || [elementNameLower isEqualToString:@"setfontstyle"] || [elementNameLower isEqualToString:@"pathelement"])
+	if ([elementNameLower isEqualToString:@"document"])
+	{
+		switch (xmlState)
+		{
+			case DetailsCheckingAvailability:
+			{
+				id browsePath = [attributeDict valueForKey:@"browsePath"];
+				if (browsePath != nil)
+				{
+					// App seems to be available, continue parsing file.
+					xmlState = DetailsSeekingAppGenre;
+				}
+				else
+				{
+					// App seems to be unavailable, stop parsing file.
+					self.importState = DetailsImportStateUnavailable;
+					[parser abortParsing];
+				}
+				break;
+			}
+		}
+	}
+	else if ([elementNameLower isEqualToString:@"b"] || [elementNameLower isEqualToString:@"setfontstyle"] || [elementNameLower isEqualToString:@"pathelement"])
 	{
 		[currentString setString:@""];
 		switch (xmlState)
@@ -732,14 +755,14 @@
 			case DetailsReadingCustomerRatings:
 				// Skip over the "Rated X for:" message.
 				CFStringTrimWhitespace((CFMutableStringRef)currentString);
-				if ([currentString hasSuffix:@":"])
-					xmlState = DetailsSeekingCustomerRatings;
-				else
+				if ([currentString isEqualToString:@"CUSTOMER RATINGS"])
 				{
 					[currentString setString:@""];
 					xmlState = DetailsSeekingCurrentRatingsDisclosure;
 					skippingCollapsedDisclosure = NO;
 				}
+				else
+					xmlState = DetailsSeekingCustomerRatings;
 				break;
 			case DetailsReadingCurrentRatingsNotEnoughReceived:
 			{

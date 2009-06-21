@@ -34,6 +34,7 @@
 @property (retain) PSProgressHUD *progressHUD;
 @property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
 @property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
+@property (nonatomic, retain) NSMutableArray *unavailableStoreNames;
 @property (nonatomic, retain) NSMutableArray *failedStoreNames;
 
 - (void)updateDisplayedStores;
@@ -43,7 +44,7 @@
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, failedStoreNames;
+@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -71,6 +72,7 @@
 
 		self.storeIdsProcessed = [NSMutableArray array];
 		self.storeIdsRemaining = [NSMutableArray array];
+		self.unavailableStoreNames = [NSMutableArray array];
 		self.failedStoreNames = [NSMutableArray array];
 		self.enabledStores = [NSMutableArray array];
 		self.displayedStores = [NSMutableArray array];
@@ -106,6 +108,7 @@
 	[progressHUD release];
 	[storeIdsProcessed release];
 	[storeIdsRemaining release];
+	[unavailableStoreNames release];
 	[failedStoreNames release];
 	[enabledStores release];
 	[displayedStores release];
@@ -148,6 +151,7 @@
 	// Build array of all storeIds for processing.
 	[storeIdsProcessed removeAllObjects];
 	[storeIdsRemaining removeAllObjects];
+	[unavailableStoreNames removeAllObjects];
 	[failedStoreNames removeAllObjects];
 	for (PSAppStore *appStore in enabledStores)
 	{
@@ -207,7 +211,13 @@
 		// See if the last store failed.
 		if ([storeIdsProcessed count] > 0)
 		{
-			if (!((detailsImporter.importState == DetailsImportStateComplete) && (reviewsImporter.importState == ReviewsImportStateComplete)))
+			if (detailsImporter.importState == DetailsImportStateUnavailable)
+			{
+				// App is not available in this store.
+				PSAppStore *failedStore = [[PSAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
+				[unavailableStoreNames addObject:failedStore.name];
+			}
+			else if (!((detailsImporter.importState == DetailsImportStateComplete) && (reviewsImporter.importState == ReviewsImportStateComplete)))
 			{
 				// This store failed to download/parse.
 				PSAppStore *failedStore = [[PSAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
@@ -241,12 +251,28 @@
 			// Check to see if there were errors downloading.
 			if ([storeIdsProcessed count] > 0)
 			{
-				if ([failedStoreNames count] > 0)
+				if (([unavailableStoreNames count] + [failedStoreNames count]) > 0)
 				{
-					// We have some failed stores.
-					NSString *msg = @"AppCritics could not fetch reviews from any App Stores. Please check network connection before trying again.";
-					if ([failedStoreNames count] != [enabledStores count])
-						msg = [NSString stringWithFormat:@"AppCritics could not fetch reviews from the following stores:\n%@\nPlease check network connection before trying again.", [failedStoreNames componentsJoinedByString:@"\n"]];
+					// TODO: We have some unavailable/failed stores.
+					NSString *msg = @"An error occurred whilst downloading reviews from some contries.";
+					NSString *thisAppName = @"This application";
+
+					if (appStoreApplication.name)
+						thisAppName = appStoreApplication.name;
+
+					if ([unavailableStoreNames count] == [enabledStores count])
+						msg = [NSString stringWithFormat:@"%@ is not available in any App Stores.", thisAppName];
+					else if ([failedStoreNames count] == [enabledStores count])
+						msg = @"AppCritics could not fetch reviews from any App Stores. Please check network connection before trying again.";
+					else
+					{
+						msg = @"";
+						if ([failedStoreNames count] > 0)
+							msg = [NSString stringWithFormat:@"AppCritics could not fetch reviews from the following stores:\n%@\nPlease check network connection before trying again.", [failedStoreNames componentsJoinedByString:@"\n"]];
+
+						if ([unavailableStoreNames count] > 0)
+							msg = [msg stringByAppendingString:[NSString stringWithFormat:@"%@%@ is not available in the following stores:\n%@", ([msg length]>0 ? @"\n\n" : @""), thisAppName, [unavailableStoreNames componentsJoinedByString:@"\n"]]];
+					}
 
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:msg delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 					[alert show];
@@ -379,7 +405,7 @@
     PSAppStoreTableCell *cell = (PSAppStoreTableCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[PSAppStoreTableCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[PSAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];

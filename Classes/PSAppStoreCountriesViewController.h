@@ -28,6 +28,7 @@
 	PSProgressHUD *progressHUD;
 	NSMutableArray *storeIdsProcessed;
 	NSMutableArray *storeIdsRemaining;
+	NSMutableArray *unavailableStoreNames;
 	NSMutableArray *failedStoreNames;
 }
 
