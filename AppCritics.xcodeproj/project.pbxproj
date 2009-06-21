@@ -48,6 +48,7 @@
 		FBB454100ED084B500A04B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4540F0ED084B500A04B1F /* Default.png */; };
 		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
 		FBBC91D30F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */; };
+		FBC6278F0FEEE05A002B6DD5 /* house.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC6278E0FEEE05A002B6DD5 /* house.png */; };
 		FBCDDE410F44CEA7003756D4 /* 143441.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE030F44CEA7003756D4 /* 143441.png */; };
 		FBCDDE420F44CEA7003756D4 /* 143442.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE040F44CEA7003756D4 /* 143442.png */; };
 		FBCDDE430F44CEA7003756D4 /* 143443.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE050F44CEA7003756D4 /* 143443.png */; };
@@ -208,6 +209,7 @@
 		FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSelectionListViewController.m; sourceTree = "<group>"; };
 		FBBC91D10F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationReviewsImporter.h; sourceTree = "<group>"; };
 		FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationReviewsImporter.m; sourceTree = "<group>"; };
+		FBC6278E0FEEE05A002B6DD5 /* house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = house.png; path = Resources/house.png; sourceTree = "<group>"; };
 		FBCDDE030F44CEA7003756D4 /* 143441.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143441.png; path = Resources/143441.png; sourceTree = "<group>"; };
 		FBCDDE040F44CEA7003756D4 /* 143442.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143442.png; path = Resources/143442.png; sourceTree = "<group>"; };
 		FBCDDE050F44CEA7003756D4 /* 143443.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143443.png; path = Resources/143443.png; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FBC6278E0FEEE05A002B6DD5 /* house.png */,
 				FBCDDE030F44CEA7003756D4 /* 143441.png */,
 				FBCDDE040F44CEA7003756D4 /* 143442.png */,
 				FBCDDE050F44CEA7003756D4 /* 143443.png */,
@@ -684,6 +687,7 @@
 				FBCDDE7D0F44CEA7003756D4 /* 143506.png in Resources */,
 				FBCDDE7E0F44CEA7003756D4 /* 143507.png in Resources */,
 				FB790A620F6B1F1100E1593F /* AppCritics.sql in Resources */,
+				FBC6278F0FEEE05A002B6DD5 /* house.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

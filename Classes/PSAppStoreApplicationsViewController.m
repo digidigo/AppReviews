@@ -153,7 +153,7 @@
 	// Lazily create countries view controller.
 	if (self.appStoreCountriesViewController == nil)
 	{
-		PSAppStoreCountriesViewController *viewController = [[PSAppStoreCountriesViewController alloc] initWithStyle:UITableViewStylePlain];
+		PSAppStoreCountriesViewController *viewController = [[PSAppStoreCountriesViewController alloc] initWithNibName:nil bundle:nil];
 		self.appStoreCountriesViewController = viewController;
 		[viewController release];
 	}

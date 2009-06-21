@@ -44,12 +44,12 @@
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
+@synthesize tableView, toolbar, appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
     // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    if (self = [super initWithStyle:style])
+    if (self = [super initWithNibName:nibName bundle:nibBundle])
 	{
 		self.title = @"Countries";
 		self.appStoreReviewsViewController = nil;
@@ -80,6 +80,61 @@
     return self;
 }
 
+- (void)loadView
+{
+	UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+	contentView.autoresizesSubviews = YES;
+	contentView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+	contentView.backgroundColor = [UIColor whiteColor];
+	self.view = contentView;
+	[contentView release];
+}
+
+- (void)viewDidLoad
+{
+	PSLogDebug(@"");
+	[super viewDidLoad];
+
+	CGRect mainViewBounds = self.view.bounds;
+
+	// create the UIToolbar at the bottom of the view controller
+	//
+	self.toolbar = [[[UIToolbar alloc] initWithFrame:CGRectZero] autorelease];
+	self.toolbar.barStyle = UIBarStyleDefault;
+
+	// size up the toolbar and set its frame
+	[self.toolbar sizeToFit];
+	CGFloat toolbarHeight = [self.toolbar frame].size.height;
+	[self.toolbar setFrame:CGRectMake(CGRectGetMinX(mainViewBounds),
+								 CGRectGetMinY(mainViewBounds) + CGRectGetHeight(mainViewBounds) - (toolbarHeight * 2.0) + 2.0,
+								 CGRectGetWidth(mainViewBounds),
+								 toolbarHeight)];
+
+
+	// Create the tableView.
+	self.tableView = [[[UITableView alloc] initWithFrame:CGRectZero] autorelease];
+	[self.tableView setDelegate:self];
+	[self.tableView setDataSource:self];
+	[self.tableView setFrame:CGRectMake(CGRectGetMinX(mainViewBounds), CGRectGetMinY(mainViewBounds), CGRectGetWidth(mainViewBounds), CGRectGetHeight(mainViewBounds) - toolbarHeight)];
+
+	UIBarButtonItem *visitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"house.png"] style:UIBarButtonItemStylePlain target:self action:@selector(visit:)];
+	NSArray *items = [NSArray arrayWithObject:visitButton];
+	[visitButton release];
+	[self.toolbar setItems:items];
+
+	[self.view addSubview:self.tableView];
+	[self.view addSubview:self.toolbar];
+}
+
+- (void)viewDidUnload
+{
+	PSLogDebug(@"");
+	[super viewDidUnload];
+
+	self.tableView = nil;
+	self.toolbar = nil;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -100,6 +155,8 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[tableView release];
+	[toolbar release];
 	[appStoreApplication release];
 	[updateButton release];
 	[appStoreReviewsViewController release];
@@ -253,7 +310,7 @@
 			{
 				if (([unavailableStoreNames count] + [failedStoreNames count]) > 0)
 				{
-					// TODO: We have some unavailable/failed stores.
+					// We have some unavailable/failed stores.
 					NSString *msg = @"An error occurred whilst downloading reviews from some contries.";
 					NSString *thisAppName = @"This application";
 
@@ -356,6 +413,44 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)visit:(id)sender
+{
+	NSUInteger cancelButtonIndex = 1;
+	NSString *sheetTitle = (appStoreApplication.name ? appStoreApplication.name : appStoreApplication.appIdentifier);
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:sheetTitle delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"Visit App Store", nil];
+
+	[appStoreApplication hydrate];
+	NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
+	if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
+	{
+		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+		if (store)
+		{
+			PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+			if (details)
+			{
+				[details hydrate];
+				if (details.companyURL && [details.companyURL length] > 0)
+				{
+					[sheet addButtonWithTitle:@"Visit Company URL"];
+					cancelButtonIndex++;
+				}
+
+				if (details.supportURL && [details.supportURL length] > 0)
+				{
+					[sheet addButtonWithTitle:@"Visit Support URL"];
+					cancelButtonIndex++;
+				}
+			}
+		}
+	}
+
+	[sheet addButtonWithTitle:@"Cancel"];
+	sheet.cancelButtonIndex = cancelButtonIndex;
+	[sheet showFromToolbar:self.toolbar];
+	[sheet release];
+}
+
 
 #pragma mark -
 #pragma mark UITableViewDelegate methods
@@ -402,7 +497,7 @@
 {
     static NSString *CellIdentifier = @"AppStoreCell";
 
-    PSAppStoreTableCell *cell = (PSAppStoreTableCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    PSAppStoreTableCell *cell = (PSAppStoreTableCell *) [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
         cell = [[[PSAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
@@ -449,6 +544,66 @@
 	}
 
     return cell;
+}
+
+
+#pragma mark -
+#pragma mark UIActionSheetDelegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	// Deselect table row.
+	NSIndexPath *tableSelection = [self.tableView indexPathForSelectedRow];
+	[self.tableView deselectRowAtIndexPath:tableSelection animated:NO];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	PSLogDebug(@"Clicked on button %d: %@", buttonIndex, [actionSheet buttonTitleAtIndex:buttonIndex]);
+
+	if (buttonIndex != actionSheet.cancelButtonIndex)
+	{
+		NSURL *targetURL = nil;
+		[appStoreApplication hydrate];
+
+		if (buttonIndex == 0)
+		{
+			// Build URL to app store.
+			targetURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=%@", appStoreApplication.appIdentifier]];
+		}
+		else
+		{
+			// Build URL to company/support site.
+			NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
+			if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
+			{
+				PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+				if (store)
+				{
+					PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+					if (details)
+					{
+						NSMutableArray *URLs = [NSMutableArray array];
+						[details hydrate];
+						if (details.companyURL && [details.companyURL length] > 0)
+							[URLs addObject:details.companyURL];
+
+						if (details.supportURL && [details.supportURL length] > 0)
+							[URLs addObject:details.supportURL];
+
+						NSInteger urlIndex = buttonIndex - 1;
+						if ((urlIndex >= 0) && (urlIndex < [URLs count]))
+						{
+							targetURL = [NSURL URLWithString:[URLs objectAtIndex:urlIndex]];
+						}
+					}
+				}
+			}
+		}
+
+		if (targetURL)
+			[[UIApplication sharedApplication] openURL:targetURL];
+	}
 }
 
 @end
