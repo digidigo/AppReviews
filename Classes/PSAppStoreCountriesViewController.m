@@ -44,7 +44,7 @@
 
 @implementation PSAppStoreCountriesViewController
 
-@synthesize tableView, toolbar, appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
+@synthesize appStoreApplication, enabledStores, displayedStores, updateButton, appStoreReviewsViewController, detailsImporter, reviewsImporter, progressHUD, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
@@ -80,50 +80,16 @@
     return self;
 }
 
-- (void)loadView
-{
-	UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-	contentView.autoresizesSubviews = YES;
-	contentView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-	contentView.backgroundColor = [UIColor whiteColor];
-	self.view = contentView;
-	[contentView release];
-}
-
 - (void)viewDidLoad
 {
 	PSLogDebug(@"");
 	[super viewDidLoad];
 
-	CGRect mainViewBounds = self.view.bounds;
-
-	// create the UIToolbar at the bottom of the view controller
-	//
-	self.toolbar = [[[UIToolbar alloc] initWithFrame:CGRectZero] autorelease];
-	self.toolbar.barStyle = UIBarStyleDefault;
-
-	// size up the toolbar and set its frame
-	[self.toolbar sizeToFit];
-	CGFloat toolbarHeight = [self.toolbar frame].size.height;
-	[self.toolbar setFrame:CGRectMake(CGRectGetMinX(mainViewBounds),
-								 CGRectGetMinY(mainViewBounds) + CGRectGetHeight(mainViewBounds) - (toolbarHeight * 2.0) + 2.0,
-								 CGRectGetWidth(mainViewBounds),
-								 toolbarHeight)];
-
-
-	// Create the tableView.
-	self.tableView = [[[UITableView alloc] initWithFrame:CGRectZero] autorelease];
-	[self.tableView setDelegate:self];
-	[self.tableView setDataSource:self];
-	[self.tableView setFrame:CGRectMake(CGRectGetMinX(mainViewBounds), CGRectGetMinY(mainViewBounds), CGRectGetWidth(mainViewBounds), CGRectGetHeight(mainViewBounds) - toolbarHeight)];
-
+	// Set the items for this view's toolbar.
 	UIBarButtonItem *visitButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"house.png"] style:UIBarButtonItemStylePlain target:self action:@selector(visit:)];
 	NSArray *items = [NSArray arrayWithObject:visitButton];
 	[visitButton release];
-	[self.toolbar setItems:items];
-
-	[self.view addSubview:self.tableView];
-	[self.view addSubview:self.toolbar];
+	self.toolbarItems = items;
 }
 
 - (void)viewDidUnload
@@ -131,8 +97,7 @@
 	PSLogDebug(@"");
 	[super viewDidUnload];
 
-	self.tableView = nil;
-	self.toolbar = nil;
+	self.toolbarItems = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,8 +120,6 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[tableView release];
-	[toolbar release];
 	[appStoreApplication release];
 	[updateButton release];
 	[appStoreReviewsViewController release];
@@ -402,6 +365,8 @@
 {
 	[super viewDidAppear:animated];
 
+	[self.navigationController setToolbarHidden:NO animated:animated];
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreDetailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreApplicationReviewsUpdatedNotification object:nil];
 }
@@ -409,6 +374,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+
+	[self.navigationController setToolbarHidden:YES animated:animated];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -447,7 +414,7 @@
 
 	[sheet addButtonWithTitle:@"Cancel"];
 	sheet.cancelButtonIndex = cancelButtonIndex;
-	[sheet showFromToolbar:self.toolbar];
+	[sheet showFromToolbar:[self.navigationController toolbar]];
 	[sheet release];
 }
 

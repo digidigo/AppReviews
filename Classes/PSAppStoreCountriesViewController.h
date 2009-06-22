@@ -14,11 +14,9 @@
 @class PSProgressHUD;
 @class PSAppStoreReviewsViewController;
 
-@interface PSAppStoreCountriesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate>
+@interface PSAppStoreCountriesViewController : UITableViewController <UIActionSheetDelegate>
 {
 	PSAppStoreApplication *appStoreApplication;
-	UITableView *tableView;
-	UIToolbar *toolbar;
 	UIBarButtonItem *updateButton;
 	NSMutableArray *enabledStores;
 	NSMutableArray *displayedStores;
@@ -34,8 +32,6 @@
 	NSMutableArray *failedStoreNames;
 }
 
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) UIToolbar *toolbar;
 @property (nonatomic, retain) PSAppStoreApplication *appStoreApplication;
 
 @end
