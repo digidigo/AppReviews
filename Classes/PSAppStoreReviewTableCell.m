@@ -35,7 +35,7 @@ static UIFont *sDetailFont = nil;
 #define MARGIN_X	5
 #define MARGIN_Y	5
 
-	CGFloat result = (4 * MARGIN_Y) + kRatingHeight;
+	CGFloat result = (3 * MARGIN_Y) + kRatingHeight;
 	CGRect screenBounds = [[UIScreen mainScreen] bounds];
 	CGFloat contentWidth = screenBounds.size.width;
 	contentWidth -= (2 * MARGIN_X);
@@ -46,8 +46,10 @@ static UIFont *sDetailFont = nil;
 	result += itemSize.height;
 
 	// Detail label.
-	itemSize = [inReview.detail sizeWithFont:sDetailFont constrainedToSize:CGSizeMake(contentWidth,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-	result += itemSize.height;
+	// UITextView seems to have an 8-pixel margin on left/right, so reduce effective width when calculating height.
+	itemSize = [inReview.detail sizeWithFont:sDetailFont constrainedToSize:CGSizeMake(screenBounds.size.width-(2*8.0),CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+	NSUInteger numLines = (NSUInteger) ceilf(itemSize.height / sDetailFont.pointSize);
+	result += (sDetailFont.pointSize * (numLines + 1));
 
 	return result;
 }
@@ -81,15 +83,15 @@ static UIFont *sDetailFont = nil;
 		authorLabel.lineBreakMode = UILineBreakModeTailTruncation;
 		[self.contentView addSubview:authorLabel];
 
-		detailLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		detailLabel.backgroundColor = [UIColor clearColor];
+		detailLabel = [[UITextView alloc] initWithFrame:CGRectZero];
+		detailLabel.editable = NO;
+		detailLabel.dataDetectorTypes = UIDataDetectorTypeAll;
+		detailLabel.scrollEnabled = NO;
+		detailLabel.backgroundColor = [UIColor whiteColor];
 		detailLabel.opaque = YES;
 		detailLabel.textColor = [UIColor blackColor];
-		detailLabel.highlightedTextColor = [UIColor whiteColor];
 		detailLabel.font = sDetailFont;
 		detailLabel.textAlignment = UITextAlignmentLeft;
-		detailLabel.lineBreakMode = UILineBreakModeWordWrap;
-		detailLabel.numberOfLines = 0;
 		[self.contentView addSubview:detailLabel];
 
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
@@ -175,12 +177,13 @@ static UIFont *sDetailFont = nil;
 	authorLabel.frame = frame;
 
 	// Position detail label.
-	posX = boundsX + MARGIN_X;
-	posY += (itemHeight + MARGIN_Y);
-	itemWidth = contentRect.size.width-(MARGIN_X + MARGIN_X);
-	itemSize = [detailLabel.text sizeWithFont:detailLabel.font constrainedToSize:CGSizeMake(itemWidth,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-	itemHeight = itemSize.height;
-	detailLabel.numberOfLines = (int)itemHeight / (int)detailLabel.font.pointSize;
+	posX = boundsX;
+	posY += itemHeight;
+	itemWidth = contentRect.size.width;
+	// UITextView seems to have an 8-pixel margin on left/right, so reduce effective width when calculating height.
+	itemSize = [detailLabel.text sizeWithFont:detailLabel.font constrainedToSize:CGSizeMake(itemWidth-(2*8.0),CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+	NSUInteger numLines = (NSUInteger) ceilf(itemSize.height / detailLabel.font.pointSize);
+	itemHeight = (detailLabel.font.pointSize * (numLines + 1));
 	frame = CGRectMake(posX, posY, itemWidth, itemHeight);
 	detailLabel.frame = frame;
 }

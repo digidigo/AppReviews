@@ -210,11 +210,13 @@ static UIColor *sAlternateRowColor = nil;
 		{
 			// Even row.
 			reviewCell.contentView.backgroundColor = sPrimaryRowColor;
+			reviewCell.detailLabel.backgroundColor = sPrimaryRowColor;
 		}
 		else
 		{
 			// Even row.
 			reviewCell.contentView.backgroundColor = sAlternateRowColor;
+			reviewCell.detailLabel.backgroundColor = sAlternateRowColor;
 		}
 		cell = reviewCell;
 	}

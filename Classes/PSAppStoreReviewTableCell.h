@@ -17,14 +17,14 @@
 {
 	UILabel *summaryLabel;
 	UILabel *authorLabel;
-	UILabel *detailLabel;
+	UITextView *detailLabel;
 	PSRatingView *ratingView;
 	PSAppStoreApplicationReview *review;
 }
 
 @property (nonatomic, retain) UILabel *summaryLabel;
 @property (nonatomic, retain) UILabel *authorLabel;
-@property (nonatomic, retain) UILabel *detailLabel;
+@property (nonatomic, retain) UITextView *detailLabel;
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) PSAppStoreApplicationReview *review;
 
