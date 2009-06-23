@@ -182,7 +182,7 @@
 	{
 		PSLog(@"Successfully parsed XML document");
 		self.lastUpdated = [NSDate date];
-		self.lastSortOrder = (NSUInteger) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+		self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 		self.importState = DetailsImportStateComplete;
 	}
 	else
@@ -664,7 +664,7 @@
 			{
 				if ([elementNameLower isEqualToString:@"pathelement"])
 				{
-					GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@".*/viewGenre[?]id=([0-9][0-9][0-9][0-9]+).*"];
+					GTMRegex *regex = [GTMRegex regexWithPattern:@".*/viewGenre[?]id=([0-9][0-9][0-9][0-9]+).*"];
 					NSArray *substrings = [regex subPatternsOfString:currentString];
 					if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 					{
@@ -691,7 +691,7 @@
 			{
 				[currentString replaceOccurrencesOfString:@"\n" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
 				[currentString replaceOccurrencesOfString:@"\t" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^[ ]*([^ ].*)[ ]{2,}([^ ].*[^ ]).*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^[ ]*([^ ].*)[ ]{2,}([^ ].*[^ ]).*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
@@ -699,7 +699,6 @@
 				}
 				else
 					self.released = @"";
-				[regex release];
 				[currentString setString:@""];
 				xmlState = DetailsSeekingCopyright;
 				break;
@@ -717,7 +716,7 @@
 			{
 				[currentString replaceOccurrencesOfString:@"\n" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
 				[currentString replaceOccurrencesOfString:@"\t" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^[ ]*([^ ][^:]*):[ ]*([^ ].*[^ ]).*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^[ ]*([^ ][^:]*):[ ]*([^ ].*[^ ]).*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
@@ -725,7 +724,6 @@
 				}
 				else
 					self.appVersion = @"";
-				[regex release];
 				[currentString setString:@""];
 				xmlState = DetailsSeekingSize;
 				break;
@@ -734,7 +732,7 @@
 			{
 				[currentString replaceOccurrencesOfString:@"\n" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
 				[currentString replaceOccurrencesOfString:@"\t" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^[ ]*([^ ].*[^ ]).*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^[ ]*([^ ].*[^ ]).*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]))
 				{
@@ -742,7 +740,6 @@
 				}
 				else
 					self.appSize = @"";
-				[regex release];
 				[currentString setString:@""];
 				xmlState = DetailsSeekingPrice;
 				break;
@@ -791,7 +788,7 @@
 				break;
 			case DetailsReadingCurrentRatingsCount:
 			{
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^([0-9]+)[^0-9].*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^([0-9]+)[^0-9].*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
@@ -873,7 +870,7 @@
 				break;
 			case DetailsReadingAllRatingsCount:
 			{
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^([0-9]+)[^0-9].*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^([0-9]+)[^0-9].*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
@@ -937,7 +934,7 @@
 			}
 			case DetailsReadingCurrentReviewsCount:
 			{
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^([0-9]+)[^0-9].*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^([0-9]+)[^0-9].*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
@@ -954,7 +951,7 @@
 			}
 			case DetailsReadingAllReviewsCount:
 			{
-				GTMRegex *regex = [[GTMRegex alloc] initWithPattern:@"^([0-9]+)[^0-9].*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^([0-9]+)[^0-9].*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{

@@ -206,7 +206,7 @@
 		// the contents of the the settings bundle.
 		NSString *bundle = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Settings.bundle/Root.plist"];
 		NSDictionary *plist = [[NSDictionary dictionaryWithContentsOfFile:bundle] objectForKey:@"PreferenceSpecifiers"];
-		NSMutableDictionary *defaults = [NSMutableDictionary new];
+		NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
 
 		// Loop through the bundle settings preferences and pull out the key/default pairs.
 		for (NSDictionary* setting in plist)

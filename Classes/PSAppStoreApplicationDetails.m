@@ -133,7 +133,7 @@
 			self.ratingCurrent = [row doubleForColumnIndex:17];
 			self.reviewCountAll = [row intForColumnIndex:18];
 			self.reviewCountCurrent = [row intForColumnIndex:19];
-			self.lastSortOrder = [row intForColumnIndex:20];
+			self.lastSortOrder = (PSReviewsSortOrder) [row intForColumnIndex:20];
 			self.lastUpdated = [row dateForColumnIndex:21];
 		}
 		else
