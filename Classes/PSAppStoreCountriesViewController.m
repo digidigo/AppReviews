@@ -98,6 +98,7 @@
 	[super viewDidUnload];
 
 	self.toolbarItems = nil;
+	self.appStoreReviewsViewController = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -115,6 +116,8 @@
 	}
 
 	[self updateDisplayedStores];
+
+	[self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 - (void)dealloc
@@ -365,8 +368,6 @@
 {
 	[super viewDidAppear:animated];
 
-	[self.navigationController setToolbarHidden:NO animated:animated];
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreDetailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreApplicationReviewsUpdatedNotification object:nil];
 }
@@ -427,7 +428,7 @@
 	// Display reviews for store.
 	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	PSAppStoreApplicationDetails *appStoreDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
-	// Lazily create countries view controller.
+	// Lazily create reviews view controller.
 	if (self.appStoreReviewsViewController == nil)
 	{
 		PSAppStoreReviewsViewController *viewController = [[PSAppStoreReviewsViewController alloc] initWithStyle:UITableViewStylePlain];

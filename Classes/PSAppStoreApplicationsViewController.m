@@ -73,6 +73,8 @@
 
 	// Store the editing state in case we get re-created after being unloaded.
 	self.savedEditingState = [NSNumber numberWithBool:self.editing];
+
+	self.appStoreCountriesViewController = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated

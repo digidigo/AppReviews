@@ -8,10 +8,12 @@
 
 #import "PSAppReviewsStore.h"
 #import "PSAppStoreReviewsViewController.h"
+#import "PSAppStoreDetailsViewController.h"
 #import "PSAppStoreApplicationDetails.h"
 #import "PSAppStoreApplicationReview.h"
 #import "PSAppStore.h"
 #import "PSAppStoreReviewsHeaderTableCell.h"
+#import "PSAppStoreReviewsSummaryTableCell.h"
 #import "PSAppStoreReviewTableCell.h"
 #import "PSRatingView.h"
 #import "PSLog.h"
@@ -23,9 +25,26 @@ static UIColor *sPrimaryRowColor = nil;
 static UIColor *sAlternateRowColor = nil;
 
 
+typedef enum
+{
+	PSAppStoreReviewsHeaderSection,
+	PSAppStoreReviewsCurrentSection,
+	PSAppStoreReviewsAllSection,
+	PSAppStoreReviewsReviewsSection,
+	PSAppStoreReviewsSectionCount
+} PSAppStoreReviewsSection;
+
+
+@interface PSAppStoreReviewsViewController ()
+
+@property (nonatomic, retain) PSAppStoreDetailsViewController *appStoreDetailsViewController;
+
+@end
+
+
 @implementation PSAppStoreReviewsViewController
 
-@synthesize appStoreDetails, userReviews;
+@synthesize appStoreDetails, userReviews, appStoreDetailsViewController;
 
 + (void)initialize
 {
@@ -41,6 +60,9 @@ static UIColor *sAlternateRowColor = nil;
 		self.title = @"Reviews";
 		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+		// Set the back button title.
+		self.navigationItem.backBarButtonItem =	[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"Back") style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+
 		self.appStoreDetails = nil;
 		self.userReviews = nil;
     }
@@ -51,7 +73,16 @@ static UIColor *sAlternateRowColor = nil;
 {
 	[appStoreDetails release];
 	[userReviews release];
+	[appStoreDetailsViewController release];
     [super dealloc];
+}
+
+- (void)viewDidUnload
+{
+	PSLogDebug(@"");
+	[super viewDidUnload];
+
+	self.appStoreDetailsViewController = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -125,19 +156,28 @@ static UIColor *sAlternateRowColor = nil;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	CGFloat result = 0.0;
-	if (indexPath.row == 0)
+
+	switch (indexPath.section)
 	{
-		// Header row.
-		result = 194.0;
-	}
-	else if (indexPath.row > 0)
-	{
-		NSUInteger reviewIndex = indexPath.row - 1;
-		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
-		if (review)
+		case PSAppStoreReviewsHeaderSection:
+			result = 88.0;
+			break;
+		case PSAppStoreReviewsCurrentSection:
+			result = 40.0;
+			break;
+		case PSAppStoreReviewsAllSection:
+			result = 40.0;
+			break;
+		case PSAppStoreReviewsReviewsSection:
 		{
-			[review hydrate];
-			result = [PSAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
+			NSUInteger reviewIndex = indexPath.row;
+			PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
+			if (review)
+			{
+				[review hydrate];
+				result = [PSAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
+			}
+			break;
 		}
 	}
 
@@ -145,9 +185,31 @@ static UIColor *sAlternateRowColor = nil;
 	return result;
 }
 
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return nil;
+	switch (indexPath.section)
+	{
+		case PSAppStoreReviewsCurrentSection:
+		case PSAppStoreReviewsAllSection:
+		{
+			PSAppStoreReviewsSummaryTableCell *summaryCell = (PSAppStoreReviewsSummaryTableCell *) [tableView cellForRowAtIndexPath:indexPath];
+			if (summaryCell.ratingsCount > 0)
+			{
+				// Lazily create details view controller.
+				if (self.appStoreDetailsViewController == nil)
+				{
+					PSAppStoreDetailsViewController *viewController = [[PSAppStoreDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+					self.appStoreDetailsViewController = viewController;
+					[viewController release];
+				}
+				self.appStoreDetailsViewController.appStoreDetails = appStoreDetails;
+				self.appStoreDetailsViewController.navigationItem.prompt = self.navigationItem.prompt;
+				self.appStoreDetailsViewController.useCurrentVersion = (indexPath.section == PSAppStoreReviewsCurrentSection);
+				[self.navigationController pushViewController:self.appStoreDetailsViewController animated:YES];
+			}
+			break;
+		}
+	}
 }
 
 
@@ -156,71 +218,161 @@ static UIColor *sAlternateRowColor = nil;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 	PSAppStoreReviewsSectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// Always have a header row.
-	NSInteger rowCount = 1;
+	switch (section)
+	{
+		case PSAppStoreReviewsHeaderSection:
+			// Always have a header row.
+			return 1;
+		case PSAppStoreReviewsCurrentSection:
+			// Always have a Current row.
+			return 1;
+		case PSAppStoreReviewsAllSection:
+			// Always have an All row.
+			return 1;
+		case PSAppStoreReviewsReviewsSection:
+			return [userReviews count];
+	}
 
-	if (userReviews)
-		rowCount += [userReviews count];
+	return 0;
+}
 
-    return rowCount;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	switch (section)
+	{
+		case PSAppStoreReviewsCurrentSection:
+			return @"Current Version";
+		case PSAppStoreReviewsAllSection:
+			return @"All Versions";
+		case PSAppStoreReviewsReviewsSection:
+			return @"Reviews";
+	}
+
+	return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *HeaderCellIdentifier = @"HeaderCell";
+    static NSString *SummaryCellIdentifier = @"SummaryCell";
     static NSString *ReviewCellIdentifier = @"ReviewCell";
 
 	UITableViewCell *cell = nil;
 
-	if (indexPath.row == 0)
+	switch (indexPath.section)
 	{
-		// Header row.
-
-		// Obtain the cell;
-		PSAppStoreReviewsHeaderTableCell *headerCell = (PSAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
-		if (headerCell == nil)
+		case PSAppStoreReviewsHeaderSection:
 		{
-			headerCell = [[[PSAppStoreReviewsHeaderTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier] autorelease];
-		}
-		// Configure the cell
-		headerCell.appDetails = self.appStoreDetails;
+			// Header row.
 
-		cell = headerCell;
+			// Obtain the cell.
+			PSAppStoreReviewsHeaderTableCell *headerCell = (PSAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
+			if (headerCell == nil)
+			{
+				headerCell = [[[PSAppStoreReviewsHeaderTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier] autorelease];
+			}
+
+			// Configure the cell.
+			headerCell.appDetails = self.appStoreDetails;
+			cell = headerCell;
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			break;
+		}
+		case PSAppStoreReviewsCurrentSection:
+		{
+			// Obtain the cell.
+			PSAppStoreReviewsSummaryTableCell *summaryCell = (PSAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
+			if (summaryCell == nil)
+			{
+				summaryCell = [[[PSAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
+			}
+
+			// Configure the cell.
+			summaryCell.ratingsCount = self.appStoreDetails.ratingCountCurrent;
+			summaryCell.reviewsCount = self.appStoreDetails.reviewCountCurrent;
+			summaryCell.averageRating = self.appStoreDetails.ratingCurrent;
+			[summaryCell setNeedsLayout];
+
+			cell = summaryCell;
+			if (summaryCell.ratingsCount > 0)
+			{
+				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			}
+			else
+			{
+				cell.accessoryType = UITableViewCellAccessoryNone;
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			}
+			break;
+		}
+		case PSAppStoreReviewsAllSection:
+		{
+			// Obtain the cell.
+			PSAppStoreReviewsSummaryTableCell *summaryCell = (PSAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
+			if (summaryCell == nil)
+			{
+				summaryCell = [[[PSAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
+			}
+			// Configure the cell.
+			summaryCell.averageRating = self.appStoreDetails.ratingAll;
+			summaryCell.ratingsCount = self.appStoreDetails.ratingCountAll;
+			summaryCell.reviewsCount = self.appStoreDetails.reviewCountAll;
+
+			cell = summaryCell;
+			if (summaryCell.ratingsCount > 0)
+			{
+				cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+				cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			}
+			else
+			{
+				cell.accessoryType = UITableViewCellAccessoryNone;
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			}
+			break;
+		}
+		case PSAppStoreReviewsReviewsSection:
+		{
+			NSUInteger reviewIndex = indexPath.row;
+			// Obtain the cell.
+			PSAppStoreReviewTableCell *reviewCell = (PSAppStoreReviewTableCell *) [tableView dequeueReusableCellWithIdentifier:ReviewCellIdentifier];
+			if (reviewCell == nil)
+			{
+				reviewCell = [[[PSAppStoreReviewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReviewCellIdentifier] autorelease];
+			}
+
+			// Configure the cell.
+			PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
+			[review hydrate];
+			reviewCell.review = review;
+
+			// Use alternate colours for rows.
+			if (reviewIndex % 2 == 0)
+			{
+				// Even row.
+				reviewCell.contentView.backgroundColor = sPrimaryRowColor;
+				reviewCell.detailLabel.backgroundColor = sPrimaryRowColor;
+			}
+			else
+			{
+				// Even row.
+				reviewCell.contentView.backgroundColor = sAlternateRowColor;
+				reviewCell.detailLabel.backgroundColor = sAlternateRowColor;
+			}
+			cell = reviewCell;
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			break;
+		}
 	}
-	else if (indexPath.row > 0)
-	{
-		NSUInteger reviewIndex = indexPath.row - 1;
-		PSAppStoreReviewTableCell *reviewCell = (PSAppStoreReviewTableCell *) [tableView dequeueReusableCellWithIdentifier:ReviewCellIdentifier];
-		if (reviewCell == nil)
-		{
-			reviewCell = [[[PSAppStoreReviewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReviewCellIdentifier] autorelease];
-		}
-		// Configure the cell
-		PSAppStoreApplicationReview *review = (PSAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
-		[review hydrate];
-		reviewCell.review = review;
 
-		// Use alternate colours for rows.
-		if (reviewIndex % 2 == 0)
-		{
-			// Even row.
-			reviewCell.contentView.backgroundColor = sPrimaryRowColor;
-			reviewCell.detailLabel.backgroundColor = sPrimaryRowColor;
-		}
-		else
-		{
-			// Even row.
-			reviewCell.contentView.backgroundColor = sAlternateRowColor;
-			reviewCell.detailLabel.backgroundColor = sAlternateRowColor;
-		}
-		cell = reviewCell;
-	}
-	cell.accessoryType = UITableViewCellAccessoryNone;
     return cell;
 }
 

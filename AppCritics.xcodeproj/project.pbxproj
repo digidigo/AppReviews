@@ -49,6 +49,10 @@
 		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
 		FBBC91D30F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */; };
 		FBC6278F0FEEE05A002B6DD5 /* house.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC6278E0FEEE05A002B6DD5 /* house.png */; };
+		FBC628F50FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC628F40FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.m */; };
+		FBC629A20FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A10FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m */; };
+		FBC629AA0FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A90FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m */; };
+		FBC62A680FF17182002B6DD5 /* PSHorizontalBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC62A670FF17182002B6DD5 /* PSHorizontalBarView.m */; };
 		FBCDDE410F44CEA7003756D4 /* 143441.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE030F44CEA7003756D4 /* 143441.png */; };
 		FBCDDE420F44CEA7003756D4 /* 143442.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE040F44CEA7003756D4 /* 143442.png */; };
 		FBCDDE430F44CEA7003756D4 /* 143443.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE050F44CEA7003756D4 /* 143443.png */; };
@@ -210,6 +214,14 @@
 		FBBC91D10F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreApplicationReviewsImporter.h; sourceTree = "<group>"; };
 		FBBC91D20F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreApplicationReviewsImporter.m; sourceTree = "<group>"; };
 		FBC6278E0FEEE05A002B6DD5 /* house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = house.png; path = Resources/house.png; sourceTree = "<group>"; };
+		FBC628F30FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreReviewsSummaryTableCell.h; sourceTree = "<group>"; };
+		FBC628F40FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreReviewsSummaryTableCell.m; sourceTree = "<group>"; };
+		FBC629A00FF0B239002B6DD5 /* PSAppStoreDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreDetailsViewController.h; sourceTree = "<group>"; };
+		FBC629A10FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreDetailsViewController.m; sourceTree = "<group>"; };
+		FBC629A80FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreRatingsCountTableCell.h; sourceTree = "<group>"; };
+		FBC629A90FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreRatingsCountTableCell.m; sourceTree = "<group>"; };
+		FBC62A660FF17182002B6DD5 /* PSHorizontalBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSHorizontalBarView.h; sourceTree = "<group>"; };
+		FBC62A670FF17182002B6DD5 /* PSHorizontalBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSHorizontalBarView.m; sourceTree = "<group>"; };
 		FBCDDE030F44CEA7003756D4 /* 143441.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143441.png; path = Resources/143441.png; sourceTree = "<group>"; };
 		FBCDDE040F44CEA7003756D4 /* 143442.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143442.png; path = Resources/143442.png; sourceTree = "<group>"; };
 		FBCDDE050F44CEA7003756D4 /* 143443.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143443.png; path = Resources/143443.png; sourceTree = "<group>"; };
@@ -538,12 +550,18 @@
 			children = (
 				FB81A5AE0EB087A90061B88B /* PSAppStoreTableCell.h */,
 				FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */,
+				FBC62A660FF17182002B6DD5 /* PSHorizontalBarView.h */,
+				FBC62A670FF17182002B6DD5 /* PSHorizontalBarView.m */,
 				FBB4539C0ED0348300A04B1F /* PSRatingView.h */,
 				FBB4539D0ED0348300A04B1F /* PSRatingView.m */,
 				FB445BFA0ED609FB00D89246 /* PSAppStoreReviewTableCell.h */,
 				FB445BFB0ED609FB00D89246 /* PSAppStoreReviewTableCell.m */,
 				FB445D750ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.h */,
 				FB445D760ED7764E00D89246 /* PSAppStoreReviewsHeaderTableCell.m */,
+				FBC628F30FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.h */,
+				FBC628F40FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.m */,
+				FBC629A80FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.h */,
+				FBC629A90FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -557,6 +575,8 @@
 				FB81A33D0EAF55060061B88B /* PSAppStoreCountriesViewController.m */,
 				FB445BA90ED54D5D00D89246 /* PSAppStoreReviewsViewController.h */,
 				FB445BAA0ED54D5D00D89246 /* PSAppStoreReviewsViewController.m */,
+				FBC629A00FF0B239002B6DD5 /* PSAppStoreDetailsViewController.h */,
+				FBC629A10FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m */,
 				FBB453870ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.h */,
 				FBB453880ECF93F200A04B1F /* PSEditAppStoreApplicationViewController.m */,
 			);
@@ -731,6 +751,10 @@
 				FB790EA00F6C875600E1593F /* PSAppStoreApplicationDetails.m in Sources */,
 				FB79103F0F6E336700E1593F /* PSAppStoreApplicationDetailsImporter.m in Sources */,
 				FBBC91D30F8EA26800D4497D /* PSAppStoreApplicationReviewsImporter.m in Sources */,
+				FBC628F50FF02C8A002B6DD5 /* PSAppStoreReviewsSummaryTableCell.m in Sources */,
+				FBC629A20FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m in Sources */,
+				FBC629AA0FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m in Sources */,
+				FBC62A680FF17182002B6DD5 /* PSHorizontalBarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

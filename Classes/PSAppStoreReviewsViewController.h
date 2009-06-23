@@ -10,11 +10,13 @@
 
 
 @class PSAppStoreApplicationDetails;
+@class PSAppStoreDetailsViewController;
 
 
 @interface PSAppStoreReviewsViewController : UITableViewController
 {
 	PSAppStoreApplicationDetails *appStoreDetails;
+	PSAppStoreDetailsViewController *appStoreDetailsViewController;
 	NSArray *userReviews;
 }
 
