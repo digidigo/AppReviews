@@ -838,7 +838,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-lz";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A787FB06-C456-434D-B8FF-1123A74D4980";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3C85951-1854-461D-A955-5641C38A3781";
 				SDKROOT = iphoneos3.0;
 			};
 			name = "Ad Hoc Distribution";
