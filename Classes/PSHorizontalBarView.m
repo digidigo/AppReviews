@@ -83,6 +83,12 @@ static CGFloat sDefaultBarAlpha = 1.0;
 - (void)setBarValue:(double)theBarValue
 {
 	barValue = theBarValue;
+	
+	if (barValue < 0.0)
+		barValue = 0.0;
+	else if (barValue > 1.0)
+		barValue = 1.0;
+	
 	[self setNeedsDisplay];
 }
 
