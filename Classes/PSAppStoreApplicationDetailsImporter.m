@@ -691,7 +691,7 @@
 			{
 				[currentString replaceOccurrencesOfString:@"\n" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
 				[currentString replaceOccurrencesOfString:@"\t" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [currentString length])];
-				GTMRegex *regex = [GTMRegex regexWithPattern:@"^[ ]*([^ ].*)[ ]{2,}([^ ].*[^ ]).*"];
+				GTMRegex *regex = [GTMRegex regexWithPattern:@"^[ ]*([^ ]+)[ ]+([^ ].*[^ ]).*"];
 				NSArray *substrings = [regex subPatternsOfString:currentString];
 				if (([substrings count] > 0) && ([substrings objectAtIndex:0] != [NSNull null]) && ([substrings objectAtIndex:1] != [NSNull null]))
 				{
