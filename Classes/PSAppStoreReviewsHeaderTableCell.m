@@ -217,13 +217,15 @@ static CGGradientRef sGradient = NULL;
 	// App name label.
 	posX = boundsX + MARGIN_X;
 	posY = boundsY + MARGIN_Y;
-	CGSize itemSize = [appName.text sizeWithFont:appName.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
+	CGFloat maxHeight = appName.font.pointSize + MARGIN_Y;
+	CGSize itemSize = [appName.text sizeWithFont:appName.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),maxHeight) lineBreakMode:UILineBreakModeTailTruncation];
 	frame = CGRectMake(posX, posY, contentRect.size.width-(2*MARGIN_X), itemSize.height);
 	appName.frame = frame;
 
 	// App company label.
 	posY += (itemSize.height + INNER_MARGIN_Y);
-	itemSize = [appCompany.text sizeWithFont:appCompany.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),CGFLOAT_MAX) lineBreakMode:UILineBreakModeTailTruncation];
+	maxHeight = appCompany.font.pointSize + INNER_MARGIN_Y;
+	itemSize = [appCompany.text sizeWithFont:appCompany.font constrainedToSize:CGSizeMake(contentRect.size.width-(2*MARGIN_X),maxHeight) lineBreakMode:UILineBreakModeTailTruncation];
 	frame = CGRectMake(posX, posY, contentRect.size.width-(2*MARGIN_X), itemSize.height);
 	appCompany.frame = frame;
 
