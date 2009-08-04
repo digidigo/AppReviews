@@ -49,7 +49,7 @@ static CGFloat sDefaultBarAlpha = 1.0;
 	CGContextRef context = UIGraphicsGetCurrentContext();
 
 	CGRect myRect = self.bounds;
-	myRect.size.width = myRect.size.width * barValue;
+	myRect.size.width = floorf(myRect.size.width * barValue);
 
 	// Draw bar.
 	CGContextSaveGState(context);
@@ -83,12 +83,12 @@ static CGFloat sDefaultBarAlpha = 1.0;
 - (void)setBarValue:(double)theBarValue
 {
 	barValue = theBarValue;
-	
+
 	if (barValue < 0.0)
 		barValue = 0.0;
 	else if (barValue > 1.0)
 		barValue = 1.0;
-	
+
 	[self setNeedsDisplay];
 }
 
