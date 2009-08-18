@@ -451,6 +451,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 		// Start new user off with some default applications.
 		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
 		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
+		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
+		[self addApplication:[[[PSAppStoreApplication alloc] initWithName:@"Dialogues" appIdentifier:@"320166734"] autorelease]];
 		PSLog(@"Added %d apps", [applications count]-countBefore);
 	}
 }
