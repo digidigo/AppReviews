@@ -54,7 +54,6 @@
 - (void)dealloc
 {
 	PSLogDebug(@"");
-	[returnTarget release];
 	[cancelButton release];
 	[saveButton release];
 	[listTitle release];

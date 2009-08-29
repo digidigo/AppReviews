@@ -66,7 +66,7 @@
 /**
  * Target object that will be notified of final selection.
  */
-@property (nonatomic, retain) id returnTarget;
+@property (nonatomic, assign) id returnTarget;
 
 /**
  * Selector to be called on target object when notifying of final selection.
