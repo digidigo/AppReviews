@@ -60,15 +60,15 @@
 	CGRect countBounds = [PSCountView boundsForCount:[countView count] usingFontSize:countView.fontSize];
 
 	// Position rating view.
-	frame = CGRectMake(boundsX + MARGIN_X, contentRect.origin.y + ((contentRect.size.height - kRatingHeight) / 2.0), kRatingWidth, kRatingHeight);
+	frame = CGRectMake(boundsX + MARGIN_X, floorf(contentRect.origin.y + ((contentRect.size.height - kRatingHeight) / 2.0)), kRatingWidth, kRatingHeight);
 	ratingView.frame = frame;
 
 	// Position count.
-	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (countBounds.size.width + INNER_MARGIN_X + kRatingsCountBarWidth + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0), countBounds.size.width, countBounds.size.height);
+	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (countBounds.size.width + INNER_MARGIN_X + kRatingsCountBarWidth + MARGIN_X), floorf(contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0)), countBounds.size.width, countBounds.size.height);
 	countView.frame = frame;
 
 	// Position bar.
-	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (kRatingsCountBarWidth + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0), kRatingsCountBarWidth, countBounds.size.height);
+	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (kRatingsCountBarWidth + MARGIN_X), floorf(contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0)), kRatingsCountBarWidth, countBounds.size.height);
 	barView.frame = frame;
 }
 
