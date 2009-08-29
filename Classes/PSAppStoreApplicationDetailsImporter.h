@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSProgressHandler.h"
 #import "PSAppReviewsStore.h"
 #import "AppCriticsAppDelegate.h"
 
@@ -143,13 +142,6 @@ typedef enum
 	BOOL hasNewReviews;
 	DetailsImportState importState;
 
-	// Members used during file download.
-	BOOL downloadCancelled;
-	id<PSProgressHandler> downloadProgressHandler;
-	long long downloadFileSize;
-	NSMutableData *downloadFileContents;
-	NSString *downloadErrorMessage;
-
 	// Members used during XML parsing.
 	DetailsXMLState xmlState;
 	BOOL skippingCollapsedDisclosure;
@@ -192,11 +184,9 @@ typedef enum
 @property (nonatomic, assign) BOOL hasNewReviews;
 @property (nonatomic, assign) DetailsImportState importState;
 
-@property (retain) id<PSProgressHandler> downloadProgressHandler;
-@property (copy) NSString *downloadErrorMessage;
-
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;
-- (void)fetchDetails:(id <PSProgressHandler>)progressHandler;
+- (NSURL *)detailsURL;
+- (void)processDetails:(NSData *)data;
 - (void)copyDetailsTo:(PSAppStoreApplicationDetails *)receiver;
 
 @end

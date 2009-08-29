@@ -15,11 +15,14 @@ static classname *shared##classname = nil; \
  \
 + (classname *)sharedInstance \
 { \
-	@synchronized(self) \
+	if (shared##classname == nil) \
 	{ \
-		if (shared##classname == nil) \
+		@synchronized(self) \
 		{ \
-			[[self alloc] init]; \
+			if (shared##classname == nil) \
+			{ \
+				[[self alloc] init]; \
+			} \
 		} \
 	} \
 	 \
@@ -28,12 +31,15 @@ static classname *shared##classname = nil; \
  \
 + (id)allocWithZone:(NSZone *)zone \
 { \
-	@synchronized(self) \
+	if (shared##classname == nil) \
 	{ \
-		if (shared##classname == nil) \
+		@synchronized(self) \
 		{ \
-			shared##classname = [super allocWithZone:zone]; \
-			return shared##classname; \
+			if (shared##classname == nil) \
+			{ \
+				shared##classname = [super allocWithZone:zone]; \
+				return shared##classname; \
+			} \
 		} \
 	} \
 	 \

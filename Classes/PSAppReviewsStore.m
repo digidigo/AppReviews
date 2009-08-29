@@ -163,6 +163,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 	return nil;
 }
 
+- (NSArray *)applications
+{
+	return [NSArray arrayWithArray:applications];
+}
+
 - (PSAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier
 {
 	for (PSAppStoreApplication *app in applications)
@@ -217,6 +222,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PSAppReviewsStore);
 
 - (void)removeApplication:(PSAppStoreApplication *)app
 {
+	// Cancel all NSOperations for this app.
+	[app suspendAllOperations];
+	[app cancelAllOperations];
+
 	// Delete actual reviews for this app.
 	[self removeReviewsForApplication:app];
 

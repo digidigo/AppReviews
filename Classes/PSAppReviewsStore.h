@@ -47,6 +47,7 @@ typedef enum
 - (void)close;
 
 - (PSAppStore *)storeForIdentifier:(NSString *)storeIdentifier;
+- (NSArray *)applications;
 - (PSAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier;
 - (PSAppStoreApplication *)applicationAtIndex:(NSUInteger)index;
 - (NSUInteger)applicationCount;

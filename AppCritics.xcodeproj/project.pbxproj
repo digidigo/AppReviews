@@ -37,6 +37,8 @@
 		FB81A5B00EB087A90061B88B /* PSAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* PSAppStoreTableCell.m */; };
 		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
 		FB9CA0B40FD8887D009D1542 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9CA0B30FD8887D009D1542 /* MessageUI.framework */; };
+		FBAA7527103B6F5D002585DE /* PSAppStoreUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA7526103B6F5D002585DE /* PSAppStoreUpdateOperation.m */; };
+		FBAA77AB103E13D7002585DE /* PSAppStoreVerifyOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA77AA103E13D7002585DE /* PSAppStoreVerifyOperation.m */; };
 		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
 		FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB44EF50ECCF24700A04B1F /* Icon.png */; };
 		FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBB451C80ECF150400A04B1F /* Settings.bundle */; };
@@ -197,6 +199,10 @@
 		FB81A6920EB12C520061B88B /* GTMRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMRegex.h; sourceTree = "<group>"; };
 		FB81A6930EB12C520061B88B /* GTMRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMRegex.m; sourceTree = "<group>"; };
 		FB9CA0B30FD8887D009D1542 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		FBAA7525103B6F5D002585DE /* PSAppStoreUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreUpdateOperation.h; sourceTree = "<group>"; };
+		FBAA7526103B6F5D002585DE /* PSAppStoreUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreUpdateOperation.m; sourceTree = "<group>"; };
+		FBAA77A9103E13D7002585DE /* PSAppStoreVerifyOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreVerifyOperation.h; sourceTree = "<group>"; };
+		FBAA77AA103E13D7002585DE /* PSAppStoreVerifyOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreVerifyOperation.m; sourceTree = "<group>"; };
 		FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAboutViewController.h; sourceTree = "<group>"; };
 		FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAboutViewController.m; sourceTree = "<group>"; };
 		FBB44EF50ECCF24700A04B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -319,6 +325,7 @@
 				FB7909B90F6A473300E1593F /* Models */,
 				FB81A5FB0EB1152A0061B88B /* Views */,
 				FBB453860ECF93BA00A04B1F /* Controllers */,
+				FBAA7520103B6E2C002585DE /* Operations */,
 				FBDC0FE10EE09FEF00442E92 /* NSDate+PSNSDateAdditions.h */,
 				FBDC0FE20EE09FEF00442E92 /* NSDate+PSNSDateAdditions.m */,
 				1D3623240D0F684500981E51 /* AppCriticsAppDelegate.h */,
@@ -566,6 +573,17 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		FBAA7520103B6E2C002585DE /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				FBAA77A9103E13D7002585DE /* PSAppStoreVerifyOperation.h */,
+				FBAA77AA103E13D7002585DE /* PSAppStoreVerifyOperation.m */,
+				FBAA7525103B6F5D002585DE /* PSAppStoreUpdateOperation.h */,
+				FBAA7526103B6F5D002585DE /* PSAppStoreUpdateOperation.m */,
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
 		FBB453860ECF93BA00A04B1F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -755,6 +773,8 @@
 				FBC629A20FF0B239002B6DD5 /* PSAppStoreDetailsViewController.m in Sources */,
 				FBC629AA0FF0B849002B6DD5 /* PSAppStoreRatingsCountTableCell.m in Sources */,
 				FBC62A680FF17182002B6DD5 /* PSHorizontalBarView.m in Sources */,
+				FBAA7527103B6F5D002585DE /* PSAppStoreUpdateOperation.m in Sources */,
+				FBAA77AB103E13D7002585DE /* PSAppStoreVerifyOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

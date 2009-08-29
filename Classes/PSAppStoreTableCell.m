@@ -12,9 +12,12 @@
 #import "PSCountView.h"
 
 
+#define	kActivityIndicatorSize 20.0
+
+
 @implementation PSAppStoreTableCell
 
-@synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView;
+@synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView, state, stateSpinnerView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -22,8 +25,8 @@
 	{
         // Initialization code here.
 		nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		nameLabel.backgroundColor = [UIColor whiteColor];
-		nameLabel.opaque = YES;
+		nameLabel.backgroundColor = [UIColor clearColor];
+		nameLabel.opaque = NO;
 		nameLabel.textColor = [UIColor blackColor];
 		nameLabel.highlightedTextColor = [UIColor whiteColor];
 		nameLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -32,14 +35,16 @@
 		[self.contentView addSubview:nameLabel];
 
 		flagView = [[PSImageView alloc] initWithFrame:CGRectZero];
+		flagView.backgroundColor = [UIColor clearColor];
+		flagView.opaque = NO;
 		[self.contentView addSubview:flagView];
 
 		ratingView = [[PSRatingView alloc] initWithFrame:CGRectZero];
 		[self.contentView addSubview:ratingView];
 
 		ratingCountLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		ratingCountLabel.backgroundColor = [UIColor whiteColor];
-		ratingCountLabel.opaque = YES;
+		ratingCountLabel.backgroundColor = [UIColor clearColor];
+		ratingCountLabel.opaque = NO;
 		ratingCountLabel.textColor = [UIColor blackColor];
 		ratingCountLabel.highlightedTextColor = [UIColor colorWithRed:0.55 green:0.6 blue:0.7 alpha:1.0];
 		ratingCountLabel.font = [UIFont systemFontOfSize:14.0];
@@ -49,7 +54,15 @@
 
 		countView = [[PSCountView alloc] initWithFrame:CGRectZero];
 		countView.fontSize = nameLabel.font.pointSize;
+		countView.backgroundColor = [UIColor clearColor];
+		countView.opaque = NO;
 		[self.contentView addSubview:countView];
+
+		state = PSAppStoreStateDefault;
+		stateSpinnerView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+		stateSpinnerView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+		stateSpinnerView.hidesWhenStopped = NO;
+		[self.contentView addSubview:stateSpinnerView];
     }
     return self;
 }
@@ -61,6 +74,7 @@
 	[ratingView release];
 	[ratingCountLabel release];
 	[countView release];
+	[stateSpinnerView release];
     [super dealloc];
 }
 
@@ -73,22 +87,10 @@
     */
 	[super setSelected:selected animated:animated];
 
-	UIColor *backgroundColor = nil;
-	if (selected)
-	{
-	    backgroundColor = [UIColor clearColor];
-	}
-	else
-	{
-		backgroundColor = [UIColor whiteColor];
-	}
-
 	NSArray *labelArray = [[NSArray alloc] initWithObjects:nameLabel, ratingCountLabel, nil];
 	for (UILabel *label in labelArray)
 	{
-		label.backgroundColor = backgroundColor;
 		label.highlighted = selected;
-		label.opaque = !selected;
 	}
 	[labelArray release];
 }
@@ -130,6 +132,46 @@
 	// Position count.
 	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (countBounds.size.width + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - countBounds.size.height) / 2.0), countBounds.size.width, countBounds.size.height);
 	countView.frame = frame;
+	// Position spinner (over count).
+	frame = CGRectMake(contentRect.origin.x + contentRect.size.width - (kActivityIndicatorSize + MARGIN_X), contentRect.origin.y + ((contentRect.size.height - kActivityIndicatorSize) / 2.0), kActivityIndicatorSize, kActivityIndicatorSize);
+	stateSpinnerView.frame = frame;
+
+	// Set background colour behind disclosure indicator.
+	self.backgroundColor = self.contentView.backgroundColor;
+}
+
+- (void)setState:(PSAppStoreState)value
+{
+	state = value;
+	switch (state)
+	{
+		case PSAppStoreStatePending:
+			[stateSpinnerView stopAnimating];
+			stateSpinnerView.hidden = NO;
+			countView.hidden = YES;
+			self.contentView.backgroundColor = [UIColor whiteColor];
+			break;
+		case PSAppStoreStateProcessing:
+			[stateSpinnerView startAnimating];
+			stateSpinnerView.hidden = NO;
+			countView.hidden = YES;
+			self.contentView.backgroundColor = [UIColor whiteColor];
+			break;
+		case PSAppStoreStateFailed:
+			[stateSpinnerView stopAnimating];
+			stateSpinnerView.hidden = YES;
+			countView.hidden = NO;
+			self.contentView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:192.0/255.0 blue:203.0/255.0 alpha:1];
+			break;
+		default:
+			[stateSpinnerView stopAnimating];
+			stateSpinnerView.hidden = YES;
+			countView.hidden = NO;
+			self.contentView.backgroundColor = [UIColor whiteColor];
+			break;
+	}
+	[self setNeedsLayout];
+	[self setNeedsDisplay];
 }
 
 @end

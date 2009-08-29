@@ -8,9 +8,6 @@
 
 #import "PSAppStoreApplicationReviewsImporter.h"
 #import "PSAppStoreApplicationReview.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStore.h"
-#import "AppCriticsAppDelegate.h"
 #import "GTMRegex.h"
 #import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
@@ -18,8 +15,7 @@
 
 @implementation PSAppStoreApplicationReviewsImporter
 
-@synthesize appIdentifier, storeIdentifier;
-@synthesize importState, downloadErrorMessage;
+@synthesize appIdentifier, storeIdentifier, importState;
 
 - (id)init
 {
@@ -33,10 +29,6 @@
 		self.appIdentifier = inAppIdentifier;
 		self.storeIdentifier = inStoreIdentifier;
 		self.importState = ReviewsImportStateEmpty;
-		self.downloadErrorMessage = nil;
-		downloadCancelled = NO;
-		downloadFileSize = NSURLResponseUnknownLength;
-		downloadFileContents = nil;
 		currentString = [[NSMutableString alloc] init];
 		currentReviewSummary = nil;
 		currentReviewRating = 0.0;
@@ -52,11 +44,8 @@
 
 - (void)dealloc
 {
-	downloadCancelled = YES;
 	[appIdentifier release];
 	[storeIdentifier release];
-	[downloadFileContents release];
-	[downloadErrorMessage release];
 	[currentString release];
 	[currentReviewSummary release];
 	[currentReviewer release];
@@ -67,14 +56,9 @@
 	[super dealloc];
 }
 
-- (void)downloadEnded
+- (NSURL *)reviewsURL
 {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-	// Cleanup ready for future downloads
-	downloadCancelled = NO;
-	[downloadFileContents release];
-	downloadFileContents = nil;
+	return [NSURL URLWithString:[NSString stringWithFormat:@"http://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=%@&pageNumber=0&sortOrdering=%d&type=Purple+Software&onlyLatestVersion=false", self.appIdentifier, [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"]]];
 }
 
 - (NSString *)localXMLFilename
@@ -89,53 +73,19 @@
 	return [NSArray arrayWithArray:reviews];
 }
 
-- (void)fetchReviews
-{
-	// Download the reviews.
-	self.importState = ReviewsImportStateDownloading;
-	self.downloadErrorMessage = nil;
-	downloadCancelled = NO;
-	downloadFileSize = NSURLResponseUnknownLength;
-	downloadFileContents = [[NSMutableData data] retain];
-	NSURL *reviewsURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=%@&pageNumber=0&sortOrdering=%d&type=Purple+Software&onlyLatestVersion=false", self.appIdentifier, [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"]]];
-	NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:reviewsURL
-											  cachePolicy:NSURLRequestUseProtocolCachePolicy
-										  timeoutInterval:10.0];
-	[theRequest setValue:@"iTunes/4.2 (Macintosh; U; PPC Mac OS X 10.2" forHTTPHeaderField:@"User-Agent"];
-	[theRequest setValue:[NSString stringWithFormat:@" %@-1", self.storeIdentifier] forHTTPHeaderField:@"X-Apple-Store-Front"];
-
-	NSDictionary *headerFields = [theRequest allHTTPHeaderFields];
-	PSLogDebug([headerFields descriptionWithLocale:nil indent:2]);
-
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-	if (theConnection)
-	{
-		// Download started.
-		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-	}
-	else
-	{
-		// Could not start download.
-		PSLogError(@"Connection failed");
-		[downloadFileContents release];
-		downloadFileContents = nil;
-		importState = ReviewsImportStateDownloadFailed;
-	}
-}
-
-- (void)processReviews
+- (void)processReviews:(NSData *)data
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	PSLogDebug(@"-->");
 
 #ifdef DEBUG
 	// Save XML file for debugging.
-	[downloadFileContents writeToFile:[self localXMLFilename] atomically:YES];
+	[data writeToFile:[self localXMLFilename] atomically:YES];
 #endif
 
 	// Initialise some members used whilst parsing XML content.
 	self.importState = ReviewsImportStateParsing;
-	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:downloadFileContents];
+	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
 	xmlParser.delegate = self;
 	xmlParser.shouldResolveExternalEntities = NO;
 	xmlState = ReviewsSeekingSortByPopup;
@@ -161,11 +111,7 @@
 		self.importState = ReviewsImportStateParseFailed;
 	}
 
-	[self downloadEnded];
 	[xmlParser release];
-
-	// Move on to next store.
-	[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreApplicationReviewsUpdatedNotification object:self];
 
 	PSLogDebug(@"<--");
 	[pool release];
@@ -443,123 +389,6 @@
 			}
 		}
 	}
-}
-
-
-#pragma mark -
-#pragma mark NSURLConnection delegate methods
-
-- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-	PSLogDebug(@"-->");
-
-	[[challenge sender] cancelAuthenticationChallenge:challenge];
-
-	PSLogDebug(@"<--");
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-	PSLogDebug(@"-->");
-	AppCriticsAppDelegate *appDelegate = (AppCriticsAppDelegate *)[[UIApplication sharedApplication] delegate];
-	NSInteger statusCode = 0;
-
-	downloadFileSize = [response expectedContentLength];
-	PSLog(@"expectedContentLength=%d", downloadFileSize);
-	PSLog(@"suggestedFilename=[%@]", ([response suggestedFilename]?[response suggestedFilename]:@"nil"));
-	PSLog(@"MIMEtype=[%@]", ([response MIMEType]?[response MIMEType]:@"nil"));
-	PSLog(@"textEncodingName=[%@]", ([response textEncodingName]?[response textEncodingName]:@"nil"));
-	if ([response isKindOfClass:[NSHTTPURLResponse class]])
-	{
-		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-		statusCode = [httpResponse statusCode];
-		PSLog(@"statusCode=[%d] [%@]", statusCode, [NSHTTPURLResponse localizedStringForStatusCode:statusCode]);
-	}
-
-	if ((statusCode >= 400) || downloadCancelled || appDelegate.exiting)
-	{
-		// Error downloading file.
-		[connection cancel];
-		[connection release];
-		[self downloadEnded];
-		// Move on to next store.
-		[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreApplicationReviewsUpdatedNotification object:self];
-	}
-	else
-	{
-		// Reset data length and progress
-		[downloadFileContents setLength:0];
-	}
-
-	PSLogDebug(@"<--");
-}
-
--(NSURLRequest *)connection:(NSURLConnection*)connection
-			willSendRequest:(NSURLRequest*)request
-		   redirectResponse:(NSURLResponse*)redirectResponse
-{
-    NSMutableURLRequest *newReq = [request mutableCopy];
-    [newReq setValue:@"iTunes/4.2 (Macintosh; U; PPC Mac OS X 10.2" forHTTPHeaderField:@"User-Agent"];
-	[newReq setValue:[NSString stringWithFormat:@"%@-1", self.storeIdentifier] forHTTPHeaderField:@"X-Apple-Store-Front"];
-    return [newReq autorelease];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-	PSLogDebug(@"-->");
-	AppCriticsAppDelegate *appDelegate = (AppCriticsAppDelegate *)[[UIApplication sharedApplication] delegate];
-
-
-	if (downloadCancelled || appDelegate.exiting)
-	{
-		[connection cancel];
-		[connection release];
-		[self downloadEnded];
-		// Move on to next store.
-		[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreApplicationReviewsUpdatedNotification object:self];
-	}
-	else
-	{
-		// Concatenate the new data with the existing data to build up the downloaded file
-		// Update the status of the download
-		[downloadFileContents appendData:data];
-	}
-	PSLogDebug(@"<--");
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	PSLogDebug(@"-->");
-
-	PSLog(@"Download succeeded - Received %d bytes of data", [downloadFileContents length]);
-    [connection release];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-	// Data is now complete:
-
-	// Process data on new thread, using same progress display.
-	[NSThread detachNewThreadSelector:@selector(processReviews) toTarget:self withObject:nil];
-
-	PSLogDebug(@"<--");
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-	PSLogDebug(@"-->");
-
-    PSLogError(@"Error - %@ %@", [error localizedDescription], [[error userInfo] objectForKey:NSErrorFailingURLStringKey]);
-    [connection release];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-	[self downloadEnded];
-
-	// Set state to reflect that we failed.
-	self.importState = ReviewsImportStateDownloadFailed;
-
-	// Move on to next store.
-	[[NSNotificationCenter defaultCenter] postNotificationName:kPSAppStoreApplicationReviewsUpdatedNotification object:self];
-
-	PSLogDebug(@"<--");
 }
 
 @end

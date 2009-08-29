@@ -14,6 +14,7 @@
 
 
 @class FMDatabase;
+@class PSAppStoreUpdateOperation;
 
 
 @interface PSAppStoreApplication : NSObject
@@ -34,6 +35,9 @@
     BOOL hydrated;
     // Dirty tracks whether there are in-memory changes to data which have no been written to the database.
     BOOL dirty;
+	// NSOperationQueue for all downloads related to this app.
+	NSOperationQueue *updateOperationsQueue;
+	NSUInteger updateOperationsCount;
 }
 
 @property (nonatomic, copy) NSString *name;
@@ -42,6 +46,7 @@
 @property (nonatomic, copy) NSString *defaultStoreIdentifier;
 @property (nonatomic, assign) NSInteger position;
 @property (nonatomic, assign, readonly) NSInteger primaryKey;
+@property (nonatomic, readonly) NSUInteger updateOperationsCount;
 
 - (id)init;
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier;
@@ -60,5 +65,11 @@
 - (void)dehydrate;
 // Remove the object completely from the database. In memory deletion to follow...
 - (void)deleteFromDatabase;
+// Manage the operations queue for this application.
+- (void)cancelAllOperations;
+- (void)cancelOperationsForApplicationDetails:(PSAppStoreApplicationDetails *)appStoreDetails;
+- (void)suspendAllOperations;
+- (void)resumeAllOperations;
+- (void)addUpdateOperation:(PSAppStoreUpdateOperation *)op;
 
 @end

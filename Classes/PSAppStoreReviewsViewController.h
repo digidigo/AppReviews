@@ -15,11 +15,17 @@
 
 @interface PSAppStoreReviewsViewController : UITableViewController
 {
+	UIBarButtonItem *updateButtonItem;
+	UIBarButtonItem *activitySpinnerItem;
+	UIActivityIndicatorView *activitySpinner;
 	PSAppStoreApplicationDetails *appStoreDetails;
 	PSAppStoreDetailsViewController *appStoreDetailsViewController;
 	NSArray *userReviews;
 }
 
+@property (nonatomic, retain) UIBarButtonItem *updateButtonItem;
+@property (nonatomic, retain) UIBarButtonItem *activitySpinnerItem;
+@property (nonatomic, retain) UIActivityIndicatorView *activitySpinner;
 @property (nonatomic, retain) PSAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, retain) NSArray *userReviews;
 

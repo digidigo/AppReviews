@@ -8,8 +8,9 @@
 
 #import "PSAppReviewsStore.h"
 #import "PSAppStoreApplication.h"
+#import "PSAppStoreUpdateOperation.h"
 #import "PSAppStore.h"
-//#import "PSAppStoreReviews.h"
+#import "PSAppStoreApplicationDetails.h"
 #import "FMDatabase.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSLog.h"
@@ -24,7 +25,7 @@
 
 @implementation PSAppStoreApplication
 
-@synthesize name, company, appIdentifier, defaultStoreIdentifier, position, primaryKey, database;
+@synthesize name, company, appIdentifier, defaultStoreIdentifier, position, primaryKey, database, updateOperationsCount;
 
 - (id)init
 {
@@ -52,17 +53,23 @@
 		self.defaultStoreIdentifier = inStoreIdentifier;
 		self.position = -1;
 		self.database = nil;
+		updateOperationsQueue = [[NSOperationQueue alloc] init];
+		updateOperationsCount = 0;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[name release];
 	[company release];
 	[appIdentifier release];
 	[defaultStoreIdentifier release];
 	[database release];
+	[updateOperationsQueue release];
 	[super dealloc];
 }
 
@@ -89,6 +96,10 @@
 		[row close];
         dirty = NO;
 		hydrated = NO;
+		updateOperationsQueue = [[NSOperationQueue alloc] init];
+		updateOperationsCount = 0;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
     }
     return self;
 }
@@ -195,6 +206,76 @@
 		return NSOrderedDescending;
 	else
 		return NSOrderedSame;
+}
+
+- (void)cancelOperationsForApplicationDetails:(PSAppStoreApplicationDetails *)appStoreDetails
+{
+	@synchronized(self)
+	{
+		[updateOperationsQueue setSuspended:YES];
+
+		NSArray *updateOperations = [updateOperationsQueue operations];
+		for (PSAppStoreUpdateOperation *op in updateOperations)
+		{
+			if ([op.appDetails.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
+				[op.appDetails.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier] &&
+				![op isCancelled] &&
+				![op isExecuting])
+			{
+				[op	cancel];
+				updateOperationsCount--;
+			}
+		}
+
+		[updateOperationsQueue setSuspended:NO];
+	}
+}
+
+- (void)cancelAllOperations
+{
+	PSLogDebug(@"");
+	@synchronized(self)
+	{
+		[updateOperationsQueue cancelAllOperations];
+		updateOperationsCount = 0;
+	}
+}
+
+- (void)suspendAllOperations
+{
+	PSLogDebug(@"");
+	[updateOperationsQueue setSuspended:YES];
+}
+
+- (void)resumeAllOperations
+{
+	PSLogDebug(@"");
+	[updateOperationsQueue setSuspended:NO];
+}
+
+- (void)addUpdateOperation:(PSAppStoreUpdateOperation *)op
+{
+	@synchronized(self)
+	{
+		PSLogDebug(@"");
+		updateOperationsCount++;
+		[updateOperationsQueue addOperation:op];
+	}
+}
+
+- (void)updatedOperationEnded:(NSNotification *)notification
+{
+	PSLog(@"Received notification: %@", notification.name);
+	@synchronized(self)
+	{
+		// Check that this notification was for our application.
+		PSAppStoreApplicationDetails *details = (PSAppStoreApplicationDetails *) [notification object];
+		if ([details.appIdentifier isEqualToString:appIdentifier])
+		{
+			if (updateOperationsCount > 0)
+				updateOperationsCount--;
+		}
+	}
 }
 
 

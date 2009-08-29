@@ -11,6 +11,8 @@
 #import "PSAppStoreDetailsViewController.h"
 #import "PSAppStoreApplicationDetails.h"
 #import "PSAppStoreApplicationReview.h"
+#import "PSAppStoreApplication.h"
+#import "PSAppStoreUpdateOperation.h"
 #import "PSAppStore.h"
 #import "PSAppStoreReviewsHeaderTableCell.h"
 #import "PSAppStoreReviewsSummaryTableCell.h"
@@ -38,13 +40,14 @@ typedef enum
 @interface PSAppStoreReviewsViewController ()
 
 @property (nonatomic, retain) PSAppStoreDetailsViewController *appStoreDetailsViewController;
+- (void)updateViewForState;
 
 @end
 
 
 @implementation PSAppStoreReviewsViewController
 
-@synthesize appStoreDetails, userReviews, appStoreDetailsViewController;
+@synthesize updateButtonItem, activitySpinnerItem, activitySpinner, appStoreDetails, userReviews, appStoreDetailsViewController;
 
 + (void)initialize
 {
@@ -62,6 +65,16 @@ typedef enum
 
 		// Set the back button title.
 		self.navigationItem.backBarButtonItem =	[[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"Back") style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+		// Create the update button & spinner.
+		self.updateButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateDetails:)] autorelease];
+		self.activitySpinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite] autorelease];
+		self.activitySpinner.hidesWhenStopped = NO;
+		self.activitySpinner.frame = CGRectMake(0.0, 0.0, 20.0, 20.0);
+		UIView *spinnerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 34.0, 29.0)];
+		[spinnerView addSubview:self.activitySpinner];
+		self.activitySpinner.center = spinnerView.center;
+		self.activitySpinnerItem = [[[UIBarButtonItem alloc] initWithCustomView:spinnerView] autorelease];
+		[spinnerView release];
 
 		self.appStoreDetails = nil;
 		self.userReviews = nil;
@@ -71,6 +84,10 @@ typedef enum
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[updateButtonItem release];
+	[activitySpinnerItem release];
+	[activitySpinner release];
 	[appStoreDetails release];
 	[userReviews release];
 	[appStoreDetailsViewController release];
@@ -111,6 +128,9 @@ typedef enum
 	}
 	self.navigationItem.prompt = [NSString stringWithFormat:@"Last updated: %@", lastUpdated];
 
+	// Display the update button or activity spinner.
+	[self updateViewForState];
+
 	if ([self.tableView numberOfRowsInSection:0] > 0)
 		[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
@@ -130,6 +150,19 @@ typedef enum
 			[alert release];
 		}
 	}
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidStart:) name:kPSAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFail:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFinish:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -140,6 +173,32 @@ typedef enum
 	self.userReviews = nil;
 }
 
+- (void)updateViewForState
+{
+	// Display the update button or activity spinner.
+	switch (appStoreDetails.state)
+	{
+		case PSAppStoreStatePending:
+		{
+			[self.activitySpinner stopAnimating];
+			self.navigationItem.rightBarButtonItem = self.activitySpinnerItem;
+			break;
+		}
+		case PSAppStoreStateProcessing:
+		{
+			[self.activitySpinner startAnimating];
+			self.navigationItem.rightBarButtonItem = self.activitySpinnerItem;
+			break;
+		}
+		default:
+		{
+			[self.activitySpinner stopAnimating];
+			self.navigationItem.rightBarButtonItem = self.updateButtonItem;
+			break;
+		}
+	}
+}
+
 - (void)setAppStoreReviews:(PSAppStoreApplicationDetails *)inDetails
 {
 	[inDetails retain];
@@ -147,6 +206,74 @@ typedef enum
 	appStoreDetails = inDetails;
 
 	self.userReviews = nil;
+}
+
+- (void)updateDetails:(id)sender
+{
+	PSAppStoreApplication *appStoreApplication = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
+	// User tapped the Update button - queue up the download operation.
+
+	// First cancel all current/pending operations for this app/store.
+	[appStoreApplication suspendAllOperations];
+	[appStoreApplication cancelOperationsForApplicationDetails:(PSAppStoreApplicationDetails *)appStoreDetails];
+
+	// Add operation to the queue for processing.
+	appStoreDetails.state = PSAppStoreStatePending;
+	PSAppStoreUpdateOperation *op = [[PSAppStoreUpdateOperation alloc] initWithApplicationDetails:appStoreDetails];
+	[op setQueuePriority:NSOperationQueuePriorityHigh];
+	[appStoreApplication addUpdateOperation:op];
+	[op release];
+
+	// Update view for new state.
+	[self updateViewForState];
+
+	// Start processing.
+	[appStoreApplication resumeAllOperations];
+}
+
+// Called on main thread after Start.
+- (void)appStoreReviewsUpdateDidStart:(NSNotification *)notification
+{
+	PSLog(@"Received notification: %@", notification.name);
+	PSAppStoreApplicationDetails *lastStoreProcessed = (PSAppStoreApplicationDetails *) [notification object];
+
+	// Only pay attention to this notification if it is for our current application AND store.
+	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
+		[lastStoreProcessed.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier])
+	{
+		// Update view to reflect current download state.
+		[self updateViewForState];
+	}
+}
+
+// Called on main thread after Fail.
+- (void)appStoreReviewsUpdateDidFail:(NSNotification *)notification
+{
+	PSLog(@"Received notification: %@", notification.name);
+	PSAppStoreApplicationDetails *lastStoreProcessed = (PSAppStoreApplicationDetails *) [notification object];
+
+	// Only pay attention to this notification if it is for our current application AND store.
+	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
+		[lastStoreProcessed.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier])
+	{
+		// Update view to reflect current download state.
+		[self updateViewForState];
+	}
+}
+
+// Called on main thread after Finish.
+- (void)appStoreReviewsUpdateDidFinish:(NSNotification *)notification
+{
+	PSLog(@"Received notification: %@", notification.name);
+	PSAppStoreApplicationDetails *lastStoreProcessed = (PSAppStoreApplicationDetails *) [notification object];
+
+	// Only pay attention to this notification if it is for our current application AND store.
+	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
+		[lastStoreProcessed.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier])
+	{
+		// Update table to show reviews that were just completed.
+		[self viewWillAppear:YES];
+	}
 }
 
 

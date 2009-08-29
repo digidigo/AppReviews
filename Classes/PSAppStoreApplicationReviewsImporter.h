@@ -60,12 +60,6 @@ typedef enum
 
 	ReviewsImportState importState;
 
-	// Members used during file download.
-	BOOL downloadCancelled;
-	long long downloadFileSize;
-	NSMutableData *downloadFileContents;
-	NSString *downloadErrorMessage;
-
 	// Members used during XML parsing.
 	ReviewsXMLState xmlState;
 	NSMutableString *currentString;
@@ -82,10 +76,10 @@ typedef enum
 @property (nonatomic, copy) NSString *appIdentifier;
 @property (nonatomic, copy) NSString *storeIdentifier;
 @property (nonatomic, assign) ReviewsImportState importState;
-@property (copy) NSString *downloadErrorMessage;
 
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;
-- (void)fetchReviews;
+- (NSURL *)reviewsURL;
+- (void)processReviews:(NSData *)data;
 - (NSArray *)reviews;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PSAppStoreApplicationDetails.h"
 
 @class PSImageView;
 @class PSRatingView;
@@ -14,11 +15,13 @@
 
 @interface PSAppStoreTableCell : UITableViewCell
 {
+	PSAppStoreState state;
 	UILabel *nameLabel;
 	PSImageView *flagView;
 	PSRatingView *ratingView;
 	UILabel *ratingCountLabel;
 	PSCountView *countView;
+	UIActivityIndicatorView *stateSpinnerView;
 }
 
 @property (nonatomic, retain) UILabel *nameLabel;
@@ -26,5 +29,7 @@
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) UILabel *ratingCountLabel;
 @property (nonatomic, retain) PSCountView *countView;
+@property (nonatomic, assign) PSAppStoreState state;
+@property (nonatomic, retain) UIActivityIndicatorView *stateSpinnerView;
 
 @end

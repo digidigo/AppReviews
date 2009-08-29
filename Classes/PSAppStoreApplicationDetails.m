@@ -29,7 +29,7 @@
 @synthesize released, appVersion, appSize, localPrice, appName, appCompany, companyURL, companyURLTitle, supportURL, supportURLTitle;
 @synthesize ratingCountAll5Stars, ratingCountAll4Stars, ratingCountAll3Stars, ratingCountAll2Stars, ratingCountAll1Star;
 @synthesize ratingCountCurrent5Stars, ratingCountCurrent4Stars, ratingCountCurrent3Stars, ratingCountCurrent2Stars, ratingCountCurrent1Star;
-@synthesize hasNewRatings, hasNewReviews, primaryKey, database;
+@synthesize hasNewRatings, hasNewReviews, state, primaryKey, database;
 
 - (id)init
 {
@@ -74,6 +74,7 @@
 		self.lastUpdated = [NSDate distantPast];
 		self.hasNewRatings = NO;
 		self.hasNewReviews = NO;
+		self.state = PSAppStoreStateDefault;
 		self.database = nil;
 	}
 	return self;
@@ -109,6 +110,7 @@
         self.database = db;
 		self.hasNewRatings = NO;
 		self.hasNewReviews = NO;
+		self.state = PSAppStoreStateDefault;
 
 		FMResultSet *row = [db executeQuery:@"SELECT app_identifier, store_identifier, category, category_identifier, rating_count_all, rating_count_all_5stars, rating_count_all_4stars, rating_count_all_3stars, rating_count_all_2stars, rating_count_all_1star, rating_count_current, rating_count_current_5stars, rating_count_current_4stars, rating_count_current_3stars, rating_count_current_2stars, rating_count_current_1star, rating_all, rating_current, review_count_all, review_count_current, last_sort_order, last_updated FROM application_details WHERE id=?", [NSNumber numberWithInteger:pk]];
 		if (row && [row next])

@@ -10,6 +10,15 @@
 #import "PSAppReviewsStore.h"
 
 
+typedef enum
+{
+	PSAppStoreStateDefault,
+	PSAppStoreStatePending,
+	PSAppStoreStateProcessing,
+	PSAppStoreStateFailed
+} PSAppStoreState;
+
+
 @class FMDatabase;
 @class PSAppStoreApplication;
 @class PSAppStore;
@@ -56,6 +65,7 @@
 	// Non-persistent members.
 	BOOL hasNewRatings;
 	BOOL hasNewReviews;
+	PSAppStoreState state;
 
     // Opaque reference to the underlying database.
     FMDatabase *database;
@@ -102,6 +112,7 @@
 
 @property (nonatomic, assign) BOOL hasNewRatings;
 @property (nonatomic, assign) BOOL hasNewReviews;
+@property (assign) PSAppStoreState state;
 @property (nonatomic, assign, readonly) NSInteger primaryKey;
 
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;

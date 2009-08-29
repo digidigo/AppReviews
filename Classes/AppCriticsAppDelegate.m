@@ -20,13 +20,15 @@
 
 @implementation AppCriticsAppDelegate
 
-@synthesize window, exiting, settings;
+@synthesize window, exiting, settings, operationQueue;
 
 - (id)init
 {
 	if (self = [super init])
 	{
 		self.settings = [self loadUserSettings:@"143441"];
+		self.operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+		networkUsageCount = 0;
 		self.exiting = NO;
 	}
 	return self;
@@ -34,6 +36,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
+	PSLogDebug(@"-->");
     // Set up the window and content view
 	self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     [window setBackgroundColor:[UIColor whiteColor]];
@@ -61,11 +64,14 @@
 		[alert show];
 		[alert release];
 	}
+	PSLogDebug(@"<--");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	PSLogDebug(@"");
+	// Suspend all NSOperations.
+	[self makeOperationQueuesPerformSelector:@selector(suspendAllOperations)];
 	// Wind down background tasks while we are not active.
 	self.exiting = YES;
 	[appReviewsStore save];
@@ -76,17 +82,22 @@
 	PSLogDebug(@"");
 	// Re-enable background tasks when we become active again.
 	self.exiting = NO;
+	// Resume all NSOperations.
+	[self makeOperationQueuesPerformSelector:@selector(resumeAllOperations)];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	PSLogDebug(@"");
+	PSLogDebug(@"-->");
+	// Cancel all NSOperations.
+	[self makeOperationQueuesPerformSelector:@selector(cancelAllOperations)];
 	// Wind down background tasks while we are exiting.
 	self.exiting = YES;
 
 	// Save data.
 	[appReviewsStore save];
 	[appReviewsStore close];
+	PSLogDebug(@"<--");
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
@@ -104,97 +115,9 @@
     [window release];
 	[navigationController release];
 	[settings release];
+	[operationQueue release];
     [super dealloc];
 }
-
-/*- (void)saveData
-{
-	PSLogDebug(@"-->");
-
-	// Build filename.
-	NSString *documentFilename = [self.documentsPath stringByAppendingPathComponent:@"appsList.archive"];
-
-	// Delete existing file.
-	BOOL isDirectory = NO;
-	if ( [[NSFileManager defaultManager] fileExistsAtPath:documentFilename isDirectory:&isDirectory] )
-	{
-		[[NSFileManager defaultManager] removeItemAtPath:documentFilename error:NULL];
-	}
-
-	// Write new file.
-	PSLog(@"Saving apps list to: %@", documentFilename);
-	if ([NSKeyedArchiver archiveRootObject:appStoreApplications toFile:documentFilename])
-	{
-		// Save reviews files for all appIds.
-		for (PSAppStoreApplication *thisApp in appStoreApplications)
-		{
-			for (PSAppStoreReviews *reviews in [thisApp.reviewsByStore allValues])
-			{
-				[reviews saveReviews];
-			}
-		}
-	}
-	else
-	{
-		PSLogError(@"Could not save apps list");
-	}
-
-	PSLogDebug(@"<--");
-}*/
-
-/*- (void)loadData
-{
-	PSLogDebug(@"-->");
-	BOOL loaded = NO;
-
-	// Build filename.
-	NSString *documentFilename = [self.documentsPath stringByAppendingPathComponent:@"appsList.archive"];
-
-	// Does file exist?
-	BOOL isDirectory = NO;
-	if ( [[NSFileManager defaultManager] fileExistsAtPath:documentFilename isDirectory:&isDirectory] )
-	{
-		NSMutableArray *newApps;
-
-		PSLog(@"Loading apps list from: %@", documentFilename);
-		newApps = [NSKeyedUnarchiver unarchiveObjectWithFile:documentFilename];
-		if (newApps)
-		{
-			[newApps retain];
-			[appStoreApplications release];
-			appStoreApplications = newApps;
-			// We successfully read apps list from the file.
-			loaded = YES;
-#ifdef DEBUG
-			// Print out apps list.
-			PSLog(@"Loaded apps list:");
-			for (PSAppStoreApplication *app in newApps)
-			{
-				PSLog(@"  %@: %@", app.appIdentifier, app.name);
-			}
-#endif
-		}
-		else
-		{
-			PSLogError(@"Failed to load apps list");
-		}
-
-		PSLog(@"Loaded %d apps", [appStoreApplications count]);
-	}
-	else
-	{
-		// File does not exist.
-#ifdef DEBUG
-		[self setupTestData];
-#endif
-		// Start new user off with some default applications.
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
-		[appStoreApplications addObject:[[[PSAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
-		PSLog(@"Added %d apps", [appStoreApplications count]);
-	}
-
-	PSLogDebug(@"<--");
-}*/
 
 - (NSUserDefaults *)loadUserSettings:(NSString *)aKey
 {
@@ -222,6 +145,64 @@
 	}
 
 	return tmpSettings;
+}
+
+- (void)increaseNetworkUsageCount
+{
+	@synchronized (self)
+	{
+		networkUsageCount++;
+
+		UIApplication *app = [UIApplication sharedApplication];
+		if (networkUsageCount > 0)
+			app.networkActivityIndicatorVisible = YES;
+		else
+			app.networkActivityIndicatorVisible = NO;
+	}
+}
+
+- (void)decreaseNetworkUsageCount
+{
+	@synchronized (self)
+	{
+		if (networkUsageCount > 0)
+			networkUsageCount--;
+
+		UIApplication *app = [UIApplication sharedApplication];
+		if (networkUsageCount > 0)
+			app.networkActivityIndicatorVisible = YES;
+		else
+			app.networkActivityIndicatorVisible = NO;
+	}
+}
+
+- (void)makeOperationQueuesPerformSelector:(SEL)selector
+{
+	PSLogDebug(@"%s", sel_getName(selector));
+	// First perform selector on the appDelegate's op queue.
+	[self performSelector:selector];
+
+	// Now perform selector on all applications' op queues.
+	NSArray *allApps = [[PSAppReviewsStore sharedInstance] applications];
+	[allApps makeObjectsPerformSelector:selector];
+}
+
+- (void)cancelAllOperations
+{
+	PSLogDebug(@"");
+	[self.operationQueue cancelAllOperations];
+}
+
+- (void)suspendAllOperations
+{
+	PSLogDebug(@"");
+	[self.operationQueue setSuspended:YES];
+}
+
+- (void)resumeAllOperations
+{
+	PSLogDebug(@"");
+	[self.operationQueue setSuspended:NO];
 }
 
 @end

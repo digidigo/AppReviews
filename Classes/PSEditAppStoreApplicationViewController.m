@@ -10,6 +10,7 @@
 #import "PSSelectionListViewController.h"
 #import "PSAppReviewsStore.h"
 #import "PSAppStoreApplication.h"
+#import "PSAppStoreVerifyOperation.h"
 #import "PSAppStoreApplicationDetailsImporter.h"
 #import "PSAppStore.h"
 #import "PSProgressHUD.h"
@@ -31,6 +32,19 @@
 		self.defaultStore = kDefaultStoreId;
     }
     return self;
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[appId release];
+	[label release];
+	[defaultStoreButton release];
+	[defaultStore release];
+	[saveButton release];
+	[app release];
+	[selectionListViewController release];
+    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -95,18 +109,6 @@
 }
 
 
-- (void)dealloc
-{
-	[appId release];
-	[label release];
-	[defaultStoreButton release];
-	[defaultStore release];
-	[saveButton release];
-	[app release];
-	[selectionListViewController release];
-    [super dealloc];
-}
-
 - (void)setApp:(PSAppStoreApplication *)inApp
 {
 	[inApp retain];
@@ -143,7 +145,10 @@
 	else
 	{
 		// Validate appId against storeId by fetching details from store.
-		PSAppStoreApplicationDetailsImporter *importer = [[PSAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appId.text storeIdentifier:self.defaultStore];
+		PSAppStoreVerifyOperation *op = [[PSAppStoreVerifyOperation alloc] initWithAppIdentifier:appId.text storeIdentifier:self.defaultStore];
+		[op setQueuePriority:NSOperationQueuePriorityVeryHigh];
+
+
 		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:self.defaultStore];
 
 		PSProgressHUD *progressHUD = [[[PSProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
@@ -151,33 +156,26 @@
 		progressHUD.titleLabel.text = @"Verifying Application Identifier";
 		progressHUD.bezelPosition = PSProgressHUDBezelPositionCenter;
 		progressHUD.bezelSize = CGSizeMake(240.0, 110.0);
+		op.progressHUD = progressHUD;
 		// Show progress HUD.
 		[progressHUD progressBeginWithMessage:store.name];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreApplicationDetailsUpdatedNotification object:importer];
-		[importer fetchDetails:progressHUD];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreVerifyOperationDidFinishNotification object:op];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreVerifyOperationDidFailNotification object:op];
+		[appDelegate.operationQueue addOperation:op];
+		[op release];
 	}
-}
-
-- (void)detailsUpdated:(NSNotification *)notification
-{
-	// This is called on the same thread that sent the notification.
-	PSLog(@"Received notification: %@", notification.name);
-	// Perform validation on main thread.
-	[self performSelectorOnMainThread:@selector(validateApplication:) withObject:notification.object waitUntilDone:NO];
 }
 
 - (void)validateApplication:(PSAppStoreApplicationDetailsImporter *)detailsImporter
 {
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreVerifyOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreVerifyOperationDidFailNotification object:nil];
+
 	if (detailsImporter)
 	{
-		// Release the progress handler.
-		[detailsImporter.downloadProgressHandler progressEnd];
-		detailsImporter.downloadProgressHandler = nil;
-
 		if (!appDelegate.exiting)
 		{
 			if (detailsImporter.appName && detailsImporter.appCompany)
@@ -225,7 +223,21 @@
 				[alert release];
 			}
 		}
-		[detailsImporter release];
+	}
+}
+
+// This is called on the main thread.
+- (void)detailsUpdated:(NSNotification *)notification
+{
+	PSLog(@"Received notification: %@", notification.name);
+
+	PSAppStoreVerifyOperation *op = (PSAppStoreVerifyOperation *) [notification object];
+	if ([op.detailsImporter.appIdentifier isEqualToString:appId.text] && [op.detailsImporter.storeIdentifier isEqualToString:self.defaultStore])
+	{
+		// Hide the progress HUD.
+		[op.progressHUD progressEnd];
+
+		[self validateApplication:op.detailsImporter];
 	}
 }
 
