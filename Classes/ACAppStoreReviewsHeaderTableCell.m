@@ -1,15 +1,15 @@
 //
-//  PSAppStoreReviewsHeaderTableCell.m
+//  ACAppStoreReviewsHeaderTableCell.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 21/11/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreReviewsHeaderTableCell.h"
-#import "PSAppReviewsStore.h"
-#import "PSAppStoreApplicationDetails.h"
-#import "PSAppStoreApplication.h"
+#import "ACAppStoreReviewsHeaderTableCell.h"
+#import "ACAppReviewsStore.h"
+#import "ACAppStoreApplicationDetails.h"
+#import "ACAppStoreApplication.h"
 #import "UIColor+MoreColors.h"
 #import "AppCriticsAppDelegate.h"
 
@@ -18,7 +18,7 @@ static UIColor *sLabelColor = nil;
 static CGGradientRef sGradient = NULL;
 
 
-@implementation PSAppStoreReviewsHeaderTableCell
+@implementation ACAppStoreReviewsHeaderTableCell
 
 @synthesize appDetails, appCompany, versionLabel, versionValue, sizeLabel, sizeValue, dateLabel, dateValue;
 @synthesize priceLabel, priceValue;
@@ -273,7 +273,7 @@ static CGGradientRef sGradient = NULL;
 	sizeLabel.frame = frame;
 }
 
-- (void)setAppDetails:(PSAppStoreApplicationDetails *)inDetails
+- (void)setAppDetails:(ACAppStoreApplicationDetails *)inDetails
 {
 	[inDetails retain];
 	[appDetails release];
@@ -281,7 +281,7 @@ static CGGradientRef sGradient = NULL;
 
 	if (appDetails)
 	{
-		PSAppStoreApplication *theApp = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
+		ACAppStoreApplication *theApp = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
 		if (theApp.name)
 			appName.text = theApp.name;
 		else

@@ -1,5 +1,5 @@
 //
-//  PSAppStore.h
+//  ACAppStore.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface PSAppStore : NSObject
+@interface ACAppStore : NSObject
 {
 	NSString *name;
 	NSString *storeIdentifier;

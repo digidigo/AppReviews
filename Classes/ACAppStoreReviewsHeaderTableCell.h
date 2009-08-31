@@ -1,5 +1,5 @@
 //
-//  PSAppStoreReviewsHeaderTableCell.h
+//  ACAppStoreReviewsHeaderTableCell.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 21/11/2008.
@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSAppStoreApplicationDetails;
+@class ACAppStoreApplicationDetails;
 
 
-@interface PSAppStoreReviewsHeaderTableCell : UITableViewCell
+@interface ACAppStoreReviewsHeaderTableCell : UITableViewCell
 {
-	PSAppStoreApplicationDetails *appDetails;
+	ACAppStoreApplicationDetails *appDetails;
 	UILabel *appName;
 	UILabel *appCompany;
 	UILabel *versionLabel;
@@ -27,7 +27,7 @@
 	UILabel *priceValue;
 }
 
-@property (nonatomic, retain) PSAppStoreApplicationDetails *appDetails;
+@property (nonatomic, retain) ACAppStoreApplicationDetails *appDetails;
 @property (nonatomic, retain) UILabel *appCompany;
 @property (nonatomic, retain) UILabel *versionLabel;
 @property (nonatomic, retain) UILabel *versionValue;

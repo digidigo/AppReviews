@@ -865,72 +865,6 @@
 			};
 			name = Release;
 		};
-		FB81A76C0EB1A6AC0061B88B /* Ad Hoc Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = dist.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3C85951-1854-461D-A955-5641C38A3781";
-				SDKROOT = iphoneos3.0;
-			};
-			name = "Ad Hoc Distribution";
-		};
-		FB81A76D0EB1A6AC0061B88B /* Ad Hoc Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-lsqlite3",
-					"-lz",
-				);
-				PRODUCT_NAME = AppCritics;
-			};
-			name = "Ad Hoc Distribution";
-		};
-		FBD1F0890EE3BE4200336D60 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Charles Gamble";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Charles Gamble";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				OTHER_LDFLAGS = "-lz";
-				PREBINDING = NO;
-				PROVISIONING_PROFILE = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B54B46F1-E6E8-46C4-8667-1CD95CB41C80";
-				SDKROOT = iphoneos3.0;
-			};
-			name = Distribution;
-		};
-		FBD1F08A0EE3BE4200336D60 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AppCritics_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-lsqlite3",
-					"-lz",
-				);
-				PRODUCT_NAME = AppCritics;
-			};
-			name = Distribution;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -939,8 +873,6 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
-				FBD1F08A0EE3BE4200336D60 /* Distribution */,
-				FB81A76D0EB1A6AC0061B88B /* Ad Hoc Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -950,8 +882,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				FBD1F0890EE3BE4200336D60 /* Distribution */,
-				FB81A76C0EB1A6AC0061B88B /* Ad Hoc Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

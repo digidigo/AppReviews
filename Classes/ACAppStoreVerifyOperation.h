@@ -1,5 +1,5 @@
 //
-//  PSAppStoreVerifyOperation.h
+//  ACAppStoreVerifyOperation.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 21/08/2009.
@@ -9,21 +9,21 @@
 #import <Foundation/Foundation.h>
 
 
-@class PSAppStoreApplicationDetailsImporter;
+@class ACAppStoreApplicationDetailsImporter;
 @class PSProgressHUD;
 
 
-@interface PSAppStoreVerifyOperation : NSOperation
+@interface ACAppStoreVerifyOperation : NSOperation
 {
 	NSString *appIdentifier;
 	NSString *storeIdentifier;
-	PSAppStoreApplicationDetailsImporter *detailsImporter;
+	ACAppStoreApplicationDetailsImporter *detailsImporter;
 	PSProgressHUD *progressHUD;
 }
 
 @property (nonatomic, copy) NSString *appIdentifier;
 @property (nonatomic, copy) NSString *storeIdentifier;
-@property (nonatomic, readonly) PSAppStoreApplicationDetailsImporter *detailsImporter;
+@property (nonatomic, readonly) ACAppStoreApplicationDetailsImporter *detailsImporter;
 @property (nonatomic, retain) PSProgressHUD *progressHUD;
 
 - (id)initWithAppIdentifier:(NSString *)appId storeIdentifier:(NSString *)storeId;

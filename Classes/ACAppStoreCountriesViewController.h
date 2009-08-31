@@ -1,5 +1,5 @@
 //
-//  PSAppStoreCountriesViewController.h
+//  ACAppStoreCountriesViewController.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
@@ -8,30 +8,30 @@
 
 #import <UIKit/UIKit.h>
 
-@class PSAppStoreApplication;
-@class PSAppStoreApplicationDetailsImporter;
-@class PSAppStoreApplicationReviewsImporter;
-@class PSAppStoreReviewsViewController;
+@class ACAppStoreApplication;
+@class ACAppStoreApplicationDetailsImporter;
+@class ACAppStoreApplicationReviewsImporter;
+@class ACAppStoreReviewsViewController;
 
-@interface PSAppStoreCountriesViewController : UITableViewController <UIActionSheetDelegate>
+@interface ACAppStoreCountriesViewController : UITableViewController <UIActionSheetDelegate>
 {
-	PSAppStoreApplication *appStoreApplication;
+	ACAppStoreApplication *appStoreApplication;
 	UIBarButtonItem *updateButton;
 	UILabel *remainingLabel;
 	UIActivityIndicatorView *remainingSpinner;
 	NSMutableArray *enabledStores;
 	NSMutableArray *displayedStores;
-	PSAppStoreReviewsViewController *appStoreReviewsViewController;
+	ACAppStoreReviewsViewController *appStoreReviewsViewController;
 
 	// Members used when updating reviews.
-	PSAppStoreApplicationDetailsImporter *detailsImporter;
-	PSAppStoreApplicationReviewsImporter *reviewsImporter;
+	ACAppStoreApplicationDetailsImporter *detailsImporter;
+	ACAppStoreApplicationReviewsImporter *reviewsImporter;
 	NSMutableArray *storeIdsProcessed;
 	NSMutableArray *storeIdsRemaining;
 	NSMutableArray *unavailableStoreNames;
 	NSMutableArray *failedStoreNames;
 }
 
-@property (nonatomic, retain) PSAppStoreApplication *appStoreApplication;
+@property (nonatomic, retain) ACAppStoreApplication *appStoreApplication;
 
 @end

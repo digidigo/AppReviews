@@ -1,38 +1,38 @@
 //
-//  PSAppStoreCountriesViewController.m
+//  ACAppStoreCountriesViewController.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppReviewsStore.h"
-#import "PSAppStoreCountriesViewController.h"
-#import "PSAppStoreReviewsViewController.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStore.h"
-#import "PSAppStoreApplicationDetails.h"
-#import "PSAppStoreUpdateOperation.h"
-#import "PSAppStoreApplicationDetailsImporter.h"
-#import "PSAppStoreApplicationReviewsImporter.h"
+#import "ACAppReviewsStore.h"
+#import "ACAppStoreCountriesViewController.h"
+#import "ACAppStoreReviewsViewController.h"
+#import "ACAppStoreApplication.h"
+#import "ACAppStore.h"
+#import "ACAppStoreApplicationDetails.h"
+#import "ACAppStoreUpdateOperation.h"
+#import "ACAppStoreApplicationDetailsImporter.h"
+#import "ACAppStoreApplicationReviewsImporter.h"
 #import "AppCriticsAppDelegate.h"
-#import "PSAppStoreTableCell.h"
+#import "ACAppStoreTableCell.h"
 #import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
 #import "PSLog.h"
 
 
-@interface PSAppStoreCountriesViewController ()
+@interface ACAppStoreCountriesViewController ()
 
 @property (nonatomic, retain) NSMutableArray *enabledStores;
 @property (nonatomic, retain) NSMutableArray *displayedStores;
 @property (nonatomic, retain) UIBarButtonItem *updateButton;
 @property (nonatomic, retain) UILabel *remainingLabel;
 @property (nonatomic, retain) UIActivityIndicatorView *remainingSpinner;
-@property (nonatomic, retain) PSAppStoreReviewsViewController *appStoreReviewsViewController;
-@property (retain) PSAppStoreApplicationDetailsImporter *detailsImporter;
-@property (retain) PSAppStoreApplicationReviewsImporter *reviewsImporter;
+@property (nonatomic, retain) ACAppStoreReviewsViewController *appStoreReviewsViewController;
+@property (retain) ACAppStoreApplicationDetailsImporter *detailsImporter;
+@property (retain) ACAppStoreApplicationReviewsImporter *reviewsImporter;
 @property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
 @property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
 @property (nonatomic, retain) NSMutableArray *unavailableStoreNames;
@@ -42,7 +42,7 @@
 
 @end
 
-@implementation PSAppStoreCountriesViewController
+@implementation ACAppStoreCountriesViewController
 
 @synthesize appStoreApplication, enabledStores, displayedStores, updateButton, remainingLabel, remainingSpinner, appStoreReviewsViewController, detailsImporter, reviewsImporter, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
 
@@ -149,7 +149,7 @@
 
 	// Build up a list of enabled stores.
 	[enabledStores removeAllObjects];
-	for (PSAppStore *store in [[PSAppReviewsStore sharedInstance] appStores])
+	for (ACAppStore *store in [[ACAppReviewsStore sharedInstance] appStores])
 	{
 		if (store.enabled)
 		{
@@ -166,9 +166,9 @@
 {
 	[super viewDidAppear:animated];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -177,12 +177,12 @@
 
 	[self.navigationController setToolbarHidden:YES animated:animated];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFailNotification object:nil];
 }
 
-- (void)setAppStoreApplication:(PSAppStoreApplication *)inAppStoreApplication
+- (void)setAppStoreApplication:(ACAppStoreApplication *)inAppStoreApplication
 {
 	[inAppStoreApplication retain];
 	[appStoreApplication release];
@@ -203,14 +203,14 @@
 
 	// Add operations to the queue for processing.
 	[appStoreApplication suspendAllOperations];
-	for (PSAppStore *appStore in enabledStores)
+	for (ACAppStore *appStore in enabledStores)
 	{
 		// Only add this store if it is enabled for this app.
 		if (appStore.enabled)
 		{
-			PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
-			details.state = PSAppStoreStatePending;
-			PSAppStoreUpdateOperation *op = [[PSAppStoreUpdateOperation alloc] initWithApplicationDetails:details];
+			ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+			details.state = ACAppStoreStatePending;
+			ACAppStoreUpdateOperation *op = [[ACAppStoreUpdateOperation alloc] initWithApplicationDetails:details];
 
 			// Make sure that the "home store" for this app has a high priority in the queue.
 			if ([appStore.storeIdentifier isEqualToString:appStoreApplication.defaultStoreIdentifier])
@@ -236,7 +236,7 @@
 - (void)appStoreReviewsUpdated:(NSNotification *)notification
 {
 	PSLog(@"Received notification: %@", notification.name);
-	PSAppStoreApplicationDetails *lastStoreProcessed = (PSAppStoreApplicationDetails *) [notification object];
+	ACAppStoreApplicationDetails *lastStoreProcessed = (ACAppStoreApplicationDetails *) [notification object];
 
 	// Only pay attention to this notification if it is for our current application.
 	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreApplication.appIdentifier])
@@ -245,7 +245,7 @@
 		[self updateDisplayedStores];
 
 		// Fill in missing app details if we have them available in last processed store reviews.
-		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [[notification name] isEqualToString:kPSAppStoreUpdateOperationDidFinishNotification])
+		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [[notification name] isEqualToString:kACAppStoreUpdateOperationDidFinishNotification])
 		{
 			if (lastStoreProcessed.appName && [lastStoreProcessed.appName length] > 0)
 			{
@@ -265,9 +265,9 @@
 {
 	// Updates the tableview and takes account of the hideEmptyCountries setting.
 	[displayedStores removeAllObjects];
-	for (PSAppStore *appStore in enabledStores)
+	for (ACAppStore *appStore in enabledStores)
 	{
-		PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+		ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 		// Only add store if it has any ratings/reviews OR we are not hiding empty stores.
 		if ((details && (details.reviewCountAll + details.reviewCountCurrent + details.ratingCountAll + details.ratingCountCurrent) > 0) ||
 			([[NSUserDefaults standardUserDefaults] boolForKey:@"hideEmptyCountries"] == NO))
@@ -302,10 +302,10 @@
 	NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
 	if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
 	{
-		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+		ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
 		if (store)
 		{
-			PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+			ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
 			if (details)
 			{
 				[details hydrate];
@@ -337,12 +337,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// Display reviews for store.
-	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
-	PSAppStoreApplicationDetails *appStoreDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	ACAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
+	ACAppStoreApplicationDetails *appStoreDetails = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	// Lazily create reviews view controller.
 	if (self.appStoreReviewsViewController == nil)
 	{
-		PSAppStoreReviewsViewController *viewController = [[PSAppStoreReviewsViewController alloc] initWithStyle:UITableViewStylePlain];
+		ACAppStoreReviewsViewController *viewController = [[ACAppStoreReviewsViewController alloc] initWithStyle:UITableViewStylePlain];
 		self.appStoreReviewsViewController = viewController;
 		[viewController release];
 	}
@@ -376,16 +376,16 @@
 {
     static NSString *CellIdentifier = @"AppStoreCell";
 
-    PSAppStoreTableCell *cell = (PSAppStoreTableCell *) [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ACAppStoreTableCell *cell = (ACAppStoreTableCell *) [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[PSAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ACAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	PSAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
+	ACAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	cell.nameLabel.text = appStore.name;
 	cell.flagView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", appStore.storeIdentifier]];
-	PSAppStoreApplicationDetails *storeDetails = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	ACAppStoreApplicationDetails *storeDetails = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	if (storeDetails)
 	{
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -421,7 +421,7 @@
 		cell.countView.count = 0;
 		cell.ratingView.rating = 0.0;
 		[cell.countView setLozengeColor:nil];
-		cell.state = PSAppStoreStateDefault;
+		cell.state = ACAppStoreStateDefault;
 	}
 
     return cell;
@@ -458,10 +458,10 @@
 			NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
 			if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
 			{
-				PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+				ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
 				if (store)
 				{
-					PSAppStoreApplicationDetails *details = [[PSAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+					ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
 					if (details)
 					{
 						NSMutableArray *URLs = [NSMutableArray array];

@@ -1,5 +1,5 @@
 //
-//  PSEditAppStoreApplicationViewController.h
+//  ACEditAppStoreApplicationViewController.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 15/11/2008.
@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSAppStoreApplication;
+@class ACAppStoreApplication;
 @class PSSelectionListViewController;
 
 
-@interface PSEditAppStoreApplicationViewController : UIViewController
+@interface ACEditAppStoreApplicationViewController : UIViewController
 {
 	UITextField *appId;
 	UILabel *label;
 	UIButton *defaultStoreButton;
 	UIBarButtonItem *saveButton;
 	NSString *defaultStore;
-	PSAppStoreApplication *app;
+	ACAppStoreApplication *app;
 	PSSelectionListViewController *selectionListViewController;
 }
 
@@ -29,7 +29,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *defaultStoreButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, retain) NSString *defaultStore;
-@property (nonatomic, retain) PSAppStoreApplication *app;
+@property (nonatomic, retain) ACAppStoreApplication *app;
 @property (nonatomic, retain) PSSelectionListViewController *selectionListViewController;
 
 - (IBAction)cancel:(id)sender;

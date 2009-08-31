@@ -1,5 +1,5 @@
 //
-//  PSAppStoreUpdateOperation.h
+//  ACAppStoreUpdateOperation.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 19/08/2009.
@@ -9,24 +9,24 @@
 #import <Foundation/Foundation.h>
 
 
-@class PSAppStoreApplicationDetailsImporter;
-@class PSAppStoreApplicationReviewsImporter;
-@class PSAppStoreApplicationDetails;
+@class ACAppStoreApplicationDetailsImporter;
+@class ACAppStoreApplicationReviewsImporter;
+@class ACAppStoreApplicationDetails;
 
 
-@interface PSAppStoreUpdateOperation : NSOperation
+@interface ACAppStoreUpdateOperation : NSOperation
 {
 	BOOL fetchReviews;
-	PSAppStoreApplicationDetails *appDetails;
-	PSAppStoreApplicationDetailsImporter *detailsImporter;
-	PSAppStoreApplicationReviewsImporter *reviewsImporter;
+	ACAppStoreApplicationDetails *appDetails;
+	ACAppStoreApplicationDetailsImporter *detailsImporter;
+	ACAppStoreApplicationReviewsImporter *reviewsImporter;
 }
 
 @property (nonatomic, assign) BOOL fetchReviews;
-@property (nonatomic, readonly) PSAppStoreApplicationDetails *appDetails;
-@property (nonatomic, readonly) PSAppStoreApplicationDetailsImporter *detailsImporter;
-@property (nonatomic, readonly) PSAppStoreApplicationReviewsImporter *reviewsImporter;
+@property (nonatomic, readonly) ACAppStoreApplicationDetails *appDetails;
+@property (nonatomic, readonly) ACAppStoreApplicationDetailsImporter *detailsImporter;
+@property (nonatomic, readonly) ACAppStoreApplicationReviewsImporter *reviewsImporter;
 
-- (id)initWithApplicationDetails:(PSAppStoreApplicationDetails *)details;
+- (id)initWithApplicationDetails:(ACAppStoreApplicationDetails *)details;
 
 @end

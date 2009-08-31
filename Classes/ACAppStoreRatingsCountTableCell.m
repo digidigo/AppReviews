@@ -1,22 +1,22 @@
 //
-//  PSAppStoreRatingsCountTableCell.m
+//  ACAppStoreRatingsCountTableCell.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 23/06/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreRatingsCountTableCell.h"
+#import "ACAppStoreRatingsCountTableCell.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
-#import "PSHorizontalBarView.h"
+#import "ACHorizontalBarView.h"
 
 
 #define kRatingsCountBarWidth	kRatingWidth
 #define kRatingsCountBarHeight	16.0
 
 
-@implementation PSAppStoreRatingsCountTableCell
+@implementation ACAppStoreRatingsCountTableCell
 
 @synthesize ratingView, countView, barView;
 
@@ -32,7 +32,7 @@
 		[self.contentView addSubview:countView];
 
 		CGRect countBounds = [PSCountView boundsForCount:[countView count] usingFontSize:countView.fontSize];
-		barView = [[PSHorizontalBarView alloc] initWithFrame:CGRectMake(0, 0, kRatingsCountBarWidth, countBounds.size.height)];
+		barView = [[ACHorizontalBarView alloc] initWithFrame:CGRectMake(0, 0, kRatingsCountBarWidth, countBounds.size.height)];
 		[self.contentView addSubview:barView];
     }
     return self;

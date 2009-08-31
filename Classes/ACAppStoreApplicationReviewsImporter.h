@@ -1,5 +1,5 @@
 //
-//  PSAppStoreApplicationReviewsImporter.h
+//  ACAppStoreApplicationReviewsImporter.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 09/04/2009.
@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSAppReviewsStore.h"
+#import "ACAppReviewsStore.h"
 #import "AppCriticsAppDelegate.h"
 
 
-//@class PSAppStoreApplication;
-//@class PSAppStore;
+//@class ACAppStoreApplication;
+//@class ACAppStore;
 
 
 typedef enum
@@ -53,7 +53,7 @@ typedef enum
 } ReviewsXMLState;
 
 
-@interface PSAppStoreApplicationReviewsImporter : NSObject
+@interface ACAppStoreApplicationReviewsImporter : NSObject
 {
 	NSString *appIdentifier;
 	NSString *storeIdentifier;

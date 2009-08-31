@@ -1,22 +1,22 @@
 //
-//  PSAppStoreApplicationDetailsImporter.m
+//  ACAppStoreApplicationDetailsImporter.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 16/03/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreApplicationDetailsImporter.h"
-#import "PSAppStoreApplicationDetails.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStore.h"
+#import "ACAppStoreApplicationDetailsImporter.h"
+#import "ACAppStoreApplicationDetails.h"
+#import "ACAppStoreApplication.h"
+#import "ACAppStore.h"
 #import "AppCriticsAppDelegate.h"
 #import "GTMRegex.h"
 #import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
 
 
-@implementation PSAppStoreApplicationDetailsImporter
+@implementation ACAppStoreApplicationDetailsImporter
 
 @synthesize appIdentifier, storeIdentifier, category, categoryIdentifier, ratingCountAll, ratingCountCurrent, ratingAll, ratingCurrent, reviewCountAll, reviewCountCurrent, lastSortOrder, lastUpdated;
 @synthesize released, appVersion, appSize, localPrice, appName, appCompany, companyURL, companyURLTitle, supportURL, supportURLTitle;
@@ -63,7 +63,7 @@
 		self.companyURLTitle = nil;
 		self.supportURL = nil;
 		self.supportURLTitle = nil;
-		self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+		self.lastSortOrder = (ACReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 		self.lastUpdated = [NSDate distantPast];
 		self.hasNewReviews = NO;
 		self.importState = DetailsImportStateEmpty;
@@ -129,7 +129,7 @@
 	{
 		PSLog(@"Successfully parsed XML document");
 		self.lastUpdated = [NSDate date];
-		self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+		self.lastSortOrder = (ACReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 		self.importState = DetailsImportStateComplete;
 	}
 	else
@@ -144,7 +144,7 @@
 	[pool release];
 }
 
-- (void)copyDetailsTo:(PSAppStoreApplicationDetails *)receiver
+- (void)copyDetailsTo:(ACAppStoreApplicationDetails *)receiver
 {
 	receiver.appIdentifier = self.appIdentifier;
 	receiver.storeIdentifier = self.storeIdentifier;

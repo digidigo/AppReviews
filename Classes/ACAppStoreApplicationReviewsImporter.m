@@ -1,19 +1,19 @@
 //
-//  PSAppStoreApplicationReviewsImporter.m
+//  ACAppStoreApplicationReviewsImporter.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 09/04/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreApplicationReviewsImporter.h"
-#import "PSAppStoreApplicationReview.h"
+#import "ACAppStoreApplicationReviewsImporter.h"
+#import "ACAppStoreApplicationReview.h"
 #import "GTMRegex.h"
 #import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
 
 
-@implementation PSAppStoreApplicationReviewsImporter
+@implementation ACAppStoreApplicationReviewsImporter
 
 @synthesize appIdentifier, storeIdentifier, importState;
 
@@ -347,7 +347,7 @@
 				[currentString setString:@""];
 				// Store current review info, ready for reading next review.
 				currentReviewIndex++;
-				PSAppStoreApplicationReview *thisReview = [[PSAppStoreApplicationReview alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
+				ACAppStoreApplicationReview *thisReview = [[ACAppStoreApplicationReview alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
 				thisReview.summary = currentReviewSummary;
 				thisReview.detail = currentReviewDetail;
 				thisReview.reviewer = currentReviewer;

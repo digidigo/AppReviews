@@ -1,5 +1,5 @@
 //
-//  PSAppStoreRatingsCountTableCell.h
+//  ACAppStoreRatingsCountTableCell.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 23/06/2009.
@@ -10,17 +10,17 @@
 
 @class PSRatingView;
 @class PSCountView;
-@class PSHorizontalBarView;
+@class ACHorizontalBarView;
 
-@interface PSAppStoreRatingsCountTableCell : UITableViewCell
+@interface ACAppStoreRatingsCountTableCell : UITableViewCell
 {
 	PSRatingView *ratingView;
 	PSCountView *countView;
-	PSHorizontalBarView *barView;
+	ACHorizontalBarView *barView;
 }
 
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) PSCountView *countView;
-@property (nonatomic, retain) PSHorizontalBarView *barView;
+@property (nonatomic, retain) ACHorizontalBarView *barView;
 
 @end

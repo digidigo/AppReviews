@@ -1,25 +1,25 @@
 //
-//  PSAppStoreVerifyOperation.m
+//  ACAppStoreVerifyOperation.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 21/08/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreVerifyOperation.h"
-#import "PSAppStoreApplicationDetailsImporter.h"
+#import "ACAppStoreVerifyOperation.h"
+#import "ACAppStoreApplicationDetailsImporter.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSLog.h"
 
 
-@interface PSAppStoreVerifyOperation ()
+@interface ACAppStoreVerifyOperation ()
 
 - (NSData *)dataFromURL:(NSURL *)url;
 
 @end
 
 
-@implementation PSAppStoreVerifyOperation
+@implementation ACAppStoreVerifyOperation
 
 @synthesize appIdentifier, storeIdentifier, detailsImporter, progressHUD;
 
@@ -31,7 +31,7 @@
 	{
 		self.appIdentifier = appId;
 		self.storeIdentifier = storeId;
-		detailsImporter = [[PSAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
+		detailsImporter = [[ACAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
 	}
 	return self;
 }
@@ -53,8 +53,8 @@
 
 	BOOL success = YES;
 
-	// Send kPSAppStoreVerifyOperationDidStartNotification to main thread.
-	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kPSAppStoreVerifyOperationDidStartNotification object:detailsImporter] waitUntilDone:NO];
+	// Send kACAppStoreVerifyOperationDidStartNotification to main thread.
+	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidStartNotification object:detailsImporter] waitUntilDone:NO];
 
 	// Fetch app details.
 	if (![self isCancelled])
@@ -79,13 +79,13 @@
 	{
 		if (success)
 		{
-			// Send kPSAppStoreVerifyOperationDidFinishNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kPSAppStoreVerifyOperationDidFinishNotification object:self] waitUntilDone:YES];
+			// Send kACAppStoreVerifyOperationDidFinishNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidFinishNotification object:self] waitUntilDone:YES];
 		}
 		else
 		{
-			// Send kPSAppStoreVerifyOperationDidFailNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kPSAppStoreVerifyOperationDidFailNotification object:self] waitUntilDone:YES];
+			// Send kACAppStoreVerifyOperationDidFailNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidFailNotification object:self] waitUntilDone:YES];
 		}
 	}
 

@@ -1,5 +1,5 @@
 //
-//  PSAppStoreApplicationDetails.h
+//  ACAppStoreApplicationDetails.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 15/03/2009.
@@ -7,24 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PSAppReviewsStore.h"
+#import "ACAppReviewsStore.h"
 
 
 typedef enum
 {
-	PSAppStoreStateDefault,
-	PSAppStoreStatePending,
-	PSAppStoreStateProcessing,
-	PSAppStoreStateFailed
-} PSAppStoreState;
+	ACAppStoreStateDefault,
+	ACAppStoreStatePending,
+	ACAppStoreStateProcessing,
+	ACAppStoreStateFailed
+} ACAppStoreState;
 
 
 @class FMDatabase;
-@class PSAppStoreApplication;
-@class PSAppStore;
+@class ACAppStoreApplication;
+@class ACAppStore;
 
 
-@interface PSAppStoreApplicationDetails : NSObject
+@interface ACAppStoreApplicationDetails : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;
@@ -47,7 +47,7 @@ typedef enum
 	double ratingCurrent;
 	NSUInteger reviewCountAll;
 	NSUInteger reviewCountCurrent;
-	PSReviewsSortOrder lastSortOrder;
+	ACReviewsSortOrder lastSortOrder;
 	NSDate *lastUpdated;
 
 	// Persistent members (dehydrated).
@@ -65,7 +65,7 @@ typedef enum
 	// Non-persistent members.
 	BOOL hasNewRatings;
 	BOOL hasNewReviews;
-	PSAppStoreState state;
+	ACAppStoreState state;
 
     // Opaque reference to the underlying database.
     FMDatabase *database;
@@ -97,7 +97,7 @@ typedef enum
 @property (nonatomic, assign) double ratingCurrent;
 @property (nonatomic, assign) NSUInteger reviewCountAll;
 @property (nonatomic, assign) NSUInteger reviewCountCurrent;
-@property (nonatomic, assign) PSReviewsSortOrder lastSortOrder;
+@property (nonatomic, assign) ACReviewsSortOrder lastSortOrder;
 @property (nonatomic, copy) NSDate *lastUpdated;
 @property (nonatomic, copy) NSString *released;
 @property (nonatomic, copy) NSString *appVersion;
@@ -112,7 +112,7 @@ typedef enum
 
 @property (nonatomic, assign) BOOL hasNewRatings;
 @property (nonatomic, assign) BOOL hasNewReviews;
-@property (assign) PSAppStoreState state;
+@property (assign) ACAppStoreState state;
 @property (nonatomic, assign, readonly) NSInteger primaryKey;
 
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;

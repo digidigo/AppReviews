@@ -1,5 +1,5 @@
 //
-//  NSDate+PSNSDateAdditions.h
+//  NSDate+ACNSDateAdditions.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 02/10/2008.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSDate (PSNSDateAdditions)
+@interface NSDate (ACNSDateAdditions)
 
 + (NSString *)ordinalForDay:(NSUInteger)day;
 - (NSString *)friendlyDateStringWithFormat:(NSString *)format allowingWords:(BOOL)words;

@@ -1,5 +1,5 @@
 //
-//  PSAppStoreApplicationReview.h
+//  ACAppStoreApplicationReview.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 09/04/2009.
@@ -12,7 +12,7 @@
 @class FMDatabase;
 
 
-@interface PSAppStoreApplicationReview : NSObject
+@interface ACAppStoreApplicationReview : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;

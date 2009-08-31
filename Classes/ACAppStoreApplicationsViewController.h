@@ -1,5 +1,5 @@
 //
-//  PSAppStoreApplicationsViewController.h
+//  ACAppStoreApplicationsViewController.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSEditAppStoreApplicationViewController;
-@class PSAppStoreCountriesViewController;
+@class ACEditAppStoreApplicationViewController;
+@class ACAppStoreCountriesViewController;
 
 
-@interface PSAppStoreApplicationsViewController : UITableViewController
+@interface ACAppStoreApplicationsViewController : UITableViewController
 {
-	PSEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
-	PSAppStoreCountriesViewController *appStoreCountriesViewController;
+	ACEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
+	ACAppStoreCountriesViewController *appStoreCountriesViewController;
 	NSNumber *savedEditingState;
 }
 
-@property (nonatomic, retain) PSEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
-@property (nonatomic, retain) PSAppStoreCountriesViewController *appStoreCountriesViewController;
+@property (nonatomic, retain) ACEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
+@property (nonatomic, retain) ACAppStoreCountriesViewController *appStoreCountriesViewController;
 
 @end

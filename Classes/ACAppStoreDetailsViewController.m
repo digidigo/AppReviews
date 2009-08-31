@@ -1,37 +1,37 @@
 //
-//  PSAppStoreDetailsViewController.m
+//  ACAppStoreDetailsViewController.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 23/06/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreDetailsViewController.h"
-#import "PSAppStoreApplicationDetails.h"
-#import "PSAppStoreRatingsCountTableCell.h"
+#import "ACAppStoreDetailsViewController.h"
+#import "ACAppStoreApplicationDetails.h"
+#import "ACAppStoreRatingsCountTableCell.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
-#import "PSHorizontalBarView.h"
+#import "ACHorizontalBarView.h"
 
 
 typedef enum
 {
-	PSAppStoreDetailsRatingsSection,
-	PSAppStoreDetailsSectionCount
-} PSAppStoreDetailsSection;
+	ACAppStoreDetailsRatingsSection,
+	ACAppStoreDetailsSectionCount
+} ACAppStoreDetailsSection;
 
 typedef enum
 {
-	PSAppStoreDetailsRatingsFiveStarsRow,
-	PSAppStoreDetailsRatingsFourStarsRow,
-	PSAppStoreDetailsRatingsThreeStarsRow,
-	PSAppStoreDetailsRatingsTwoStarsRow,
-	PSAppStoreDetailsRatingsOneStarRow,
-	PSAppStoreDetailsRatingsRowCount
-} PSAppStoreDetailsRatingsRow;
+	ACAppStoreDetailsRatingsFiveStarsRow,
+	ACAppStoreDetailsRatingsFourStarsRow,
+	ACAppStoreDetailsRatingsThreeStarsRow,
+	ACAppStoreDetailsRatingsTwoStarsRow,
+	ACAppStoreDetailsRatingsOneStarRow,
+	ACAppStoreDetailsRatingsRowCount
+} ACAppStoreDetailsRatingsRow;
 
 
-@implementation PSAppStoreDetailsViewController
+@implementation ACAppStoreDetailsViewController
 
 @synthesize appStoreDetails, useCurrentVersion;
 
@@ -74,7 +74,7 @@ typedef enum
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return PSAppStoreDetailsSectionCount;
+    return ACAppStoreDetailsSectionCount;
 }
 
 
@@ -83,8 +83,8 @@ typedef enum
 {
 	switch (section)
 	{
-		case PSAppStoreDetailsRatingsSection:
-			return PSAppStoreDetailsRatingsRowCount;
+		case ACAppStoreDetailsRatingsSection:
+			return ACAppStoreDetailsRatingsRowCount;
 	}
     return 0;
 }
@@ -98,13 +98,13 @@ typedef enum
 
 	switch (indexPath.section)
 	{
-		case PSAppStoreDetailsRatingsSection:
+		case ACAppStoreDetailsRatingsSection:
 		{
 			// Obtain the cell.
-			PSAppStoreRatingsCountTableCell *rcCell = (PSAppStoreRatingsCountTableCell *) [tableView dequeueReusableCellWithIdentifier:kRatingsCountCellIdentifier];
+			ACAppStoreRatingsCountTableCell *rcCell = (ACAppStoreRatingsCountTableCell *) [tableView dequeueReusableCellWithIdentifier:kRatingsCountCellIdentifier];
 			if (rcCell == nil)
 			{
-				rcCell = [[[PSAppStoreRatingsCountTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRatingsCountCellIdentifier] autorelease];
+				rcCell = [[[ACAppStoreRatingsCountTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRatingsCountCellIdentifier] autorelease];
 				[rcCell.barView setBarRed:27.0/255.0 green:58.0/255.0 blue:95.0/255.0 alpha:1.0];
 			}
 
@@ -130,23 +130,23 @@ typedef enum
 			NSUInteger maxCount = MAX(MAX(MAX(MAX(ratingCountOneStar,ratingCountTwoStars),ratingCountThreeStars),ratingCountFourStars),ratingCountFiveStars);
 			switch (indexPath.row)
 			{
-				case PSAppStoreDetailsRatingsFiveStarsRow:
+				case ACAppStoreDetailsRatingsFiveStarsRow:
 					rcCell.ratingView.rating = 5.0;
 					rcCell.countView.count = ratingCountFiveStars;
 					break;
-				case PSAppStoreDetailsRatingsFourStarsRow:
+				case ACAppStoreDetailsRatingsFourStarsRow:
 					rcCell.ratingView.rating = 4.0;
 					rcCell.countView.count = ratingCountFourStars;
 					break;
-				case PSAppStoreDetailsRatingsThreeStarsRow:
+				case ACAppStoreDetailsRatingsThreeStarsRow:
 					rcCell.ratingView.rating = 3.0;
 					rcCell.countView.count = ratingCountThreeStars;
 					break;
-				case PSAppStoreDetailsRatingsTwoStarsRow:
+				case ACAppStoreDetailsRatingsTwoStarsRow:
 					rcCell.ratingView.rating = 2.0;
 					rcCell.countView.count = ratingCountTwoStars;
 					break;
-				case PSAppStoreDetailsRatingsOneStarRow:
+				case ACAppStoreDetailsRatingsOneStarRow:
 					rcCell.ratingView.rating = 1.0;
 					rcCell.countView.count = ratingCountOneStar;
 					break;

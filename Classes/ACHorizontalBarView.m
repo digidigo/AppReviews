@@ -1,12 +1,12 @@
 //
-//  PSHorizontalBarView.m
+//  ACHorizontalBarView.m
 //  PSCommon
 //
 //  Created by Charles Gamble on 23/06/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSHorizontalBarView.h"
+#import "ACHorizontalBarView.h"
 #import <UIKit/UIColor.h>
 
 
@@ -19,7 +19,7 @@ static CGFloat sDefaultBarAlpha = 1.0;
 /**
  * Subclass of UIView which displays a filled bar representing a value between 0.0 and 1.0.
  */
-@implementation PSHorizontalBarView
+@implementation ACHorizontalBarView
 
 @synthesize barValue;
 

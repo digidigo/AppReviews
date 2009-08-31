@@ -1,5 +1,5 @@
 //
-//  PSHorizontalBarView.h
+//  ACHorizontalBarView.h
 //  PSCommon
 //
 //  Created by Charles Gamble on 23/06/2009.
@@ -12,7 +12,7 @@
 /**
  * Subclass of UIView which displays a filled bar representing a value between 0.0 and 1.0.
  */
-@interface PSHorizontalBarView : UIView
+@interface ACHorizontalBarView : UIView
 {
 	double barValue;
 	CGFloat barRed;

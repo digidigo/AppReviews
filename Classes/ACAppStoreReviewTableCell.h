@@ -1,5 +1,5 @@
 //
-//  PSAppStoreReviewTableCell.h
+//  ACAppStoreReviewTableCell.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 20/11/2008.
@@ -10,24 +10,24 @@
 
 
 @class PSRatingView;
-@class PSAppStoreApplicationReview;
+@class ACAppStoreApplicationReview;
 
 
-@interface PSAppStoreReviewTableCell : UITableViewCell
+@interface ACAppStoreReviewTableCell : UITableViewCell
 {
 	UILabel *summaryLabel;
 	UILabel *authorLabel;
 	UITextView *detailLabel;
 	PSRatingView *ratingView;
-	PSAppStoreApplicationReview *review;
+	ACAppStoreApplicationReview *review;
 }
 
 @property (nonatomic, retain) UILabel *summaryLabel;
 @property (nonatomic, retain) UILabel *authorLabel;
 @property (nonatomic, retain) UITextView *detailLabel;
 @property (nonatomic, retain) PSRatingView *ratingView;
-@property (nonatomic, retain) PSAppStoreApplicationReview *review;
+@property (nonatomic, retain) ACAppStoreApplicationReview *review;
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreApplicationReview *)inReview;
++ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(ACAppStoreApplicationReview *)inReview;
 
 @end

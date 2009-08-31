@@ -1,24 +1,24 @@
 //
-//  PSAppStoreApplicationReview.m
+//  ACAppStoreApplicationReview.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 09/04/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreApplicationReview.h"
+#import "ACAppStoreApplicationReview.h"
 #import "FMDatabase.h"
 #import "PSLog.h"
 
 
-@interface PSAppStoreApplicationReview ()
+@interface ACAppStoreApplicationReview ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 @end
 
 
-@implementation PSAppStoreApplicationReview
+@implementation ACAppStoreApplicationReview
 
 @synthesize appIdentifier, storeIdentifier, index, reviewer, rating, summary, detail, appVersion, reviewDate, primaryKey, database;
 
@@ -76,7 +76,7 @@
 		}
 		else
 		{
-			PSLogError(@"Failed to populate PSAppStoreApplicationReview using primary key %d", pk);
+			PSLogError(@"Failed to populate ACAppStoreApplicationReview using primary key %d", pk);
 			self.appIdentifier = nil;
 			self.storeIdentifier = nil;
 			self.index = 0;
@@ -109,7 +109,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to insert PSAppStoreApplicationReview into the database with message '%@'.", [db lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to insert ACAppStoreApplicationReview into the database with message '%@'.", [db lastErrorMessage]];
 		PSLogError(message);
         NSAssert(0, message);
 	}
@@ -136,7 +136,7 @@
 			  reviewDate,
 			  [NSNumber numberWithInteger:primaryKey]])
 		{
-			NSString *message = [NSString stringWithFormat:@"Failed to save PSAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
+			NSString *message = [NSString stringWithFormat:@"Failed to save ACAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
 			PSLogError(message);
 			NSAssert(0, message);
 		}
@@ -164,7 +164,7 @@
 	}
 	else
 	{
-		PSLogError(@"Failed to hydrate PSAppStoreApplicationReview using primary key %d", primaryKey);
+		PSLogError(@"Failed to hydrate ACAppStoreApplicationReview using primary key %d", primaryKey);
 		self.reviewer = nil;
 		self.summary = nil;
 		self.detail = nil;
@@ -204,7 +204,7 @@
 {
 	if (![database executeUpdate:@"DELETE FROM application_review WHERE id=?", [NSNumber numberWithInteger:primaryKey]])
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to delete PSAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to delete ACAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
 		PSLogError(message);
 		NSAssert(0, message);
 	}

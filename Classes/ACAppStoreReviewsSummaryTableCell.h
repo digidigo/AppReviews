@@ -1,5 +1,5 @@
 //
-//  PSAppStoreReviewsSummaryTableCell.h
+//  ACAppStoreReviewsSummaryTableCell.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/06/2009.
@@ -12,7 +12,7 @@
 @class PSRatingView;
 
 
-@interface PSAppStoreReviewsSummaryTableCell : UITableViewCell
+@interface ACAppStoreReviewsSummaryTableCell : UITableViewCell
 {
 	UILabel *ratingsLabel;
 	UILabel *ratingsValue;

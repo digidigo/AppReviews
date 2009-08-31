@@ -1,12 +1,12 @@
 //
-//  PSAppStoreTableCell.m
+//  ACAppStoreTableCell.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 16/09/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreTableCell.h"
+#import "ACAppStoreTableCell.h"
 #import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
@@ -15,7 +15,7 @@
 #define	kActivityIndicatorSize 20.0
 
 
-@implementation PSAppStoreTableCell
+@implementation ACAppStoreTableCell
 
 @synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView, state, stateSpinnerView;
 
@@ -58,7 +58,7 @@
 		countView.opaque = NO;
 		[self.contentView addSubview:countView];
 
-		state = PSAppStoreStateDefault;
+		state = ACAppStoreStateDefault;
 		stateSpinnerView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
 		stateSpinnerView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
 		stateSpinnerView.hidesWhenStopped = NO;
@@ -140,24 +140,24 @@
 	self.backgroundColor = self.contentView.backgroundColor;
 }
 
-- (void)setState:(PSAppStoreState)value
+- (void)setState:(ACAppStoreState)value
 {
 	state = value;
 	switch (state)
 	{
-		case PSAppStoreStatePending:
+		case ACAppStoreStatePending:
 			[stateSpinnerView stopAnimating];
 			stateSpinnerView.hidden = NO;
 			countView.hidden = YES;
 			self.contentView.backgroundColor = [UIColor whiteColor];
 			break;
-		case PSAppStoreStateProcessing:
+		case ACAppStoreStateProcessing:
 			[stateSpinnerView startAnimating];
 			stateSpinnerView.hidden = NO;
 			countView.hidden = YES;
 			self.contentView.backgroundColor = [UIColor whiteColor];
 			break;
-		case PSAppStoreStateFailed:
+		case ACAppStoreStateFailed:
 			[stateSpinnerView stopAnimating];
 			stateSpinnerView.hidden = YES;
 			countView.hidden = NO;

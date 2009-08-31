@@ -1,5 +1,5 @@
 //
-//  PSAppReviewsStore.h
+//  ACAppReviewsStore.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 13/03/2009.
@@ -11,23 +11,23 @@
 
 typedef enum
 {
-	PSMostHelpfulSortOrder = 1,
-	PSMostFavorableSortOrder,
-	PSMostCriticalSortOrder,
-	PSMostRecentSortOrder
-} PSReviewsSortOrder;
+	ACMostHelpfulSortOrder = 1,
+	ACMostFavorableSortOrder,
+	ACMostCriticalSortOrder,
+	ACMostRecentSortOrder
+} ACReviewsSortOrder;
 
 
 @class FMDatabase;
-@class PSAppStore;
-@class PSAppStoreApplication;
-@class PSAppStoreApplicationDetails;
+@class ACAppStore;
+@class ACAppStoreApplication;
+@class ACAppStoreApplicationDetails;
 
 
 /**
  * Singleton class to encapsulate model data access.
  */
-@interface PSAppReviewsStore : NSObject
+@interface ACAppReviewsStore : NSObject
 {
 	FMDatabase *database;
 	NSArray *appStores;
@@ -41,23 +41,23 @@ typedef enum
 /**
  * Get the singleton instance.
  */
-+ (PSAppReviewsStore *)sharedInstance;
++ (ACAppReviewsStore *)sharedInstance;
 
 - (BOOL)save;
 - (void)close;
 
-- (PSAppStore *)storeForIdentifier:(NSString *)storeIdentifier;
+- (ACAppStore *)storeForIdentifier:(NSString *)storeIdentifier;
 - (NSArray *)applications;
-- (PSAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier;
-- (PSAppStoreApplication *)applicationAtIndex:(NSUInteger)index;
+- (ACAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier;
+- (ACAppStoreApplication *)applicationAtIndex:(NSUInteger)index;
 - (NSUInteger)applicationCount;
-- (void)addApplication:(PSAppStoreApplication *)app;
-- (void)addApplication:(PSAppStoreApplication *)app atIndex:(NSUInteger)index;
+- (void)addApplication:(ACAppStoreApplication *)app;
+- (void)addApplication:(ACAppStoreApplication *)app atIndex:(NSUInteger)index;
 - (void)moveApplicationAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
-- (void)removeApplication:(PSAppStoreApplication *)app;
-- (void)resetDetailsForApplication:(PSAppStoreApplication *)app;
-- (PSAppStoreApplicationDetails *)detailsForApplication:(PSAppStoreApplication *)app inStore:(PSAppStore *)store;
-- (void)setReviews:(NSArray *)reviews forApplication:(PSAppStoreApplication *)app inStore:(PSAppStore *)store;
-- (NSArray *)reviewsForApplication:(PSAppStoreApplication *)app inStore:(PSAppStore *)store;
+- (void)removeApplication:(ACAppStoreApplication *)app;
+- (void)resetDetailsForApplication:(ACAppStoreApplication *)app;
+- (ACAppStoreApplicationDetails *)detailsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
+- (void)setReviews:(NSArray *)reviews forApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
+- (NSArray *)reviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
 
 @end

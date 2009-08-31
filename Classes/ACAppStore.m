@@ -1,15 +1,15 @@
 //
-//  PSAppStore.m
+//  ACAppStore.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStore.h"
+#import "ACAppStore.h"
 
 
-@implementation PSAppStore
+@implementation ACAppStore
 
 @synthesize name, storeIdentifier, enabled;
 
@@ -42,7 +42,7 @@
 	[super dealloc];
 }
 
-- (NSComparisonResult)compare:(PSAppStore *)other
+- (NSComparisonResult)compare:(ACAppStore *)other
 {
 	return [self.name compare:other.name];
 }

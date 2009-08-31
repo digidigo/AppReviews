@@ -1,5 +1,5 @@
 //
-//  PSAppStoreReviewsViewController.h
+//  ACAppStoreReviewsViewController.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 20/11/2008.
@@ -9,24 +9,24 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSAppStoreApplicationDetails;
-@class PSAppStoreDetailsViewController;
+@class ACAppStoreApplicationDetails;
+@class ACAppStoreDetailsViewController;
 
 
-@interface PSAppStoreReviewsViewController : UITableViewController
+@interface ACAppStoreReviewsViewController : UITableViewController
 {
 	UIBarButtonItem *updateButtonItem;
 	UIBarButtonItem *activitySpinnerItem;
 	UIActivityIndicatorView *activitySpinner;
-	PSAppStoreApplicationDetails *appStoreDetails;
-	PSAppStoreDetailsViewController *appStoreDetailsViewController;
+	ACAppStoreApplicationDetails *appStoreDetails;
+	ACAppStoreDetailsViewController *appStoreDetailsViewController;
 	NSArray *userReviews;
 }
 
 @property (nonatomic, retain) UIBarButtonItem *updateButtonItem;
 @property (nonatomic, retain) UIBarButtonItem *activitySpinnerItem;
 @property (nonatomic, retain) UIActivityIndicatorView *activitySpinner;
-@property (nonatomic, retain) PSAppStoreApplicationDetails *appStoreDetails;
+@property (nonatomic, retain) ACAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, retain) NSArray *userReviews;
 
 @end

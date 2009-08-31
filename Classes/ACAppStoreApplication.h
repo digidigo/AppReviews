@@ -1,5 +1,5 @@
 //
-//  PSAppStoreApplication.h
+//  ACAppStoreApplication.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
@@ -14,10 +14,10 @@
 
 
 @class FMDatabase;
-@class PSAppStoreUpdateOperation;
+@class ACAppStoreUpdateOperation;
 
 
-@interface PSAppStoreApplication : NSObject
+@interface ACAppStoreApplication : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;
@@ -67,9 +67,9 @@
 - (void)deleteFromDatabase;
 // Manage the operations queue for this application.
 - (void)cancelAllOperations;
-- (void)cancelOperationsForApplicationDetails:(PSAppStoreApplicationDetails *)appStoreDetails;
+- (void)cancelOperationsForApplicationDetails:(ACAppStoreApplicationDetails *)appStoreDetails;
 - (void)suspendAllOperations;
 - (void)resumeAllOperations;
-- (void)addUpdateOperation:(PSAppStoreUpdateOperation *)op;
+- (void)addUpdateOperation:(ACAppStoreUpdateOperation *)op;
 
 @end

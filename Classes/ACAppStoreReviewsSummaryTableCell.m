@@ -1,12 +1,12 @@
 //
-//  PSAppStoreReviewsSummaryTableCell.m
+//  ACAppStoreReviewsSummaryTableCell.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/06/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreReviewsSummaryTableCell.h"
+#import "ACAppStoreReviewsSummaryTableCell.h"
 #import "PSRatingView.h"
 #import "UIColor+MoreColors.h"
 #import "AppCriticsAppDelegate.h"
@@ -15,7 +15,7 @@
 static UIColor *sLabelColor = nil;
 
 
-@implementation PSAppStoreReviewsSummaryTableCell
+@implementation ACAppStoreReviewsSummaryTableCell
 
 @synthesize ratingsLabel, ratingsValue, ratingsView, reviewsLabel, reviewsValue, averageRating, ratingsCount, reviewsCount;
 

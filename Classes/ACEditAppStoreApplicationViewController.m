@@ -1,24 +1,24 @@
 //
-//  PSEditAppStoreApplicationViewController.m
+//  ACEditAppStoreApplicationViewController.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 15/11/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSEditAppStoreApplicationViewController.h"
+#import "ACEditAppStoreApplicationViewController.h"
 #import "PSSelectionListViewController.h"
-#import "PSAppReviewsStore.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStoreVerifyOperation.h"
-#import "PSAppStoreApplicationDetailsImporter.h"
-#import "PSAppStore.h"
+#import "ACAppReviewsStore.h"
+#import "ACAppStoreApplication.h"
+#import "ACAppStoreVerifyOperation.h"
+#import "ACAppStoreApplicationDetailsImporter.h"
+#import "ACAppStore.h"
 #import "PSProgressHUD.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSLog.h"
 
 
-@implementation PSEditAppStoreApplicationViewController
+@implementation ACEditAppStoreApplicationViewController
 
 @synthesize appId, label, defaultStoreButton, saveButton, defaultStore, app, selectionListViewController;
 
@@ -109,7 +109,7 @@
 }
 
 
-- (void)setApp:(PSAppStoreApplication *)inApp
+- (void)setApp:(ACAppStoreApplication *)inApp
 {
 	[inApp retain];
 	[app release];
@@ -133,7 +133,7 @@
 	[appId resignFirstResponder];
 
 	// Check that new appId does already exist in app list.
-	PSAppStoreApplication *appForNewAppId = [[PSAppReviewsStore sharedInstance] applicationForIdentifier:appId.text];
+	ACAppStoreApplication *appForNewAppId = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appId.text];
 	if (appForNewAppId && (appForNewAppId != app))
 	{
 		// Duplicate appId.
@@ -145,11 +145,11 @@
 	else
 	{
 		// Validate appId against storeId by fetching details from store.
-		PSAppStoreVerifyOperation *op = [[PSAppStoreVerifyOperation alloc] initWithAppIdentifier:appId.text storeIdentifier:self.defaultStore];
+		ACAppStoreVerifyOperation *op = [[ACAppStoreVerifyOperation alloc] initWithAppIdentifier:appId.text storeIdentifier:self.defaultStore];
 		[op setQueuePriority:NSOperationQueuePriorityVeryHigh];
 
 
-		PSAppStore *store = [[PSAppReviewsStore sharedInstance] storeForIdentifier:self.defaultStore];
+		ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:self.defaultStore];
 
 		PSProgressHUD *progressHUD = [[[PSProgressHUD alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
 		progressHUD.parentView = appDelegate.window;
@@ -160,19 +160,19 @@
 		// Show progress HUD.
 		[progressHUD progressBeginWithMessage:store.name];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreVerifyOperationDidFinishNotification object:op];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kPSAppStoreVerifyOperationDidFailNotification object:op];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kACAppStoreVerifyOperationDidFinishNotification object:op];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(detailsUpdated:) name:kACAppStoreVerifyOperationDidFailNotification object:op];
 		[appDelegate.operationQueue addOperation:op];
 		[op release];
 	}
 }
 
-- (void)validateApplication:(PSAppStoreApplicationDetailsImporter *)detailsImporter
+- (void)validateApplication:(ACAppStoreApplicationDetailsImporter *)detailsImporter
 {
 	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreVerifyOperationDidFinishNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kPSAppStoreVerifyOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreVerifyOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreVerifyOperationDidFailNotification object:nil];
 
 	if (detailsImporter)
 	{
@@ -199,7 +199,7 @@
 					if (![previousAppId isEqualToString:detailsImporter.appIdentifier])
 					{
 						// AppId has been changed to a different Id, so delete all review data for old appId.
-						[[PSAppReviewsStore sharedInstance] resetDetailsForApplication:app];
+						[[ACAppReviewsStore sharedInstance] resetDetailsForApplication:app];
 					}
 					[previousAppId release];
 				}
@@ -208,7 +208,7 @@
 					// We are adding a new application.
 
 					// Add new application to list.
-					[[PSAppReviewsStore sharedInstance] addApplication:app atIndex:0];
+					[[ACAppReviewsStore sharedInstance] addApplication:app atIndex:0];
 				}
 
 				[self.navigationController popViewControllerAnimated:YES];
@@ -231,7 +231,7 @@
 {
 	PSLog(@"Received notification: %@", notification.name);
 
-	PSAppStoreVerifyOperation *op = (PSAppStoreVerifyOperation *) [notification object];
+	ACAppStoreVerifyOperation *op = (ACAppStoreVerifyOperation *) [notification object];
 	if ([op.detailsImporter.appIdentifier isEqualToString:appId.text] && [op.detailsImporter.storeIdentifier isEqualToString:self.defaultStore])
 	{
 		// Hide the progress HUD.
@@ -259,7 +259,7 @@
 	NSMutableArray *listImages = [NSMutableArray array];
 	NSMutableArray *listValues = [NSMutableArray array];
 	NSMutableArray *listSelections = [NSMutableArray array];
-	for (PSAppStore *store in [[PSAppReviewsStore sharedInstance] appStores])
+	for (ACAppStore *store in [[ACAppReviewsStore sharedInstance] appStores])
 	{
 		[listLabels addObject:store.name];
 		[listImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", store.storeIdentifier]]];

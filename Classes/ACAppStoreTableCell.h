@@ -1,5 +1,5 @@
 //
-//  PSAppStoreTableCell.h
+//  ACAppStoreTableCell.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 16/09/2008.
@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSAppStoreApplicationDetails.h"
+#import "ACAppStoreApplicationDetails.h"
 
 @class PSImageView;
 @class PSRatingView;
 @class PSCountView;
 
-@interface PSAppStoreTableCell : UITableViewCell
+@interface ACAppStoreTableCell : UITableViewCell
 {
-	PSAppStoreState state;
+	ACAppStoreState state;
 	UILabel *nameLabel;
 	PSImageView *flagView;
 	PSRatingView *ratingView;
@@ -29,7 +29,7 @@
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) UILabel *ratingCountLabel;
 @property (nonatomic, retain) PSCountView *countView;
-@property (nonatomic, assign) PSAppStoreState state;
+@property (nonatomic, assign) ACAppStoreState state;
 @property (nonatomic, retain) UIActivityIndicatorView *stateSpinnerView;
 
 @end

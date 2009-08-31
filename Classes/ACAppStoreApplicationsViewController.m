@@ -1,29 +1,29 @@
 //
-//  PSAppStoreApplicationsViewController.m
+//  ACAppStoreApplicationsViewController.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreApplicationsViewController.h"
-#import "PSAppStoreCountriesViewController.h"
-#import "PSAppReviewsStore.h"
-#import "PSAppStoreApplication.h"
-#import "PSEditAppStoreApplicationViewController.h"
+#import "ACAppStoreApplicationsViewController.h"
+#import "ACAppStoreCountriesViewController.h"
+#import "ACAppReviewsStore.h"
+#import "ACAppStoreApplication.h"
+#import "ACEditAppStoreApplicationViewController.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSAboutViewController.h"
 #import "PSLog.h"
 
 
-@interface PSAppStoreApplicationsViewController ()
+@interface ACAppStoreApplicationsViewController ()
 
 @property (nonatomic, retain) NSNumber *savedEditingState;
 
 @end
 
 
-@implementation PSAppStoreApplicationsViewController
+@implementation ACAppStoreApplicationsViewController
 
 @synthesize editAppStoreApplicationViewController, appStoreCountriesViewController, savedEditingState;
 
@@ -115,11 +115,11 @@
 	// Lazily create edit view.
 	if (editAppStoreApplicationViewController == nil)
 	{
-		editAppStoreApplicationViewController = [[PSEditAppStoreApplicationViewController alloc] initWithNibName:@"PSEditAppStoreApplicationView" bundle:nil];
+		editAppStoreApplicationViewController = [[ACEditAppStoreApplicationViewController alloc] initWithNibName:@"ACEditAppStoreApplicationView" bundle:nil];
 	}
 	// Configure view.
 	editAppStoreApplicationViewController.title = @"New Application";
-	editAppStoreApplicationViewController.app = [[[PSAppStoreApplication alloc] init] autorelease];
+	editAppStoreApplicationViewController.app = [[[ACAppStoreApplication alloc] init] autorelease];
 	[[self navigationController] pushViewController:editAppStoreApplicationViewController animated:YES];
 }
 
@@ -136,11 +136,11 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	PSLog(@"Tapped on disclosure for row %d", indexPath.row);
-	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create edit view.
 	if (editAppStoreApplicationViewController == nil)
 	{
-		editAppStoreApplicationViewController = [[PSEditAppStoreApplicationViewController alloc] initWithNibName:@"PSEditAppStoreApplicationView" bundle:nil];
+		editAppStoreApplicationViewController = [[ACEditAppStoreApplicationViewController alloc] initWithNibName:@"ACEditAppStoreApplicationView" bundle:nil];
 	}
 	// Configure view.
 	editAppStoreApplicationViewController.title = app.name;
@@ -151,11 +151,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create countries view controller.
 	if (self.appStoreCountriesViewController == nil)
 	{
-		PSAppStoreCountriesViewController *viewController = [[PSAppStoreCountriesViewController alloc] initWithNibName:nil bundle:nil];
+		ACAppStoreCountriesViewController *viewController = [[ACAppStoreCountriesViewController alloc] initWithNibName:nil bundle:nil];
 		self.appStoreCountriesViewController = viewController;
 		[viewController release];
 	}
@@ -176,7 +176,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[PSAppReviewsStore sharedInstance] applicationCount];
+    return [[ACAppReviewsStore sharedInstance] applicationCount];
 }
 
 
@@ -190,7 +190,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	if (app.name==nil || [app.name length]==0)
 		cell.textLabel.text = app.appIdentifier;
 	else
@@ -221,9 +221,9 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete)
 	{
 		PSLog(@"Deleting row %d", indexPath.row);
-		PSAppStoreApplication *app = [[PSAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
-		[[PSAppReviewsStore sharedInstance] removeApplication:app];
-		[[PSAppReviewsStore sharedInstance] save];
+		ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+		[[ACAppReviewsStore sharedInstance] removeApplication:app];
+		[[ACAppReviewsStore sharedInstance] save];
 
 		// Confirm back to GUI that row has been deleted from model.
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -239,24 +239,24 @@
 		// Print out apps list BEFORE reorder.
 		NSUInteger appIndex;
 		PSLog(@"Apps list BEFORE reorder:");
-		for (appIndex = 0; appIndex < [[PSAppReviewsStore sharedInstance] applicationCount]; appIndex++)
+		for (appIndex = 0; appIndex < [[ACAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
-			PSAppStoreApplication *anApp = [[PSAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
+			ACAppStoreApplication *anApp = [[ACAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
 		}
 #endif
 		// Move array elements to match moved rows.
-		[[PSAppReviewsStore sharedInstance] moveApplicationAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+		[[ACAppReviewsStore sharedInstance] moveApplicationAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
 #ifdef DEBUG
 		// Print out apps list AFTER reorder.
 		PSLog(@"Apps list AFTER reorder:");
-		for (appIndex = 0; appIndex < [[PSAppReviewsStore sharedInstance] applicationCount]; appIndex++)
+		for (appIndex = 0; appIndex < [[ACAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
-			PSAppStoreApplication *anApp = [[PSAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
+			ACAppStoreApplication *anApp = [[ACAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
 		}
 #endif
-		[[PSAppReviewsStore sharedInstance] save];
+		[[ACAppReviewsStore sharedInstance] save];
 	}
 }
 

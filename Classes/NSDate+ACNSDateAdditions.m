@@ -1,15 +1,15 @@
 //
-//  NSDate+PSNSDateAdditions.m
+//  NSDate+ACNSDateAdditions.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 02/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "NSDate+PSNSDateAdditions.h"
+#import "NSDate+ACNSDateAdditions.h"
 
 
-@implementation NSDate (PSNSDateAdditions)
+@implementation NSDate (ACNSDateAdditions)
 
 + (NSString *)ordinalForDay:(NSUInteger)day
 {

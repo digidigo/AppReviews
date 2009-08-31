@@ -1,14 +1,14 @@
 //
-//  PSAppStoreApplicationDetails.m
+//  ACAppStoreApplicationDetails.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 15/03/2009.
 //  Copyright 2009 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreApplicationDetails.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStore.h"
+#import "ACAppStoreApplicationDetails.h"
+#import "ACAppStoreApplication.h"
+#import "ACAppStore.h"
 #import "AppCriticsAppDelegate.h"
 #import "GTMRegex.h"
 #import "NSString+PSPathAdditions.h"
@@ -16,14 +16,14 @@
 #import "PSLog.h"
 
 
-@interface PSAppStoreApplicationDetails ()
+@interface ACAppStoreApplicationDetails ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 @end
 
 
-@implementation PSAppStoreApplicationDetails
+@implementation ACAppStoreApplicationDetails
 
 @synthesize appIdentifier, storeIdentifier, category, categoryIdentifier, ratingCountAll, ratingCountCurrent, ratingAll, ratingCurrent, reviewCountAll, reviewCountCurrent, lastSortOrder, lastUpdated;
 @synthesize released, appVersion, appSize, localPrice, appName, appCompany, companyURL, companyURLTitle, supportURL, supportURLTitle;
@@ -70,11 +70,11 @@
 		self.companyURLTitle = nil;
 		self.supportURL = nil;
 		self.supportURLTitle = nil;
-		self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+		self.lastSortOrder = (ACReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 		self.lastUpdated = [NSDate distantPast];
 		self.hasNewRatings = NO;
 		self.hasNewReviews = NO;
-		self.state = PSAppStoreStateDefault;
+		self.state = ACAppStoreStateDefault;
 		self.database = nil;
 	}
 	return self;
@@ -110,7 +110,7 @@
         self.database = db;
 		self.hasNewRatings = NO;
 		self.hasNewReviews = NO;
-		self.state = PSAppStoreStateDefault;
+		self.state = ACAppStoreStateDefault;
 
 		FMResultSet *row = [db executeQuery:@"SELECT app_identifier, store_identifier, category, category_identifier, rating_count_all, rating_count_all_5stars, rating_count_all_4stars, rating_count_all_3stars, rating_count_all_2stars, rating_count_all_1star, rating_count_current, rating_count_current_5stars, rating_count_current_4stars, rating_count_current_3stars, rating_count_current_2stars, rating_count_current_1star, rating_all, rating_current, review_count_all, review_count_current, last_sort_order, last_updated FROM application_details WHERE id=?", [NSNumber numberWithInteger:pk]];
 		if (row && [row next])
@@ -135,12 +135,12 @@
 			self.ratingCurrent = [row doubleForColumnIndex:17];
 			self.reviewCountAll = [row intForColumnIndex:18];
 			self.reviewCountCurrent = [row intForColumnIndex:19];
-			self.lastSortOrder = (PSReviewsSortOrder) [row intForColumnIndex:20];
+			self.lastSortOrder = (ACReviewsSortOrder) [row intForColumnIndex:20];
 			self.lastUpdated = [row dateForColumnIndex:21];
 		}
 		else
 		{
-			PSLogError(@"Failed to populate PSAppStoreApplicationDetails using primary key %d", pk);
+			PSLogError(@"Failed to populate ACAppStoreApplicationDetails using primary key %d", pk);
 			self.appIdentifier = nil;
 			self.storeIdentifier = nil;
 			self.category = nil;
@@ -161,7 +161,7 @@
 			self.ratingCurrent = 0.0;
 			self.reviewCountAll = 0;
 			self.reviewCountCurrent = 0;
-			self.lastSortOrder = (PSReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
+			self.lastSortOrder = (ACReviewsSortOrder) [[NSUserDefaults standardUserDefaults] integerForKey:@"sortOrder"];
 			self.lastUpdated = nil;
 		}
 		[row close];
@@ -214,7 +214,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to insert PSAppStoreApplicationDetails into the database with message '%@'.", [db lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to insert ACAppStoreApplicationDetails into the database with message '%@'.", [db lastErrorMessage]];
 		PSLogError(message);
         NSAssert(0, message);
 	}
@@ -264,7 +264,7 @@
 			  supportURLTitle,
 			  [NSNumber numberWithInteger:primaryKey]])
 		{
-			NSString *message = [NSString stringWithFormat:@"Failed to save PSAppStoreApplicationDetails with message '%@'.", [database lastErrorMessage]];
+			NSString *message = [NSString stringWithFormat:@"Failed to save ACAppStoreApplicationDetails with message '%@'.", [database lastErrorMessage]];
 			PSLogError(message);
 			NSAssert(0, message);
 		}
@@ -297,7 +297,7 @@
 	}
 	else
 	{
-		PSLogError(@"Failed to hydrate PSAppStoreApplicationDetails using primary key %d", primaryKey);
+		PSLogError(@"Failed to hydrate ACAppStoreApplicationDetails using primary key %d", primaryKey);
 		self.released = nil;
 		self.appVersion = nil;
 		self.appSize = nil;
@@ -352,7 +352,7 @@
 {
 	if (![database executeUpdate:@"DELETE FROM application_details WHERE id=?", [NSNumber numberWithInteger:primaryKey]])
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to delete PSAppStoreApplicationDetails with message '%@'.", [database lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to delete ACAppStoreApplicationDetails with message '%@'.", [database lastErrorMessage]];
 		PSLogError(message);
 		NSAssert(0, message);
 	}
@@ -548,7 +548,7 @@
 	reviewCountCurrent = anInt;
 }
 
-- (void)setLastSortOrder:(PSReviewsSortOrder)aSortOrder
+- (void)setLastSortOrder:(ACReviewsSortOrder)aSortOrder
 {
 	if (lastSortOrder == aSortOrder)
 		return;

@@ -1,5 +1,5 @@
 //
-//  PSAppStoreDetailsViewController.h
+//  ACAppStoreDetailsViewController.h
 //  AppCritics
 //
 //  Created by Charles Gamble on 23/06/2009.
@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 
 
-@class PSAppStoreApplicationDetails;
+@class ACAppStoreApplicationDetails;
 
 
-@interface PSAppStoreDetailsViewController : UITableViewController
+@interface ACAppStoreDetailsViewController : UITableViewController
 {
-	PSAppStoreApplicationDetails *appStoreDetails;
+	ACAppStoreApplicationDetails *appStoreDetails;
 	BOOL useCurrentVersion;
 }
 
-@property (nonatomic, retain) PSAppStoreApplicationDetails *appStoreDetails;
+@property (nonatomic, retain) ACAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, assign) BOOL useCurrentVersion;
 
 @end

@@ -1,13 +1,13 @@
 //
-//  PSAppStoreReviewTableCell.m
+//  ACAppStoreReviewTableCell.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 20/11/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppStoreReviewTableCell.h"
-#import "PSAppStoreApplicationReview.h"
+#import "ACAppStoreReviewTableCell.h"
+#import "ACAppStoreApplicationReview.h"
 #import "PSRatingView.h"
 #import <UIKit/UIStringDrawing.h>
 
@@ -15,7 +15,7 @@
 static UIFont *sSummaryFont = nil;
 static UIFont *sDetailFont = nil;
 
-@implementation PSAppStoreReviewTableCell
+@implementation ACAppStoreReviewTableCell
 
 @synthesize summaryLabel, authorLabel, detailLabel, ratingView, review;
 
@@ -25,12 +25,12 @@ static UIFont *sDetailFont = nil;
 	sDetailFont = [[UIFont systemFontOfSize:13.0] retain];
 }
 
-+ (NSString *)summaryTextForReview:(PSAppStoreApplicationReview *)review
++ (NSString *)summaryTextForReview:(ACAppStoreApplicationReview *)review
 {
 	return [NSString stringWithFormat:@"%d. %@%@", review.index, review.summary, (review.appVersion?[NSString stringWithFormat:@" (%@)", review.appVersion]:@"")];
 }
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(PSAppStoreApplicationReview *)inReview
++ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(ACAppStoreApplicationReview *)inReview
 {
 #define MARGIN_X	5
 #define MARGIN_Y	5
@@ -112,7 +112,7 @@ static UIFont *sDetailFont = nil;
     [super dealloc];
 }
 
-- (void)setReview:(PSAppStoreApplicationReview *)inReview
+- (void)setReview:(ACAppStoreApplicationReview *)inReview
 {
 	[inReview retain];
 	[review release];
@@ -120,7 +120,7 @@ static UIFont *sDetailFont = nil;
 
 	if (review)
 	{
-		self.summaryLabel.text = [PSAppStoreReviewTableCell summaryTextForReview:review];
+		self.summaryLabel.text = [ACAppStoreReviewTableCell summaryTextForReview:review];
 		self.ratingView.rating = review.rating;
 		self.authorLabel.text = [NSString stringWithFormat:@"by %@%@", review.reviewer, (review.reviewDate?[NSString stringWithFormat:@" on %@", review.reviewDate]:@"")];
 		self.detailLabel.text = review.detail;

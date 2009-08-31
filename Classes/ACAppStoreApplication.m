@@ -1,29 +1,29 @@
 //
-//  PSAppStoreApplication.m
+//  ACAppStoreApplication.m
 //  AppCritics
 //
 //  Created by Charles Gamble on 22/10/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.
 //
 
-#import "PSAppReviewsStore.h"
-#import "PSAppStoreApplication.h"
-#import "PSAppStoreUpdateOperation.h"
-#import "PSAppStore.h"
-#import "PSAppStoreApplicationDetails.h"
+#import "ACAppReviewsStore.h"
+#import "ACAppStoreApplication.h"
+#import "ACAppStoreUpdateOperation.h"
+#import "ACAppStore.h"
+#import "ACAppStoreApplicationDetails.h"
 #import "FMDatabase.h"
 #import "AppCriticsAppDelegate.h"
 #import "PSLog.h"
 
 
-@interface PSAppStoreApplication ()
+@interface ACAppStoreApplication ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 @end
 
 
-@implementation PSAppStoreApplication
+@implementation ACAppStoreApplication
 
 @synthesize name, company, appIdentifier, defaultStoreIdentifier, position, primaryKey, database, updateOperationsCount;
 
@@ -55,8 +55,8 @@
 		self.database = nil;
 		updateOperationsQueue = [[NSOperationQueue alloc] init];
 		updateOperationsCount = 0;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
 	}
 	return self;
 }
@@ -89,7 +89,7 @@
 		}
 		else
 		{
-			PSLogError(@"Failed to populate PSAppStoreApplication using primary key %d", pk);
+			PSLogError(@"Failed to populate ACAppStoreApplication using primary key %d", pk);
 			self.appIdentifier = nil;
 			self.position = -1;
 		}
@@ -98,8 +98,8 @@
 		hydrated = NO;
 		updateOperationsQueue = [[NSOperationQueue alloc] init];
 		updateOperationsCount = 0;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFinishNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kPSAppStoreUpdateOperationDidFailNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
     }
     return self;
 }
@@ -115,7 +115,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to insert PSAppStoreApplication into the database with message '%@'.", [db lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to insert ACAppStoreApplication into the database with message '%@'.", [db lastErrorMessage]];
 		PSLogError(message);
         NSAssert(0, message);
 	}
@@ -132,7 +132,7 @@
 	{
 		if (![database executeUpdate:@"UPDATE application SET name=?, company=?, app_identifier=?, default_store_identifier=?, position=? WHERE id=?", name, company, appIdentifier, defaultStoreIdentifier, [NSNumber numberWithInteger:position], [NSNumber numberWithInteger:primaryKey]])
 		{
-			NSString *message = [NSString stringWithFormat:@"Failed to save PSAppStoreApplication with message '%@'.", [database lastErrorMessage]];
+			NSString *message = [NSString stringWithFormat:@"Failed to save ACAppStoreApplication with message '%@'.", [database lastErrorMessage]];
 			PSLogError(message);
 			NSAssert(0, message);
 		}
@@ -158,7 +158,7 @@
 	}
 	else
 	{
-		PSLogError(@"Failed to hydrate PSAppStoreApplication using primary key %d", primaryKey);
+		PSLogError(@"Failed to hydrate ACAppStoreApplication using primary key %d", primaryKey);
 		self.name = nil;
 		self.company = nil;
 		self.defaultStoreIdentifier = kDefaultStoreId;
@@ -192,13 +192,13 @@
 {
 	if (![database executeUpdate:@"DELETE FROM application WHERE id=?", [NSNumber numberWithInteger:primaryKey]])
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to delete PSAppStoreApplication with message '%@'.", [database lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to delete ACAppStoreApplication with message '%@'.", [database lastErrorMessage]];
 		PSLogError(message);
 		NSAssert(0, message);
 	}
 }
 
-- (NSComparisonResult)compareByPosition:(PSAppStoreApplication *)other
+- (NSComparisonResult)compareByPosition:(ACAppStoreApplication *)other
 {
 	if (self.position < other.position)
 		return NSOrderedAscending;
@@ -208,14 +208,14 @@
 		return NSOrderedSame;
 }
 
-- (void)cancelOperationsForApplicationDetails:(PSAppStoreApplicationDetails *)appStoreDetails
+- (void)cancelOperationsForApplicationDetails:(ACAppStoreApplicationDetails *)appStoreDetails
 {
 	@synchronized(self)
 	{
 		[updateOperationsQueue setSuspended:YES];
 
 		NSArray *updateOperations = [updateOperationsQueue operations];
-		for (PSAppStoreUpdateOperation *op in updateOperations)
+		for (ACAppStoreUpdateOperation *op in updateOperations)
 		{
 			if ([op.appDetails.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
 				[op.appDetails.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier] &&
@@ -253,7 +253,7 @@
 	[updateOperationsQueue setSuspended:NO];
 }
 
-- (void)addUpdateOperation:(PSAppStoreUpdateOperation *)op
+- (void)addUpdateOperation:(ACAppStoreUpdateOperation *)op
 {
 	@synchronized(self)
 	{
@@ -269,7 +269,7 @@
 	@synchronized(self)
 	{
 		// Check that this notification was for our application.
-		PSAppStoreApplicationDetails *details = (PSAppStoreApplicationDetails *) [notification object];
+		ACAppStoreApplicationDetails *details = (ACAppStoreApplicationDetails *) [notification object];
 		if ([details.appIdentifier isEqualToString:appIdentifier])
 		{
 			if (updateOperationsCount > 0)
