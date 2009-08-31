@@ -7,6 +7,7 @@
 //
 
 #import "PSAboutViewController.h"
+#import "PSHelpViewController.h"
 #import "PSLog.h"
 
 
@@ -19,10 +20,10 @@ typedef enum
 	PSAboutApplicationRow,
 	PSAboutVersionRow,
 	PSAboutCopyrightRow,
+	PSAboutCreditsRow,
 	PSAboutWebsiteRow,
 	PSAboutFeedbackEmailRow,
-	PSAboutRecommendEmailRow,
-	PSAboutRowCount
+	PSAboutRecommendEmailRow
 } PSAboutRow;
 
 
@@ -32,11 +33,13 @@ typedef enum
 @property (nonatomic, retain) UIImage *appIcon;
 @property (nonatomic, retain) NSString *appVersion;
 @property (nonatomic, retain) NSString *copyright;
+@property (nonatomic, retain) NSString *creditsURL;
 @property (nonatomic, retain) NSString *websiteURL;
 @property (nonatomic, retain) NSString *appURL;
 @property (nonatomic, retain) NSString *releaseNotesURL;
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *appId;
+@property (nonatomic, retain) NSMutableArray *rowTypes;
 
 - (id)infoValueForKey:(NSString*)key;
 - (NSString *)pathForIcon;
@@ -46,7 +49,7 @@ typedef enum
 
 @implementation PSAboutViewController
 
-@synthesize appName, appIcon, appVersion, copyright, websiteURL, appURL, releaseNotesURL, email, appId, applicationNameFontSize, parentViewForConfirmation;
+@synthesize appName, appIcon, appVersion, copyright, creditsURL, websiteURL, appURL, releaseNotesURL, email, appId, applicationNameFontSize, parentViewForConfirmation, rowTypes;
 
 
 /**
@@ -96,6 +99,7 @@ typedef enum
 	self.appName = [self infoValueForKey:@"CFBundleDisplayName"];
 	self.appVersion = [self infoValueForKey:@"CFBundleVersion"];
 	self.copyright = [self infoValueForKey:@"NSHumanReadableCopyright"];
+	self.creditsURL = [self infoValueForKey:@"PSCreditsURL"];
 	self.websiteURL = [self infoValueForKey:@"PSWebsiteURL"];
 	self.appURL = [self infoValueForKey:@"PSApplicationURL"];
 	self.releaseNotesURL = [self infoValueForKey:@"PSReleaseNotesURL"];
@@ -105,6 +109,26 @@ typedef enum
 	if (iconFilePath && [iconFilePath length] > 0)
 		self.appIcon = [UIImage imageWithContentsOfFile:iconFilePath];
 	self.applicationNameFontSize = 28.0;
+	// Build an array of row types.
+	self.rowTypes = [NSMutableArray array];
+	// First row is always app name.
+	[rowTypes addObject:[NSNumber numberWithInteger:PSAboutApplicationRow]];
+	// Second row is always app version.
+	[rowTypes addObject:[NSNumber numberWithInteger:PSAboutVersionRow]];
+	// Optional copyright row.
+	if (self.copyright && [self.copyright length]>0)
+		[rowTypes addObject:[NSNumber numberWithInteger:PSAboutCopyrightRow]];
+	// Optional credits row.
+	if (self.creditsURL && [self.creditsURL length]>0)
+		[rowTypes addObject:[NSNumber numberWithInteger:PSAboutCreditsRow]];
+	// Optional website row.
+	if (self.websiteURL && [self.websiteURL length]>0)
+		[rowTypes addObject:[NSNumber numberWithInteger:PSAboutWebsiteRow]];
+	// Optional feedback row.
+	if (self.email && [self.email length]>0)
+		[rowTypes addObject:[NSNumber numberWithInteger:PSAboutFeedbackEmailRow]];
+	// Final row is always "Send to a friend".
+	[rowTypes addObject:[NSNumber numberWithInteger:PSAboutRecommendEmailRow]];
 }
 
 - (void)viewDidUnload
@@ -116,12 +140,14 @@ typedef enum
 	self.appName = nil;
 	self.appVersion = nil;
 	self.copyright = nil;
+	self.creditsURL = nil;
 	self.websiteURL = nil;
 	self.appURL = nil;
 	self.releaseNotesURL = nil;
 	self.email = nil;
 	self.appId = nil;
 	self.appIcon = nil;
+	self.rowTypes = nil;
 }
 
 /**
@@ -134,12 +160,14 @@ typedef enum
 	[appIcon release];
 	[appVersion release];
 	[copyright release];
+	[creditsURL release];
 	[websiteURL release];
 	[appURL release];
 	[releaseNotesURL release];
 	[email release];
 	[appId release];
 	[parentViewForConfirmation release];
+	[rowTypes release];
     [super dealloc];
 }
 
@@ -194,10 +222,12 @@ typedef enum
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	switch (indexPath.row)
+	PSAboutRow rowType = (PSAboutRow) [[rowTypes objectAtIndex:indexPath.row] integerValue];
+	switch (rowType)
 	{
-		case PSAboutWebsiteRow:
 		case PSAboutVersionRow:
+		case PSAboutCreditsRow:
+		case PSAboutWebsiteRow:
 		case PSAboutFeedbackEmailRow:
 		case PSAboutRecommendEmailRow:
 			return indexPath;
@@ -208,7 +238,8 @@ typedef enum
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (indexPath.row == PSAboutApplicationRow)
+	PSAboutRow rowType = (PSAboutRow) [[rowTypes objectAtIndex:indexPath.row] integerValue];
+	if (rowType == PSAboutApplicationRow)
 		return 67.0;
 	return 44.0;
 }
@@ -217,8 +248,26 @@ typedef enum
 {
 	UIActionSheet *sheet = nil;
 
-	switch (indexPath.row)
+	PSAboutRow rowType = (PSAboutRow) [[rowTypes objectAtIndex:indexPath.row] integerValue];
+	switch (rowType)
 	{
+		case PSAboutCreditsRow:
+		{
+			// Create the credits view controller.
+			PSHelpViewController *creditsViewController = [[[PSHelpViewController alloc] initWithNibName:@"PSHelpView" bundle:nil] autorelease];
+			creditsViewController.hidesBottomBarWhenPushed = YES;
+			creditsViewController.viewTitle = @"Credits";
+			// Set the content.
+			NSString *creditsFile = [self.creditsURL stringByDeletingPathExtension];
+			NSString *creditsExt = [self.creditsURL pathExtension];
+			NSString *contentPath = [[NSBundle mainBundle] pathForResource:creditsFile ofType:creditsExt];
+			NSAssert2(contentPath != nil, @"Could not locate resource file %@.%@", creditsFile, creditsExt);
+			NSURL *contentURL = [NSURL fileURLWithPath:contentPath];
+			creditsViewController.contentURL = contentURL;
+			// Show the content.
+			[self.navigationController pushViewController:creditsViewController animated:YES];
+			break;
+		}
 		case PSAboutWebsiteRow:
 		{
 			sheet = [[UIActionSheet alloc] initWithTitle:websiteURL delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Cancel") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Visit Website", @"Visit Website"), nil];
@@ -357,7 +406,7 @@ typedef enum
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (NSInteger)PSAboutRowCount;
+    return [rowTypes count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -367,7 +416,8 @@ typedef enum
     static NSString *kPSTitleValueTableCellID = @"PSTitleValueTableCellID";
     UITableViewCell *cell = nil;
 
-	switch (indexPath.row)
+	PSAboutRow rowType = (PSAboutRow) [[rowTypes objectAtIndex:indexPath.row] integerValue];
+	switch (rowType)
 	{
 		case PSAboutApplicationRow:
 		{
@@ -413,6 +463,21 @@ typedef enum
 			cell.textLabel.text = NSLocalizedString(@"Copyright", @"Copyright");
 			cell.detailTextLabel.text = copyright;
 			cell.accessoryType = UITableViewCellAccessoryNone;
+			break;
+		}
+		case PSAboutCreditsRow:
+		{
+			// Obtain the cell.
+			cell = [tableView dequeueReusableCellWithIdentifier:kPSTitleValueTableCellID];
+			if (cell == nil)
+			{
+				cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kPSTitleValueTableCellID] autorelease];
+			}
+			// Configure the cell.
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+			cell.textLabel.text = NSLocalizedString(@"Credits", @"Credits");
+			cell.detailTextLabel.text = nil;
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 			break;
 		}
 		case PSAboutWebsiteRow:

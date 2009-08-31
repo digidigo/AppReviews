@@ -25,15 +25,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2009 Percula Software</string>
+	<string></string>
+	<key>PSCreditsURL</key>
+	<string>credits.html</string>
 	<key>PSWebsiteURL</key>
 	<string>www.perculasoft.com</string>
 	<key>PSApplicationURL</key>
 	<string>www.perculasoft.com/appcritics</string>
 	<key>PSReleaseNotesURL</key>
 	<string>www.perculasoft.com/appcritics/releases.html</string>
-	<key>PSContactEmail</key>
-	<string>support@perculasoft.com</string>
 	<key>PSAboutIconFile</key>
 	<string>About.png</string>
 </dict>

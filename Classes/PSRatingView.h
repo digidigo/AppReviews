@@ -1,6 +1,6 @@
 //
 //  PSRatingView.h
-//  AppCritics
+//  PSCommon
 //
 //  Created by Charles Gamble on 16/11/2008.
 //  Copyright 2008 Charles Gamble. All rights reserved.

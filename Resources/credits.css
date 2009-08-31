@@ -1,0 +1,32 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 200%;
+}
+
+body {
+	color: #3E4556;
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+h1 {
+	color: #000;
+	margin-top: 0.5em;
+	font-size: 180%;
+}
+
+h2 {
+	color: #000;
+	margin-top: 1em;
+	font-size: 150%;
+}
+
+p {
+	margin-bottom: 1em;
+	font-size: 130%;
+}

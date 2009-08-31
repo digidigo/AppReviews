@@ -20,6 +20,7 @@
 	UIImage *appIcon;
 	NSString *appVersion;
 	NSString *copyright;
+	NSString *creditsURL;
 	NSString *websiteURL;
 	NSString *appURL;
 	NSString *releaseNotesURL;
@@ -27,6 +28,7 @@
 	NSString *appId;
 	CGFloat applicationNameFontSize;
 	UIView *parentViewForConfirmation;
+	NSMutableArray *rowTypes;
 }
 
 /**

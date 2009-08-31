@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 
 
-#define kPSAppStoreVerifyOperationDidStartNotification @"PSAppStoreVerifyOperationDidStartNotification"
-#define kPSAppStoreVerifyOperationDidFailNotification @"PSAppStoreVerifyOperationDidFailNotification"
-#define kPSAppStoreVerifyOperationDidFinishNotification @"PSAppStoreVerifyOperationDidFinishNotification"
+#define kACAppStoreVerifyOperationDidStartNotification @"ACAppStoreVerifyOperationDidStartNotification"
+#define kACAppStoreVerifyOperationDidFailNotification @"ACAppStoreVerifyOperationDidFailNotification"
+#define kACAppStoreVerifyOperationDidFinishNotification @"ACAppStoreVerifyOperationDidFinishNotification"
 
-#define kPSAppStoreUpdateOperationDidStartNotification @"PSAppStoreUpdateOperationDidStartNotification"
-#define kPSAppStoreUpdateOperationDidFailNotification @"PSAppStoreUpdateOperationDidFailNotification"
-#define kPSAppStoreUpdateOperationDidFinishNotification @"PSAppStoreUpdateOperationDidFinishNotification"
+#define kACAppStoreUpdateOperationDidStartNotification @"ACAppStoreUpdateOperationDidStartNotification"
+#define kACAppStoreUpdateOperationDidFailNotification @"ACAppStoreUpdateOperationDidFailNotification"
+#define kACAppStoreUpdateOperationDidFinishNotification @"ACAppStoreUpdateOperationDidFinishNotification"
 
 
-@class PSAppReviewsStore;
+@class ACAppReviewsStore;
 
 
 @interface AppCriticsAppDelegate : NSObject <UIApplicationDelegate>
@@ -29,7 +29,7 @@
 	NSUserDefaults *settings;
 	NSOperationQueue *operationQueue;
 	NSUInteger networkUsageCount;
-	PSAppReviewsStore *appReviewsStore;
+	ACAppReviewsStore *appReviewsStore;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
