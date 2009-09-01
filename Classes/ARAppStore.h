@@ -34,7 +34,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ACAppStore : NSObject
+@interface ARAppStore : NSObject
 {
 	NSString *name;
 	NSString *storeIdentifier;

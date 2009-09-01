@@ -243,7 +243,7 @@ b24ncyBTYWxlcyBSZXBvcnRzLg</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>ACEditAppStoreApplicationViewController</string>
+					<string>AREditAppStoreApplicationViewController</string>
 					<string>UIResponder</string>
 					<string>{{354, 376}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -278,7 +278,7 @@ b24ncyBTYWxlcyBSZXBvcnRzLg</string>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">ACEditAppStoreApplicationViewController</string>
+					<string key="className">AREditAppStoreApplicationViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -314,7 +314,7 @@ b24ncyBTYWxlcyBSZXBvcnRzLg</string>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/ACEditAppStoreApplicationViewController.h</string>
+						<string key="minorKey">Classes/AREditAppStoreApplicationViewController.h</string>
 					</object>
 				</object>
 			</object>

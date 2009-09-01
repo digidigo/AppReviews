@@ -31,32 +31,32 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreDetailsViewController.h"
-#import "ACAppStoreApplicationDetails.h"
-#import "ACAppStoreRatingsCountTableCell.h"
+#import "ARAppStoreDetailsViewController.h"
+#import "ARAppStoreApplicationDetails.h"
+#import "ARAppStoreRatingsCountTableCell.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
-#import "ACHorizontalBarView.h"
+#import "ARHorizontalBarView.h"
 
 
 typedef enum
 {
-	ACAppStoreDetailsRatingsSection,
-	ACAppStoreDetailsSectionCount
-} ACAppStoreDetailsSection;
+	ARAppStoreDetailsRatingsSection,
+	ARAppStoreDetailsSectionCount
+} ARAppStoreDetailsSection;
 
 typedef enum
 {
-	ACAppStoreDetailsRatingsFiveStarsRow,
-	ACAppStoreDetailsRatingsFourStarsRow,
-	ACAppStoreDetailsRatingsThreeStarsRow,
-	ACAppStoreDetailsRatingsTwoStarsRow,
-	ACAppStoreDetailsRatingsOneStarRow,
-	ACAppStoreDetailsRatingsRowCount
-} ACAppStoreDetailsRatingsRow;
+	ARAppStoreDetailsRatingsFiveStarsRow,
+	ARAppStoreDetailsRatingsFourStarsRow,
+	ARAppStoreDetailsRatingsThreeStarsRow,
+	ARAppStoreDetailsRatingsTwoStarsRow,
+	ARAppStoreDetailsRatingsOneStarRow,
+	ARAppStoreDetailsRatingsRowCount
+} ARAppStoreDetailsRatingsRow;
 
 
-@implementation ACAppStoreDetailsViewController
+@implementation ARAppStoreDetailsViewController
 
 @synthesize appStoreDetails, useCurrentVersion;
 
@@ -99,7 +99,7 @@ typedef enum
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return ACAppStoreDetailsSectionCount;
+    return ARAppStoreDetailsSectionCount;
 }
 
 
@@ -108,8 +108,8 @@ typedef enum
 {
 	switch (section)
 	{
-		case ACAppStoreDetailsRatingsSection:
-			return ACAppStoreDetailsRatingsRowCount;
+		case ARAppStoreDetailsRatingsSection:
+			return ARAppStoreDetailsRatingsRowCount;
 	}
     return 0;
 }
@@ -123,13 +123,13 @@ typedef enum
 
 	switch (indexPath.section)
 	{
-		case ACAppStoreDetailsRatingsSection:
+		case ARAppStoreDetailsRatingsSection:
 		{
 			// Obtain the cell.
-			ACAppStoreRatingsCountTableCell *rcCell = (ACAppStoreRatingsCountTableCell *) [tableView dequeueReusableCellWithIdentifier:kRatingsCountCellIdentifier];
+			ARAppStoreRatingsCountTableCell *rcCell = (ARAppStoreRatingsCountTableCell *) [tableView dequeueReusableCellWithIdentifier:kRatingsCountCellIdentifier];
 			if (rcCell == nil)
 			{
-				rcCell = [[[ACAppStoreRatingsCountTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRatingsCountCellIdentifier] autorelease];
+				rcCell = [[[ARAppStoreRatingsCountTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kRatingsCountCellIdentifier] autorelease];
 				[rcCell.barView setBarRed:27.0/255.0 green:58.0/255.0 blue:95.0/255.0 alpha:1.0];
 			}
 
@@ -155,23 +155,23 @@ typedef enum
 			NSUInteger maxCount = MAX(MAX(MAX(MAX(ratingCountOneStar,ratingCountTwoStars),ratingCountThreeStars),ratingCountFourStars),ratingCountFiveStars);
 			switch (indexPath.row)
 			{
-				case ACAppStoreDetailsRatingsFiveStarsRow:
+				case ARAppStoreDetailsRatingsFiveStarsRow:
 					rcCell.ratingView.rating = 5.0;
 					rcCell.countView.count = ratingCountFiveStars;
 					break;
-				case ACAppStoreDetailsRatingsFourStarsRow:
+				case ARAppStoreDetailsRatingsFourStarsRow:
 					rcCell.ratingView.rating = 4.0;
 					rcCell.countView.count = ratingCountFourStars;
 					break;
-				case ACAppStoreDetailsRatingsThreeStarsRow:
+				case ARAppStoreDetailsRatingsThreeStarsRow:
 					rcCell.ratingView.rating = 3.0;
 					rcCell.countView.count = ratingCountThreeStars;
 					break;
-				case ACAppStoreDetailsRatingsTwoStarsRow:
+				case ARAppStoreDetailsRatingsTwoStarsRow:
 					rcCell.ratingView.rating = 2.0;
 					rcCell.countView.count = ratingCountTwoStars;
 					break;
-				case ACAppStoreDetailsRatingsOneStarRow:
+				case ARAppStoreDetailsRatingsOneStarRow:
 					rcCell.ratingView.rating = 1.0;
 					rcCell.countView.count = ratingCountOneStar;
 					break;

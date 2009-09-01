@@ -31,10 +31,10 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "NSDate+ACNSDateAdditions.h"
+#import "NSDate+ARNSDateAdditions.h"
 
 
-@implementation NSDate (ACNSDateAdditions)
+@implementation NSDate (ARNSDateAdditions)
 
 + (NSString *)ordinalForDay:(NSUInteger)day
 {

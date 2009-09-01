@@ -32,24 +32,24 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ACAppReviewsStore.h"
+#import "ARAppReviewsStore.h"
 
 
 typedef enum
 {
-	ACAppStoreStateDefault,
-	ACAppStoreStatePending,
-	ACAppStoreStateProcessing,
-	ACAppStoreStateFailed
-} ACAppStoreState;
+	ARAppStoreStateDefault,
+	ARAppStoreStatePending,
+	ARAppStoreStateProcessing,
+	ARAppStoreStateFailed
+} ARAppStoreState;
 
 
 @class FMDatabase;
-@class ACAppStoreApplication;
-@class ACAppStore;
+@class ARAppStoreApplication;
+@class ARAppStore;
 
 
-@interface ACAppStoreApplicationDetails : NSObject
+@interface ARAppStoreApplicationDetails : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;
@@ -72,7 +72,7 @@ typedef enum
 	double ratingCurrent;
 	NSUInteger reviewCountAll;
 	NSUInteger reviewCountCurrent;
-	ACReviewsSortOrder lastSortOrder;
+	ARReviewsSortOrder lastSortOrder;
 	NSDate *lastUpdated;
 
 	// Persistent members (dehydrated).
@@ -90,7 +90,7 @@ typedef enum
 	// Non-persistent members.
 	BOOL hasNewRatings;
 	BOOL hasNewReviews;
-	ACAppStoreState state;
+	ARAppStoreState state;
 
     // Opaque reference to the underlying database.
     FMDatabase *database;
@@ -122,7 +122,7 @@ typedef enum
 @property (nonatomic, assign) double ratingCurrent;
 @property (nonatomic, assign) NSUInteger reviewCountAll;
 @property (nonatomic, assign) NSUInteger reviewCountCurrent;
-@property (nonatomic, assign) ACReviewsSortOrder lastSortOrder;
+@property (nonatomic, assign) ARReviewsSortOrder lastSortOrder;
 @property (nonatomic, copy) NSDate *lastUpdated;
 @property (nonatomic, copy) NSString *released;
 @property (nonatomic, copy) NSString *appVersion;
@@ -137,7 +137,7 @@ typedef enum
 
 @property (nonatomic, assign) BOOL hasNewRatings;
 @property (nonatomic, assign) BOOL hasNewReviews;
-@property (assign) ACAppStoreState state;
+@property (assign) ARAppStoreState state;
 @property (nonatomic, assign, readonly) NSInteger primaryKey;
 
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;

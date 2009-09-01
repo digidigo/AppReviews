@@ -31,7 +31,7 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreReviewsSummaryTableCell.h"
+#import "ARAppStoreReviewsSummaryTableCell.h"
 #import "PSRatingView.h"
 #import "UIColor+MoreColors.h"
 #import "AppReviewsAppDelegate.h"
@@ -40,7 +40,7 @@
 static UIColor *sLabelColor = nil;
 
 
-@implementation ACAppStoreReviewsSummaryTableCell
+@implementation ARAppStoreReviewsSummaryTableCell
 
 @synthesize ratingsLabel, ratingsValue, ratingsView, reviewsLabel, reviewsValue, averageRating, ratingsCount, reviewsCount;
 

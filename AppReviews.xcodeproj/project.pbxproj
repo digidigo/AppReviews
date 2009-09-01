@@ -14,47 +14,47 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		FB445A6F0ED2F36000D89246 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445A6E0ED2F36000D89246 /* Reachability.m */; };
 		FB445AA90ED2F42400D89246 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */; };
-		FB445BAB0ED54D5D00D89246 /* ACAppStoreReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BAA0ED54D5D00D89246 /* ACAppStoreReviewsViewController.m */; };
-		FB445BFC0ED609FB00D89246 /* ACAppStoreReviewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BFB0ED609FB00D89246 /* ACAppStoreReviewTableCell.m */; };
-		FB445D770ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445D760ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.m */; };
+		FB445BAB0ED54D5D00D89246 /* ARAppStoreReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BAA0ED54D5D00D89246 /* ARAppStoreReviewsViewController.m */; };
+		FB445BFC0ED609FB00D89246 /* ARAppStoreReviewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445BFB0ED609FB00D89246 /* ARAppStoreReviewTableCell.m */; };
+		FB445D770ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB445D760ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.m */; };
 		FB7909C90F6A47F000E1593F /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C40F6A47F000E1593F /* FMDatabase.m */; };
 		FB7909CA0F6A47F000E1593F /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C60F6A47F000E1593F /* FMDatabaseAdditions.m */; };
 		FB7909CB0F6A47F000E1593F /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909C80F6A47F000E1593F /* FMResultSet.m */; };
-		FB7909E40F6A4A1B00E1593F /* ACAppReviewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909E30F6A4A1B00E1593F /* ACAppReviewsStore.m */; };
+		FB7909E40F6A4A1B00E1593F /* ARAppReviewsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7909E30F6A4A1B00E1593F /* ARAppReviewsStore.m */; };
 		FB790A580F6B179B00E1593F /* FmdbMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A530F6B179B00E1593F /* FmdbMigration.m */; };
 		FB790A590F6B179B00E1593F /* FmdbMigrationColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A550F6B179B00E1593F /* FmdbMigrationColumn.m */; };
 		FB790A5A0F6B179B00E1593F /* FmdbMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790A570F6B179B00E1593F /* FmdbMigrationManager.m */; };
 		FB790A620F6B1F1100E1593F /* AppReviews.sql in Resources */ = {isa = PBXBuildFile; fileRef = FB790A610F6B1F1100E1593F /* AppReviews.sql */; };
-		FB790EA00F6C875600E1593F /* ACAppStoreApplicationDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790E9F0F6C875600E1593F /* ACAppStoreApplicationDetails.m */; };
-		FB79103F0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FB79103E0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.m */; };
+		FB790EA00F6C875600E1593F /* ARAppStoreApplicationDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = FB790E9F0F6C875600E1593F /* ARAppStoreApplicationDetails.m */; };
+		FB79103F0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FB79103E0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.m */; };
 		FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2C70EAF35750061B88B /* PSCountView.m */; };
 		FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2CB0EAF35750061B88B /* PSImageView.m */; };
-		FB81A2D60EAF39B10061B88B /* ACAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2D50EAF39B10061B88B /* ACAppStore.m */; };
-		FB81A2F20EAF3FAA0061B88B /* ACAppStoreApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F10EAF3FAA0061B88B /* ACAppStoreApplication.m */; };
-		FB81A2F90EAF501C0061B88B /* ACAppStoreApplicationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F80EAF501C0061B88B /* ACAppStoreApplicationsViewController.m */; };
-		FB81A33E0EAF55060061B88B /* ACAppStoreCountriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A33D0EAF55060061B88B /* ACAppStoreCountriesViewController.m */; };
-		FB81A5AA0EB0776F0061B88B /* ACAppStoreApplicationReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* ACAppStoreApplicationReview.m */; };
-		FB81A5B00EB087A90061B88B /* ACAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* ACAppStoreTableCell.m */; };
+		FB81A2D60EAF39B10061B88B /* ARAppStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2D50EAF39B10061B88B /* ARAppStore.m */; };
+		FB81A2F20EAF3FAA0061B88B /* ARAppStoreApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F10EAF3FAA0061B88B /* ARAppStoreApplication.m */; };
+		FB81A2F90EAF501C0061B88B /* ARAppStoreApplicationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A2F80EAF501C0061B88B /* ARAppStoreApplicationsViewController.m */; };
+		FB81A33E0EAF55060061B88B /* ARAppStoreCountriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A33D0EAF55060061B88B /* ARAppStoreCountriesViewController.m */; };
+		FB81A5AA0EB0776F0061B88B /* ARAppStoreApplicationReview.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5A90EB0776F0061B88B /* ARAppStoreApplicationReview.m */; };
+		FB81A5B00EB087A90061B88B /* ARAppStoreTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A5AF0EB087A90061B88B /* ARAppStoreTableCell.m */; };
 		FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */ = {isa = PBXBuildFile; fileRef = FB81A6930EB12C520061B88B /* GTMRegex.m */; };
 		FB9CA0B40FD8887D009D1542 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9CA0B30FD8887D009D1542 /* MessageUI.framework */; };
-		FBAA7527103B6F5D002585DE /* ACAppStoreUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA7526103B6F5D002585DE /* ACAppStoreUpdateOperation.m */; };
-		FBAA77AB103E13D7002585DE /* ACAppStoreVerifyOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA77AA103E13D7002585DE /* ACAppStoreVerifyOperation.m */; };
+		FBAA7527103B6F5D002585DE /* ARAppStoreUpdateOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA7526103B6F5D002585DE /* ARAppStoreUpdateOperation.m */; };
+		FBAA77AB103E13D7002585DE /* ARAppStoreVerifyOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FBAA77AA103E13D7002585DE /* ARAppStoreVerifyOperation.m */; };
 		FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */; };
 		FBB44EF60ECCF24700A04B1F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB44EF50ECCF24700A04B1F /* Icon.png */; };
 		FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FBB451C80ECF150400A04B1F /* Settings.bundle */; };
 		FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536C0ECF8DD800A04B1F /* halfstar.png */; };
 		FBB4536F0ECF8DD800A04B1F /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4536D0ECF8DD800A04B1F /* star.png */; };
-		FBB453820ECF8F2900A04B1F /* ACEditAppStoreApplicationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB453810ECF8F2900A04B1F /* ACEditAppStoreApplicationView.xib */; };
-		FBB453890ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB453880ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.m */; };
+		FBB453820ECF8F2900A04B1F /* AREditAppStoreApplicationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB453810ECF8F2900A04B1F /* AREditAppStoreApplicationView.xib */; };
+		FBB453890ECF93F200A04B1F /* AREditAppStoreApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB453880ECF93F200A04B1F /* AREditAppStoreApplicationViewController.m */; };
 		FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4539D0ED0348300A04B1F /* PSRatingView.m */; };
 		FBB454100ED084B500A04B1F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FBB4540F0ED084B500A04B1F /* Default.png */; };
 		FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */; };
-		FBBC91D30F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBC91D20F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.m */; };
+		FBBC91D30F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = FBBC91D20F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.m */; };
 		FBC6278F0FEEE05A002B6DD5 /* house.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC6278E0FEEE05A002B6DD5 /* house.png */; };
-		FBC628F50FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC628F40FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.m */; };
-		FBC629A20FF0B239002B6DD5 /* ACAppStoreDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A10FF0B239002B6DD5 /* ACAppStoreDetailsViewController.m */; };
-		FBC629AA0FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A90FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.m */; };
-		FBC62A680FF17182002B6DD5 /* ACHorizontalBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC62A670FF17182002B6DD5 /* ACHorizontalBarView.m */; };
+		FBC628F50FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC628F40FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.m */; };
+		FBC629A20FF0B239002B6DD5 /* ARAppStoreDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A10FF0B239002B6DD5 /* ARAppStoreDetailsViewController.m */; };
+		FBC629AA0FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC629A90FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.m */; };
+		FBC62A680FF17182002B6DD5 /* ARHorizontalBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC62A670FF17182002B6DD5 /* ARHorizontalBarView.m */; };
 		FBCDDE410F44CEA7003756D4 /* 143441.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE030F44CEA7003756D4 /* 143441.png */; };
 		FBCDDE420F44CEA7003756D4 /* 143442.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE040F44CEA7003756D4 /* 143442.png */; };
 		FBCDDE430F44CEA7003756D4 /* 143443.png in Resources */ = {isa = PBXBuildFile; fileRef = FBCDDE050F44CEA7003756D4 /* 143443.png */; };
@@ -120,7 +120,7 @@
 		FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDA31D90F416FD60015A948 /* NSString+PSPathAdditions.m */; };
 		FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */; };
 		FBDC0F3E0EE03FA900442E92 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = FBDC0F3D0EE03FA900442E92 /* About.png */; };
-		FBDC0FE30EE09FEF00442E92 /* NSDate+ACNSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDC0FE20EE09FEF00442E92 /* NSDate+ACNSDateAdditions.m */; };
+		FBDC0FE30EE09FEF00442E92 /* NSDate+ARNSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDC0FE20EE09FEF00442E92 /* NSDate+ARNSDateAdditions.m */; };
 		FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */; };
 		FBFAEC3F1049E2B600B0DFFD /* PSHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBFAEC3E1049E2B600B0DFFD /* PSHelpView.xib */; };
 		FBFAEC421049E2D700B0DFFD /* PSHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBFAEC411049E2D700B0DFFD /* PSHelpViewController.m */; };
@@ -155,12 +155,12 @@
 		FB445A6D0ED2F36000D89246 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		FB445A6E0ED2F36000D89246 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		FB445AA80ED2F42400D89246 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
-		FB445BA90ED54D5D00D89246 /* ACAppStoreReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreReviewsViewController.h; sourceTree = "<group>"; };
-		FB445BAA0ED54D5D00D89246 /* ACAppStoreReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreReviewsViewController.m; sourceTree = "<group>"; };
-		FB445BFA0ED609FB00D89246 /* ACAppStoreReviewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreReviewTableCell.h; sourceTree = "<group>"; };
-		FB445BFB0ED609FB00D89246 /* ACAppStoreReviewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreReviewTableCell.m; sourceTree = "<group>"; };
-		FB445D750ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreReviewsHeaderTableCell.h; sourceTree = "<group>"; };
-		FB445D760ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreReviewsHeaderTableCell.m; sourceTree = "<group>"; };
+		FB445BA90ED54D5D00D89246 /* ARAppStoreReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreReviewsViewController.h; sourceTree = "<group>"; };
+		FB445BAA0ED54D5D00D89246 /* ARAppStoreReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreReviewsViewController.m; sourceTree = "<group>"; };
+		FB445BFA0ED609FB00D89246 /* ARAppStoreReviewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreReviewTableCell.h; sourceTree = "<group>"; };
+		FB445BFB0ED609FB00D89246 /* ARAppStoreReviewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreReviewTableCell.m; sourceTree = "<group>"; };
+		FB445D750ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreReviewsHeaderTableCell.h; sourceTree = "<group>"; };
+		FB445D760ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreReviewsHeaderTableCell.m; sourceTree = "<group>"; };
 		FB7909C30F6A47F000E1593F /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = FMDB/FMDatabase.h; sourceTree = "<group>"; };
 		FB7909C40F6A47F000E1593F /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = FMDB/FMDatabase.m; sourceTree = "<group>"; };
 		FB7909C50F6A47F000E1593F /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = FMDB/FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -168,8 +168,8 @@
 		FB7909C70F6A47F000E1593F /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = FMDB/FMResultSet.h; sourceTree = "<group>"; };
 		FB7909C80F6A47F000E1593F /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = FMDB/FMResultSet.m; sourceTree = "<group>"; };
 		FB7909E10F6A495300E1593F /* PSSynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSynthesizeSingleton.h; sourceTree = "<group>"; };
-		FB7909E20F6A4A1B00E1593F /* ACAppReviewsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppReviewsStore.h; sourceTree = "<group>"; };
-		FB7909E30F6A4A1B00E1593F /* ACAppReviewsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppReviewsStore.m; sourceTree = "<group>"; };
+		FB7909E20F6A4A1B00E1593F /* ARAppReviewsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppReviewsStore.h; sourceTree = "<group>"; };
+		FB7909E30F6A4A1B00E1593F /* ARAppReviewsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppReviewsStore.m; sourceTree = "<group>"; };
 		FB790A520F6B179B00E1593F /* FmdbMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigration.h; path = FMDB/FmdbMigration.h; sourceTree = "<group>"; };
 		FB790A530F6B179B00E1593F /* FmdbMigration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FmdbMigration.m; path = FMDB/FmdbMigration.m; sourceTree = "<group>"; };
 		FB790A540F6B179B00E1593F /* FmdbMigrationColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigrationColumn.h; path = FMDB/FmdbMigrationColumn.h; sourceTree = "<group>"; };
@@ -177,61 +177,61 @@
 		FB790A560F6B179B00E1593F /* FmdbMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FmdbMigrationManager.h; path = FMDB/FmdbMigrationManager.h; sourceTree = "<group>"; };
 		FB790A570F6B179B00E1593F /* FmdbMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FmdbMigrationManager.m; path = FMDB/FmdbMigrationManager.m; sourceTree = "<group>"; };
 		FB790A610F6B1F1100E1593F /* AppReviews.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppReviews.sql; sourceTree = "<group>"; };
-		FB790E9E0F6C875600E1593F /* ACAppStoreApplicationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplicationDetails.h; sourceTree = "<group>"; };
-		FB790E9F0F6C875600E1593F /* ACAppStoreApplicationDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplicationDetails.m; sourceTree = "<group>"; };
-		FB79103D0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplicationDetailsImporter.h; sourceTree = "<group>"; };
-		FB79103E0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplicationDetailsImporter.m; sourceTree = "<group>"; };
+		FB790E9E0F6C875600E1593F /* ARAppStoreApplicationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplicationDetails.h; sourceTree = "<group>"; };
+		FB790E9F0F6C875600E1593F /* ARAppStoreApplicationDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplicationDetails.m; sourceTree = "<group>"; };
+		FB79103D0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplicationDetailsImporter.h; sourceTree = "<group>"; };
+		FB79103E0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplicationDetailsImporter.m; sourceTree = "<group>"; };
 		FB81A2C60EAF35750061B88B /* PSCountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCountView.h; sourceTree = "<group>"; };
 		FB81A2C70EAF35750061B88B /* PSCountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCountView.m; sourceTree = "<group>"; };
 		FB81A2CA0EAF35750061B88B /* PSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageView.h; sourceTree = "<group>"; };
 		FB81A2CB0EAF35750061B88B /* PSImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageView.m; sourceTree = "<group>"; };
 		FB81A2CC0EAF35750061B88B /* PSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLog.h; sourceTree = "<group>"; };
 		FB81A2CF0EAF35750061B88B /* PSProgressHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressHandler.h; sourceTree = "<group>"; };
-		FB81A2D40EAF39B10061B88B /* ACAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStore.h; sourceTree = "<group>"; };
-		FB81A2D50EAF39B10061B88B /* ACAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStore.m; sourceTree = "<group>"; };
-		FB81A2F00EAF3FAA0061B88B /* ACAppStoreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplication.h; sourceTree = "<group>"; };
-		FB81A2F10EAF3FAA0061B88B /* ACAppStoreApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplication.m; sourceTree = "<group>"; };
-		FB81A2F70EAF501C0061B88B /* ACAppStoreApplicationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplicationsViewController.h; sourceTree = "<group>"; };
-		FB81A2F80EAF501C0061B88B /* ACAppStoreApplicationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplicationsViewController.m; sourceTree = "<group>"; };
-		FB81A33C0EAF55060061B88B /* ACAppStoreCountriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreCountriesViewController.h; sourceTree = "<group>"; };
-		FB81A33D0EAF55060061B88B /* ACAppStoreCountriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreCountriesViewController.m; sourceTree = "<group>"; };
-		FB81A5A80EB0776F0061B88B /* ACAppStoreApplicationReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplicationReview.h; sourceTree = "<group>"; };
-		FB81A5A90EB0776F0061B88B /* ACAppStoreApplicationReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplicationReview.m; sourceTree = "<group>"; };
-		FB81A5AE0EB087A90061B88B /* ACAppStoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreTableCell.h; sourceTree = "<group>"; };
-		FB81A5AF0EB087A90061B88B /* ACAppStoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreTableCell.m; sourceTree = "<group>"; };
+		FB81A2D40EAF39B10061B88B /* ARAppStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStore.h; sourceTree = "<group>"; };
+		FB81A2D50EAF39B10061B88B /* ARAppStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStore.m; sourceTree = "<group>"; };
+		FB81A2F00EAF3FAA0061B88B /* ARAppStoreApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplication.h; sourceTree = "<group>"; };
+		FB81A2F10EAF3FAA0061B88B /* ARAppStoreApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplication.m; sourceTree = "<group>"; };
+		FB81A2F70EAF501C0061B88B /* ARAppStoreApplicationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplicationsViewController.h; sourceTree = "<group>"; };
+		FB81A2F80EAF501C0061B88B /* ARAppStoreApplicationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplicationsViewController.m; sourceTree = "<group>"; };
+		FB81A33C0EAF55060061B88B /* ARAppStoreCountriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreCountriesViewController.h; sourceTree = "<group>"; };
+		FB81A33D0EAF55060061B88B /* ARAppStoreCountriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreCountriesViewController.m; sourceTree = "<group>"; };
+		FB81A5A80EB0776F0061B88B /* ARAppStoreApplicationReview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplicationReview.h; sourceTree = "<group>"; };
+		FB81A5A90EB0776F0061B88B /* ARAppStoreApplicationReview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplicationReview.m; sourceTree = "<group>"; };
+		FB81A5AE0EB087A90061B88B /* ARAppStoreTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreTableCell.h; sourceTree = "<group>"; };
+		FB81A5AF0EB087A90061B88B /* ARAppStoreTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreTableCell.m; sourceTree = "<group>"; };
 		FB81A6910EB12C400061B88B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		FB81A6920EB12C520061B88B /* GTMRegex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMRegex.h; sourceTree = "<group>"; };
 		FB81A6930EB12C520061B88B /* GTMRegex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMRegex.m; sourceTree = "<group>"; };
 		FB9CA0B30FD8887D009D1542 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		FBAA7525103B6F5D002585DE /* ACAppStoreUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreUpdateOperation.h; sourceTree = "<group>"; };
-		FBAA7526103B6F5D002585DE /* ACAppStoreUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreUpdateOperation.m; sourceTree = "<group>"; };
-		FBAA77A9103E13D7002585DE /* ACAppStoreVerifyOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreVerifyOperation.h; sourceTree = "<group>"; };
-		FBAA77AA103E13D7002585DE /* ACAppStoreVerifyOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreVerifyOperation.m; sourceTree = "<group>"; };
+		FBAA7525103B6F5D002585DE /* ARAppStoreUpdateOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreUpdateOperation.h; sourceTree = "<group>"; };
+		FBAA7526103B6F5D002585DE /* ARAppStoreUpdateOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreUpdateOperation.m; sourceTree = "<group>"; };
+		FBAA77A9103E13D7002585DE /* ARAppStoreVerifyOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreVerifyOperation.h; sourceTree = "<group>"; };
+		FBAA77AA103E13D7002585DE /* ARAppStoreVerifyOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreVerifyOperation.m; sourceTree = "<group>"; };
 		FBB44EC60ECCEB1D00A04B1F /* PSAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAboutViewController.h; sourceTree = "<group>"; };
 		FBB44EC70ECCEB1D00A04B1F /* PSAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAboutViewController.m; sourceTree = "<group>"; };
 		FBB44EF50ECCF24700A04B1F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		FBB451C80ECF150400A04B1F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FBB4536C0ECF8DD800A04B1F /* halfstar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = halfstar.png; path = Resources/halfstar.png; sourceTree = "<group>"; };
 		FBB4536D0ECF8DD800A04B1F /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = Resources/star.png; sourceTree = "<group>"; };
-		FBB453810ECF8F2900A04B1F /* ACEditAppStoreApplicationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ACEditAppStoreApplicationView.xib; sourceTree = "<group>"; };
-		FBB453870ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEditAppStoreApplicationViewController.h; sourceTree = "<group>"; };
-		FBB453880ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEditAppStoreApplicationViewController.m; sourceTree = "<group>"; };
+		FBB453810ECF8F2900A04B1F /* AREditAppStoreApplicationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AREditAppStoreApplicationView.xib; sourceTree = "<group>"; };
+		FBB453870ECF93F200A04B1F /* AREditAppStoreApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AREditAppStoreApplicationViewController.h; sourceTree = "<group>"; };
+		FBB453880ECF93F200A04B1F /* AREditAppStoreApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AREditAppStoreApplicationViewController.m; sourceTree = "<group>"; };
 		FBB4539C0ED0348300A04B1F /* PSRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRatingView.h; sourceTree = "<group>"; };
 		FBB4539D0ED0348300A04B1F /* PSRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSRatingView.m; sourceTree = "<group>"; };
 		FBB4540F0ED084B500A04B1F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FBB4555C0ED0E6BE00A04B1F /* PSSelectionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSelectionListViewController.h; sourceTree = "<group>"; };
 		FBB4555D0ED0E6BE00A04B1F /* PSSelectionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSelectionListViewController.m; sourceTree = "<group>"; };
-		FBBC91D10F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreApplicationReviewsImporter.h; sourceTree = "<group>"; };
-		FBBC91D20F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreApplicationReviewsImporter.m; sourceTree = "<group>"; };
+		FBBC91D10F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreApplicationReviewsImporter.h; sourceTree = "<group>"; };
+		FBBC91D20F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreApplicationReviewsImporter.m; sourceTree = "<group>"; };
 		FBC6278E0FEEE05A002B6DD5 /* house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = house.png; path = Resources/house.png; sourceTree = "<group>"; };
-		FBC628F30FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreReviewsSummaryTableCell.h; sourceTree = "<group>"; };
-		FBC628F40FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreReviewsSummaryTableCell.m; sourceTree = "<group>"; };
-		FBC629A00FF0B239002B6DD5 /* ACAppStoreDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreDetailsViewController.h; sourceTree = "<group>"; };
-		FBC629A10FF0B239002B6DD5 /* ACAppStoreDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreDetailsViewController.m; sourceTree = "<group>"; };
-		FBC629A80FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAppStoreRatingsCountTableCell.h; sourceTree = "<group>"; };
-		FBC629A90FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAppStoreRatingsCountTableCell.m; sourceTree = "<group>"; };
-		FBC62A660FF17182002B6DD5 /* ACHorizontalBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACHorizontalBarView.h; sourceTree = "<group>"; };
-		FBC62A670FF17182002B6DD5 /* ACHorizontalBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACHorizontalBarView.m; sourceTree = "<group>"; };
+		FBC628F30FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreReviewsSummaryTableCell.h; sourceTree = "<group>"; };
+		FBC628F40FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreReviewsSummaryTableCell.m; sourceTree = "<group>"; };
+		FBC629A00FF0B239002B6DD5 /* ARAppStoreDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreDetailsViewController.h; sourceTree = "<group>"; };
+		FBC629A10FF0B239002B6DD5 /* ARAppStoreDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreDetailsViewController.m; sourceTree = "<group>"; };
+		FBC629A80FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppStoreRatingsCountTableCell.h; sourceTree = "<group>"; };
+		FBC629A90FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppStoreRatingsCountTableCell.m; sourceTree = "<group>"; };
+		FBC62A660FF17182002B6DD5 /* ARHorizontalBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARHorizontalBarView.h; sourceTree = "<group>"; };
+		FBC62A670FF17182002B6DD5 /* ARHorizontalBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARHorizontalBarView.m; sourceTree = "<group>"; };
 		FBCDDE030F44CEA7003756D4 /* 143441.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143441.png; path = Resources/143441.png; sourceTree = "<group>"; };
 		FBCDDE040F44CEA7003756D4 /* 143442.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143442.png; path = Resources/143442.png; sourceTree = "<group>"; };
 		FBCDDE050F44CEA7003756D4 /* 143443.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 143443.png; path = Resources/143443.png; sourceTree = "<group>"; };
@@ -299,8 +299,8 @@
 		FBDA31DA0F416FD60015A948 /* UIColor+MoreColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MoreColors.h"; sourceTree = "<group>"; };
 		FBDA31DB0F416FD60015A948 /* UIColor+MoreColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MoreColors.m"; sourceTree = "<group>"; };
 		FBDC0F3D0EE03FA900442E92 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = About.png; path = Resources/About.png; sourceTree = "<group>"; };
-		FBDC0FE10EE09FEF00442E92 /* NSDate+ACNSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ACNSDateAdditions.h"; sourceTree = "<group>"; };
-		FBDC0FE20EE09FEF00442E92 /* NSDate+ACNSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ACNSDateAdditions.m"; sourceTree = "<group>"; };
+		FBDC0FE10EE09FEF00442E92 /* NSDate+ARNSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ARNSDateAdditions.h"; sourceTree = "<group>"; };
+		FBDC0FE20EE09FEF00442E92 /* NSDate+ARNSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ARNSDateAdditions.m"; sourceTree = "<group>"; };
 		FBE098870F5B4CFB00CDBBA9 /* PSProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSProgressHUD.h; sourceTree = "<group>"; };
 		FBE098880F5B4CFB00CDBBA9 /* PSProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSProgressHUD.m; sourceTree = "<group>"; };
 		FBFAEC3E1049E2B600B0DFFD /* PSHelpView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSHelpView.xib; sourceTree = "<group>"; };
@@ -335,8 +335,8 @@
 				FB81A5FB0EB1152A0061B88B /* Views */,
 				FBB453860ECF93BA00A04B1F /* Controllers */,
 				FBAA7520103B6E2C002585DE /* Operations */,
-				FBDC0FE10EE09FEF00442E92 /* NSDate+ACNSDateAdditions.h */,
-				FBDC0FE20EE09FEF00442E92 /* NSDate+ACNSDateAdditions.m */,
+				FBDC0FE10EE09FEF00442E92 /* NSDate+ARNSDateAdditions.h */,
+				FBDC0FE20EE09FEF00442E92 /* NSDate+ARNSDateAdditions.m */,
 				1D3623240D0F684500981E51 /* AppReviewsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppReviewsAppDelegate.m */,
 			);
@@ -448,7 +448,7 @@
 				FBB4536D0ECF8DD800A04B1F /* star.png */,
 				FBB44EF50ECCF24700A04B1F /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
-				FBB453810ECF8F2900A04B1F /* ACEditAppStoreApplicationView.xib */,
+				FBB453810ECF8F2900A04B1F /* AREditAppStoreApplicationView.xib */,
 				FBFAEC3E1049E2B600B0DFFD /* PSHelpView.xib */,
 			);
 			name = Resources;
@@ -469,20 +469,20 @@
 		FB7909B90F6A473300E1593F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FB7909E20F6A4A1B00E1593F /* ACAppReviewsStore.h */,
-				FB7909E30F6A4A1B00E1593F /* ACAppReviewsStore.m */,
-				FB81A2D40EAF39B10061B88B /* ACAppStore.h */,
-				FB81A2D50EAF39B10061B88B /* ACAppStore.m */,
-				FB81A2F00EAF3FAA0061B88B /* ACAppStoreApplication.h */,
-				FB81A2F10EAF3FAA0061B88B /* ACAppStoreApplication.m */,
-				FB790E9E0F6C875600E1593F /* ACAppStoreApplicationDetails.h */,
-				FB790E9F0F6C875600E1593F /* ACAppStoreApplicationDetails.m */,
-				FB79103D0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.h */,
-				FB79103E0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.m */,
-				FB81A5A80EB0776F0061B88B /* ACAppStoreApplicationReview.h */,
-				FB81A5A90EB0776F0061B88B /* ACAppStoreApplicationReview.m */,
-				FBBC91D10F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.h */,
-				FBBC91D20F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.m */,
+				FB7909E20F6A4A1B00E1593F /* ARAppReviewsStore.h */,
+				FB7909E30F6A4A1B00E1593F /* ARAppReviewsStore.m */,
+				FB81A2D40EAF39B10061B88B /* ARAppStore.h */,
+				FB81A2D50EAF39B10061B88B /* ARAppStore.m */,
+				FB81A2F00EAF3FAA0061B88B /* ARAppStoreApplication.h */,
+				FB81A2F10EAF3FAA0061B88B /* ARAppStoreApplication.m */,
+				FB790E9E0F6C875600E1593F /* ARAppStoreApplicationDetails.h */,
+				FB790E9F0F6C875600E1593F /* ARAppStoreApplicationDetails.m */,
+				FB79103D0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.h */,
+				FB79103E0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.m */,
+				FB81A5A80EB0776F0061B88B /* ARAppStoreApplicationReview.h */,
+				FB81A5A90EB0776F0061B88B /* ARAppStoreApplicationReview.m */,
+				FBBC91D10F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.h */,
+				FBBC91D20F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -569,18 +569,18 @@
 		FB81A5FB0EB1152A0061B88B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FB81A5AE0EB087A90061B88B /* ACAppStoreTableCell.h */,
-				FB81A5AF0EB087A90061B88B /* ACAppStoreTableCell.m */,
-				FBC62A660FF17182002B6DD5 /* ACHorizontalBarView.h */,
-				FBC62A670FF17182002B6DD5 /* ACHorizontalBarView.m */,
-				FB445BFA0ED609FB00D89246 /* ACAppStoreReviewTableCell.h */,
-				FB445BFB0ED609FB00D89246 /* ACAppStoreReviewTableCell.m */,
-				FB445D750ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.h */,
-				FB445D760ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.m */,
-				FBC628F30FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.h */,
-				FBC628F40FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.m */,
-				FBC629A80FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.h */,
-				FBC629A90FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.m */,
+				FB81A5AE0EB087A90061B88B /* ARAppStoreTableCell.h */,
+				FB81A5AF0EB087A90061B88B /* ARAppStoreTableCell.m */,
+				FBC62A660FF17182002B6DD5 /* ARHorizontalBarView.h */,
+				FBC62A670FF17182002B6DD5 /* ARHorizontalBarView.m */,
+				FB445BFA0ED609FB00D89246 /* ARAppStoreReviewTableCell.h */,
+				FB445BFB0ED609FB00D89246 /* ARAppStoreReviewTableCell.m */,
+				FB445D750ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.h */,
+				FB445D760ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.m */,
+				FBC628F30FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.h */,
+				FBC628F40FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.m */,
+				FBC629A80FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.h */,
+				FBC629A90FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -588,10 +588,10 @@
 		FBAA7520103B6E2C002585DE /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				FBAA77A9103E13D7002585DE /* ACAppStoreVerifyOperation.h */,
-				FBAA77AA103E13D7002585DE /* ACAppStoreVerifyOperation.m */,
-				FBAA7525103B6F5D002585DE /* ACAppStoreUpdateOperation.h */,
-				FBAA7526103B6F5D002585DE /* ACAppStoreUpdateOperation.m */,
+				FBAA77A9103E13D7002585DE /* ARAppStoreVerifyOperation.h */,
+				FBAA77AA103E13D7002585DE /* ARAppStoreVerifyOperation.m */,
+				FBAA7525103B6F5D002585DE /* ARAppStoreUpdateOperation.h */,
+				FBAA7526103B6F5D002585DE /* ARAppStoreUpdateOperation.m */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -599,16 +599,16 @@
 		FBB453860ECF93BA00A04B1F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FB81A2F70EAF501C0061B88B /* ACAppStoreApplicationsViewController.h */,
-				FB81A2F80EAF501C0061B88B /* ACAppStoreApplicationsViewController.m */,
-				FB81A33C0EAF55060061B88B /* ACAppStoreCountriesViewController.h */,
-				FB81A33D0EAF55060061B88B /* ACAppStoreCountriesViewController.m */,
-				FB445BA90ED54D5D00D89246 /* ACAppStoreReviewsViewController.h */,
-				FB445BAA0ED54D5D00D89246 /* ACAppStoreReviewsViewController.m */,
-				FBC629A00FF0B239002B6DD5 /* ACAppStoreDetailsViewController.h */,
-				FBC629A10FF0B239002B6DD5 /* ACAppStoreDetailsViewController.m */,
-				FBB453870ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.h */,
-				FBB453880ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.m */,
+				FB81A2F70EAF501C0061B88B /* ARAppStoreApplicationsViewController.h */,
+				FB81A2F80EAF501C0061B88B /* ARAppStoreApplicationsViewController.m */,
+				FB81A33C0EAF55060061B88B /* ARAppStoreCountriesViewController.h */,
+				FB81A33D0EAF55060061B88B /* ARAppStoreCountriesViewController.m */,
+				FB445BA90ED54D5D00D89246 /* ARAppStoreReviewsViewController.h */,
+				FB445BAA0ED54D5D00D89246 /* ARAppStoreReviewsViewController.m */,
+				FBC629A00FF0B239002B6DD5 /* ARAppStoreDetailsViewController.h */,
+				FBC629A10FF0B239002B6DD5 /* ARAppStoreDetailsViewController.m */,
+				FBB453870ECF93F200A04B1F /* AREditAppStoreApplicationViewController.h */,
+				FBB453880ECF93F200A04B1F /* AREditAppStoreApplicationViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -673,7 +673,7 @@
 				FBB451C90ECF150400A04B1F /* Settings.bundle in Resources */,
 				FBB4536E0ECF8DD800A04B1F /* halfstar.png in Resources */,
 				FBB4536F0ECF8DD800A04B1F /* star.png in Resources */,
-				FBB453820ECF8F2900A04B1F /* ACEditAppStoreApplicationView.xib in Resources */,
+				FBB453820ECF8F2900A04B1F /* AREditAppStoreApplicationView.xib in Resources */,
 				FBB454100ED084B500A04B1F /* Default.png in Resources */,
 				FBDC0F3E0EE03FA900442E92 /* About.png in Resources */,
 				FBCDDE410F44CEA7003756D4 /* 143441.png in Resources */,
@@ -757,41 +757,41 @@
 				1D3623260D0F684500981E51 /* AppReviewsAppDelegate.m in Sources */,
 				FB81A2D00EAF35750061B88B /* PSCountView.m in Sources */,
 				FB81A2D20EAF35750061B88B /* PSImageView.m in Sources */,
-				FB81A2D60EAF39B10061B88B /* ACAppStore.m in Sources */,
-				FB81A2F20EAF3FAA0061B88B /* ACAppStoreApplication.m in Sources */,
-				FB81A2F90EAF501C0061B88B /* ACAppStoreApplicationsViewController.m in Sources */,
-				FB81A33E0EAF55060061B88B /* ACAppStoreCountriesViewController.m in Sources */,
-				FB81A5AA0EB0776F0061B88B /* ACAppStoreApplicationReview.m in Sources */,
-				FB81A5B00EB087A90061B88B /* ACAppStoreTableCell.m in Sources */,
+				FB81A2D60EAF39B10061B88B /* ARAppStore.m in Sources */,
+				FB81A2F20EAF3FAA0061B88B /* ARAppStoreApplication.m in Sources */,
+				FB81A2F90EAF501C0061B88B /* ARAppStoreApplicationsViewController.m in Sources */,
+				FB81A33E0EAF55060061B88B /* ARAppStoreCountriesViewController.m in Sources */,
+				FB81A5AA0EB0776F0061B88B /* ARAppStoreApplicationReview.m in Sources */,
+				FB81A5B00EB087A90061B88B /* ARAppStoreTableCell.m in Sources */,
 				FB81A6940EB12C520061B88B /* GTMRegex.m in Sources */,
 				FBB44EC80ECCEB1D00A04B1F /* PSAboutViewController.m in Sources */,
-				FBB453890ECF93F200A04B1F /* ACEditAppStoreApplicationViewController.m in Sources */,
+				FBB453890ECF93F200A04B1F /* AREditAppStoreApplicationViewController.m in Sources */,
 				FBB4539E0ED0348300A04B1F /* PSRatingView.m in Sources */,
 				FBB4555E0ED0E6BE00A04B1F /* PSSelectionListViewController.m in Sources */,
 				FB445A6F0ED2F36000D89246 /* Reachability.m in Sources */,
-				FB445BAB0ED54D5D00D89246 /* ACAppStoreReviewsViewController.m in Sources */,
-				FB445BFC0ED609FB00D89246 /* ACAppStoreReviewTableCell.m in Sources */,
-				FB445D770ED7764E00D89246 /* ACAppStoreReviewsHeaderTableCell.m in Sources */,
-				FBDC0FE30EE09FEF00442E92 /* NSDate+ACNSDateAdditions.m in Sources */,
+				FB445BAB0ED54D5D00D89246 /* ARAppStoreReviewsViewController.m in Sources */,
+				FB445BFC0ED609FB00D89246 /* ARAppStoreReviewTableCell.m in Sources */,
+				FB445D770ED7764E00D89246 /* ARAppStoreReviewsHeaderTableCell.m in Sources */,
+				FBDC0FE30EE09FEF00442E92 /* NSDate+ARNSDateAdditions.m in Sources */,
 				FBDA31DC0F416FD60015A948 /* NSString+PSPathAdditions.m in Sources */,
 				FBDA31DD0F416FD60015A948 /* UIColor+MoreColors.m in Sources */,
 				FBE098890F5B4CFB00CDBBA9 /* PSProgressHUD.m in Sources */,
 				FB7909C90F6A47F000E1593F /* FMDatabase.m in Sources */,
 				FB7909CA0F6A47F000E1593F /* FMDatabaseAdditions.m in Sources */,
 				FB7909CB0F6A47F000E1593F /* FMResultSet.m in Sources */,
-				FB7909E40F6A4A1B00E1593F /* ACAppReviewsStore.m in Sources */,
+				FB7909E40F6A4A1B00E1593F /* ARAppReviewsStore.m in Sources */,
 				FB790A580F6B179B00E1593F /* FmdbMigration.m in Sources */,
 				FB790A590F6B179B00E1593F /* FmdbMigrationColumn.m in Sources */,
 				FB790A5A0F6B179B00E1593F /* FmdbMigrationManager.m in Sources */,
-				FB790EA00F6C875600E1593F /* ACAppStoreApplicationDetails.m in Sources */,
-				FB79103F0F6E336700E1593F /* ACAppStoreApplicationDetailsImporter.m in Sources */,
-				FBBC91D30F8EA26800D4497D /* ACAppStoreApplicationReviewsImporter.m in Sources */,
-				FBC628F50FF02C8A002B6DD5 /* ACAppStoreReviewsSummaryTableCell.m in Sources */,
-				FBC629A20FF0B239002B6DD5 /* ACAppStoreDetailsViewController.m in Sources */,
-				FBC629AA0FF0B849002B6DD5 /* ACAppStoreRatingsCountTableCell.m in Sources */,
-				FBC62A680FF17182002B6DD5 /* ACHorizontalBarView.m in Sources */,
-				FBAA7527103B6F5D002585DE /* ACAppStoreUpdateOperation.m in Sources */,
-				FBAA77AB103E13D7002585DE /* ACAppStoreVerifyOperation.m in Sources */,
+				FB790EA00F6C875600E1593F /* ARAppStoreApplicationDetails.m in Sources */,
+				FB79103F0F6E336700E1593F /* ARAppStoreApplicationDetailsImporter.m in Sources */,
+				FBBC91D30F8EA26800D4497D /* ARAppStoreApplicationReviewsImporter.m in Sources */,
+				FBC628F50FF02C8A002B6DD5 /* ARAppStoreReviewsSummaryTableCell.m in Sources */,
+				FBC629A20FF0B239002B6DD5 /* ARAppStoreDetailsViewController.m in Sources */,
+				FBC629AA0FF0B849002B6DD5 /* ARAppStoreRatingsCountTableCell.m in Sources */,
+				FBC62A680FF17182002B6DD5 /* ARHorizontalBarView.m in Sources */,
+				FBAA7527103B6F5D002585DE /* ARAppStoreUpdateOperation.m in Sources */,
+				FBAA77AB103E13D7002585DE /* ARAppStoreVerifyOperation.m in Sources */,
 				FBFAEC421049E2D700B0DFFD /* PSHelpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

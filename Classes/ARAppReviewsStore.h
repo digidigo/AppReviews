@@ -36,23 +36,23 @@
 
 typedef enum
 {
-	ACMostHelpfulSortOrder = 1,
-	ACMostFavorableSortOrder,
-	ACMostCriticalSortOrder,
-	ACMostRecentSortOrder
-} ACReviewsSortOrder;
+	ARMostHelpfulSortOrder = 1,
+	ARMostFavorableSortOrder,
+	ARMostCriticalSortOrder,
+	ARMostRecentSortOrder
+} ARReviewsSortOrder;
 
 
 @class FMDatabase;
-@class ACAppStore;
-@class ACAppStoreApplication;
-@class ACAppStoreApplicationDetails;
+@class ARAppStore;
+@class ARAppStoreApplication;
+@class ARAppStoreApplicationDetails;
 
 
 /**
  * Singleton class to encapsulate model data access.
  */
-@interface ACAppReviewsStore : NSObject
+@interface ARAppReviewsStore : NSObject
 {
 	FMDatabase *database;
 	NSArray *appStores;
@@ -66,23 +66,23 @@ typedef enum
 /**
  * Get the singleton instance.
  */
-+ (ACAppReviewsStore *)sharedInstance;
++ (ARAppReviewsStore *)sharedInstance;
 
 - (BOOL)save;
 - (void)close;
 
-- (ACAppStore *)storeForIdentifier:(NSString *)storeIdentifier;
+- (ARAppStore *)storeForIdentifier:(NSString *)storeIdentifier;
 - (NSArray *)applications;
-- (ACAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier;
-- (ACAppStoreApplication *)applicationAtIndex:(NSUInteger)index;
+- (ARAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier;
+- (ARAppStoreApplication *)applicationAtIndex:(NSUInteger)index;
 - (NSUInteger)applicationCount;
-- (void)addApplication:(ACAppStoreApplication *)app;
-- (void)addApplication:(ACAppStoreApplication *)app atIndex:(NSUInteger)index;
+- (void)addApplication:(ARAppStoreApplication *)app;
+- (void)addApplication:(ARAppStoreApplication *)app atIndex:(NSUInteger)index;
 - (void)moveApplicationAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
-- (void)removeApplication:(ACAppStoreApplication *)app;
-- (void)resetDetailsForApplication:(ACAppStoreApplication *)app;
-- (ACAppStoreApplicationDetails *)detailsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
-- (void)setReviews:(NSArray *)reviews forApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
-- (NSArray *)reviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
+- (void)removeApplication:(ARAppStoreApplication *)app;
+- (void)resetDetailsForApplication:(ARAppStoreApplication *)app;
+- (ARAppStoreApplicationDetails *)detailsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store;
+- (void)setReviews:(NSArray *)reviews forApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store;
+- (NSArray *)reviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store;
 
 @end

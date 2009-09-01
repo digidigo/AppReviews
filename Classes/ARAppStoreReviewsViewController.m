@@ -31,20 +31,20 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppReviewsStore.h"
-#import "ACAppStoreReviewsViewController.h"
-#import "ACAppStoreDetailsViewController.h"
-#import "ACAppStoreApplicationDetails.h"
-#import "ACAppStoreApplicationReview.h"
-#import "ACAppStoreApplication.h"
-#import "ACAppStoreUpdateOperation.h"
-#import "ACAppStore.h"
-#import "ACAppStoreReviewsHeaderTableCell.h"
-#import "ACAppStoreReviewsSummaryTableCell.h"
-#import "ACAppStoreReviewTableCell.h"
+#import "ARAppReviewsStore.h"
+#import "ARAppStoreReviewsViewController.h"
+#import "ARAppStoreDetailsViewController.h"
+#import "ARAppStoreApplicationDetails.h"
+#import "ARAppStoreApplicationReview.h"
+#import "ARAppStoreApplication.h"
+#import "ARAppStoreUpdateOperation.h"
+#import "ARAppStore.h"
+#import "ARAppStoreReviewsHeaderTableCell.h"
+#import "ARAppStoreReviewsSummaryTableCell.h"
+#import "ARAppStoreReviewTableCell.h"
 #import "PSRatingView.h"
 #import "PSLog.h"
-#import "NSDate+ACNSDateAdditions.h"
+#import "NSDate+ARNSDateAdditions.h"
 #import "AppReviewsAppDelegate.h"
 
 
@@ -54,23 +54,23 @@ static UIColor *sAlternateRowColor = nil;
 
 typedef enum
 {
-	ACAppStoreReviewsHeaderSection,
-	ACAppStoreReviewsCurrentSection,
-	ACAppStoreReviewsAllSection,
-	ACAppStoreReviewsReviewsSection,
-	ACAppStoreReviewsSectionCount
-} ACAppStoreReviewsSection;
+	ARAppStoreReviewsHeaderSection,
+	ARAppStoreReviewsCurrentSection,
+	ARAppStoreReviewsAllSection,
+	ARAppStoreReviewsReviewsSection,
+	ARAppStoreReviewsSectionCount
+} ARAppStoreReviewsSection;
 
 
-@interface ACAppStoreReviewsViewController ()
+@interface ARAppStoreReviewsViewController ()
 
-@property (nonatomic, retain) ACAppStoreDetailsViewController *appStoreDetailsViewController;
+@property (nonatomic, retain) ARAppStoreDetailsViewController *appStoreDetailsViewController;
 - (void)updateViewForState;
 
 @end
 
 
-@implementation ACAppStoreReviewsViewController
+@implementation ARAppStoreReviewsViewController
 
 @synthesize updateButtonItem, activitySpinnerItem, activitySpinner, appStoreDetails, userReviews, appStoreDetailsViewController;
 
@@ -132,9 +132,9 @@ typedef enum
 	NSAssert(appStoreDetails, @"appStoreDetails must be set");
 
     [super viewWillAppear:animated];
-	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
-	ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier];
-	self.userReviews = [[ACAppReviewsStore sharedInstance] reviewsForApplication:app inStore:store];
+	ARAppStoreApplication *app = [[ARAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
+	ARAppStore *store = [[ARAppReviewsStore sharedInstance] storeForIdentifier:appStoreDetails.storeIdentifier];
+	self.userReviews = [[ARAppReviewsStore sharedInstance] reviewsForApplication:app inStore:store];
 	self.title = store.name;
 	[self.tableView reloadData];
 
@@ -176,18 +176,18 @@ typedef enum
 		}
 	}
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidStart:) name:kACAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFail:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFinish:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidStart:) name:kARAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFail:) name:kARAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdateDidFinish:) name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFailNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -203,13 +203,13 @@ typedef enum
 	// Display the update button or activity spinner.
 	switch (appStoreDetails.state)
 	{
-		case ACAppStoreStatePending:
+		case ARAppStoreStatePending:
 		{
 			[self.activitySpinner stopAnimating];
 			self.navigationItem.rightBarButtonItem = self.activitySpinnerItem;
 			break;
 		}
-		case ACAppStoreStateProcessing:
+		case ARAppStoreStateProcessing:
 		{
 			[self.activitySpinner startAnimating];
 			self.navigationItem.rightBarButtonItem = self.activitySpinnerItem;
@@ -224,7 +224,7 @@ typedef enum
 	}
 }
 
-- (void)setAppStoreReviews:(ACAppStoreApplicationDetails *)inDetails
+- (void)setAppStoreReviews:(ARAppStoreApplicationDetails *)inDetails
 {
 	[inDetails retain];
 	[appStoreDetails release];
@@ -235,16 +235,16 @@ typedef enum
 
 - (void)updateDetails:(id)sender
 {
-	ACAppStoreApplication *appStoreApplication = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
+	ARAppStoreApplication *appStoreApplication = [[ARAppReviewsStore sharedInstance] applicationForIdentifier:appStoreDetails.appIdentifier];
 	// User tapped the Update button - queue up the download operation.
 
 	// First cancel all current/pending operations for this app/store.
 	[appStoreApplication suspendAllOperations];
-	[appStoreApplication cancelOperationsForApplicationDetails:(ACAppStoreApplicationDetails *)appStoreDetails];
+	[appStoreApplication cancelOperationsForApplicationDetails:(ARAppStoreApplicationDetails *)appStoreDetails];
 
 	// Add operation to the queue for processing.
-	appStoreDetails.state = ACAppStoreStatePending;
-	ACAppStoreUpdateOperation *op = [[ACAppStoreUpdateOperation alloc] initWithApplicationDetails:appStoreDetails];
+	appStoreDetails.state = ARAppStoreStatePending;
+	ARAppStoreUpdateOperation *op = [[ARAppStoreUpdateOperation alloc] initWithApplicationDetails:appStoreDetails];
 	[op setQueuePriority:NSOperationQueuePriorityHigh];
 	[appStoreApplication addUpdateOperation:op];
 	[op release];
@@ -260,7 +260,7 @@ typedef enum
 - (void)appStoreReviewsUpdateDidStart:(NSNotification *)notification
 {
 	PSLog(@"Received notification: %@", notification.name);
-	ACAppStoreApplicationDetails *lastStoreProcessed = (ACAppStoreApplicationDetails *) [notification object];
+	ARAppStoreApplicationDetails *lastStoreProcessed = (ARAppStoreApplicationDetails *) [notification object];
 
 	// Only pay attention to this notification if it is for our current application AND store.
 	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
@@ -275,7 +275,7 @@ typedef enum
 - (void)appStoreReviewsUpdateDidFail:(NSNotification *)notification
 {
 	PSLog(@"Received notification: %@", notification.name);
-	ACAppStoreApplicationDetails *lastStoreProcessed = (ACAppStoreApplicationDetails *) [notification object];
+	ARAppStoreApplicationDetails *lastStoreProcessed = (ARAppStoreApplicationDetails *) [notification object];
 
 	// Only pay attention to this notification if it is for our current application AND store.
 	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
@@ -290,7 +290,7 @@ typedef enum
 - (void)appStoreReviewsUpdateDidFinish:(NSNotification *)notification
 {
 	PSLog(@"Received notification: %@", notification.name);
-	ACAppStoreApplicationDetails *lastStoreProcessed = (ACAppStoreApplicationDetails *) [notification object];
+	ARAppStoreApplicationDetails *lastStoreProcessed = (ARAppStoreApplicationDetails *) [notification object];
 
 	// Only pay attention to this notification if it is for our current application AND store.
 	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
@@ -311,23 +311,23 @@ typedef enum
 
 	switch (indexPath.section)
 	{
-		case ACAppStoreReviewsHeaderSection:
+		case ARAppStoreReviewsHeaderSection:
 			result = 88.0;
 			break;
-		case ACAppStoreReviewsCurrentSection:
+		case ARAppStoreReviewsCurrentSection:
 			result = 40.0;
 			break;
-		case ACAppStoreReviewsAllSection:
+		case ARAppStoreReviewsAllSection:
 			result = 40.0;
 			break;
-		case ACAppStoreReviewsReviewsSection:
+		case ARAppStoreReviewsReviewsSection:
 		{
 			NSUInteger reviewIndex = indexPath.row;
-			ACAppStoreApplicationReview *review = (ACAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
+			ARAppStoreApplicationReview *review = (ARAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
 			if (review)
 			{
 				[review hydrate];
-				result = [ACAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
+				result = [ARAppStoreReviewTableCell tableView:tableView heightForCellWithReview:review];
 			}
 			break;
 		}
@@ -341,22 +341,22 @@ typedef enum
 {
 	switch (indexPath.section)
 	{
-		case ACAppStoreReviewsCurrentSection:
-		case ACAppStoreReviewsAllSection:
+		case ARAppStoreReviewsCurrentSection:
+		case ARAppStoreReviewsAllSection:
 		{
-			ACAppStoreReviewsSummaryTableCell *summaryCell = (ACAppStoreReviewsSummaryTableCell *) [tableView cellForRowAtIndexPath:indexPath];
+			ARAppStoreReviewsSummaryTableCell *summaryCell = (ARAppStoreReviewsSummaryTableCell *) [tableView cellForRowAtIndexPath:indexPath];
 			if (summaryCell.ratingsCount > 0)
 			{
 				// Lazily create details view controller.
 				if (self.appStoreDetailsViewController == nil)
 				{
-					ACAppStoreDetailsViewController *viewController = [[ACAppStoreDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+					ARAppStoreDetailsViewController *viewController = [[ARAppStoreDetailsViewController alloc] initWithStyle:UITableViewStyleGrouped];
 					self.appStoreDetailsViewController = viewController;
 					[viewController release];
 				}
 				self.appStoreDetailsViewController.appStoreDetails = appStoreDetails;
 				self.appStoreDetailsViewController.navigationItem.prompt = self.navigationItem.prompt;
-				self.appStoreDetailsViewController.useCurrentVersion = (indexPath.section == ACAppStoreReviewsCurrentSection);
+				self.appStoreDetailsViewController.useCurrentVersion = (indexPath.section == ARAppStoreReviewsCurrentSection);
 				[self.navigationController pushViewController:self.appStoreDetailsViewController animated:YES];
 			}
 			break;
@@ -370,23 +370,23 @@ typedef enum
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 	ACAppStoreReviewsSectionCount;
+    return 	ARAppStoreReviewsSectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	switch (section)
 	{
-		case ACAppStoreReviewsHeaderSection:
+		case ARAppStoreReviewsHeaderSection:
 			// Always have a header row.
 			return 1;
-		case ACAppStoreReviewsCurrentSection:
+		case ARAppStoreReviewsCurrentSection:
 			// Always have a Current row.
 			return 1;
-		case ACAppStoreReviewsAllSection:
+		case ARAppStoreReviewsAllSection:
 			// Always have an All row.
 			return 1;
-		case ACAppStoreReviewsReviewsSection:
+		case ARAppStoreReviewsReviewsSection:
 			return [userReviews count];
 	}
 
@@ -397,11 +397,11 @@ typedef enum
 {
 	switch (section)
 	{
-		case ACAppStoreReviewsCurrentSection:
+		case ARAppStoreReviewsCurrentSection:
 			return @"Current Version";
-		case ACAppStoreReviewsAllSection:
+		case ARAppStoreReviewsAllSection:
 			return @"All Versions";
-		case ACAppStoreReviewsReviewsSection:
+		case ARAppStoreReviewsReviewsSection:
 			return @"Reviews";
 	}
 
@@ -418,15 +418,15 @@ typedef enum
 
 	switch (indexPath.section)
 	{
-		case ACAppStoreReviewsHeaderSection:
+		case ARAppStoreReviewsHeaderSection:
 		{
 			// Header row.
 
 			// Obtain the cell.
-			ACAppStoreReviewsHeaderTableCell *headerCell = (ACAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
+			ARAppStoreReviewsHeaderTableCell *headerCell = (ARAppStoreReviewsHeaderTableCell *) [tableView dequeueReusableCellWithIdentifier:HeaderCellIdentifier];
 			if (headerCell == nil)
 			{
-				headerCell = [[[ACAppStoreReviewsHeaderTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier] autorelease];
+				headerCell = [[[ARAppStoreReviewsHeaderTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCellIdentifier] autorelease];
 			}
 
 			// Configure the cell.
@@ -436,13 +436,13 @@ typedef enum
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 			break;
 		}
-		case ACAppStoreReviewsCurrentSection:
+		case ARAppStoreReviewsCurrentSection:
 		{
 			// Obtain the cell.
-			ACAppStoreReviewsSummaryTableCell *summaryCell = (ACAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
+			ARAppStoreReviewsSummaryTableCell *summaryCell = (ARAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
 			if (summaryCell == nil)
 			{
-				summaryCell = [[[ACAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
+				summaryCell = [[[ARAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
 			}
 
 			// Configure the cell.
@@ -464,13 +464,13 @@ typedef enum
 			}
 			break;
 		}
-		case ACAppStoreReviewsAllSection:
+		case ARAppStoreReviewsAllSection:
 		{
 			// Obtain the cell.
-			ACAppStoreReviewsSummaryTableCell *summaryCell = (ACAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
+			ARAppStoreReviewsSummaryTableCell *summaryCell = (ARAppStoreReviewsSummaryTableCell *) [tableView dequeueReusableCellWithIdentifier:SummaryCellIdentifier];
 			if (summaryCell == nil)
 			{
-				summaryCell = [[[ACAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
+				summaryCell = [[[ARAppStoreReviewsSummaryTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:SummaryCellIdentifier] autorelease];
 			}
 			// Configure the cell.
 			summaryCell.averageRating = self.appStoreDetails.ratingAll;
@@ -490,18 +490,18 @@ typedef enum
 			}
 			break;
 		}
-		case ACAppStoreReviewsReviewsSection:
+		case ARAppStoreReviewsReviewsSection:
 		{
 			NSUInteger reviewIndex = indexPath.row;
 			// Obtain the cell.
-			ACAppStoreReviewTableCell *reviewCell = (ACAppStoreReviewTableCell *) [tableView dequeueReusableCellWithIdentifier:ReviewCellIdentifier];
+			ARAppStoreReviewTableCell *reviewCell = (ARAppStoreReviewTableCell *) [tableView dequeueReusableCellWithIdentifier:ReviewCellIdentifier];
 			if (reviewCell == nil)
 			{
-				reviewCell = [[[ACAppStoreReviewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReviewCellIdentifier] autorelease];
+				reviewCell = [[[ARAppStoreReviewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReviewCellIdentifier] autorelease];
 			}
 
 			// Configure the cell.
-			ACAppStoreApplicationReview *review = (ACAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
+			ARAppStoreApplicationReview *review = (ARAppStoreApplicationReview *) [userReviews objectAtIndex:reviewIndex];
 			[review hydrate];
 			reviewCell.review = review;
 

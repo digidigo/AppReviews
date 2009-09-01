@@ -31,24 +31,24 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppReviewsStore.h"
-#import "ACAppStoreApplication.h"
-#import "ACAppStoreUpdateOperation.h"
-#import "ACAppStore.h"
-#import "ACAppStoreApplicationDetails.h"
+#import "ARAppReviewsStore.h"
+#import "ARAppStoreApplication.h"
+#import "ARAppStoreUpdateOperation.h"
+#import "ARAppStore.h"
+#import "ARAppStoreApplicationDetails.h"
 #import "FMDatabase.h"
 #import "AppReviewsAppDelegate.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreApplication ()
+@interface ARAppStoreApplication ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 @end
 
 
-@implementation ACAppStoreApplication
+@implementation ARAppStoreApplication
 
 @synthesize name, company, appIdentifier, defaultStoreIdentifier, position, primaryKey, database, updateOperationsCount;
 
@@ -80,8 +80,8 @@
 		self.database = nil;
 		updateOperationsQueue = [[NSOperationQueue alloc] init];
 		updateOperationsCount = 0;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kARAppStoreUpdateOperationDidFailNotification object:nil];
 	}
 	return self;
 }
@@ -114,7 +114,7 @@
 		}
 		else
 		{
-			PSLogError(@"Failed to populate ACAppStoreApplication using primary key %d", pk);
+			PSLogError(@"Failed to populate ARAppStoreApplication using primary key %d", pk);
 			self.appIdentifier = nil;
 			self.position = -1;
 		}
@@ -123,8 +123,8 @@
 		hydrated = NO;
 		updateOperationsQueue = [[NSOperationQueue alloc] init];
 		updateOperationsCount = 0;
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatedOperationEnded:) name:kARAppStoreUpdateOperationDidFailNotification object:nil];
     }
     return self;
 }
@@ -140,7 +140,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to insert ACAppStoreApplication into the database with message '%@'.", [db lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to insert ARAppStoreApplication into the database with message '%@'.", [db lastErrorMessage]];
 		PSLogError(message);
         NSAssert(0, message);
 	}
@@ -157,7 +157,7 @@
 	{
 		if (![database executeUpdate:@"UPDATE application SET name=?, company=?, app_identifier=?, default_store_identifier=?, position=? WHERE id=?", name, company, appIdentifier, defaultStoreIdentifier, [NSNumber numberWithInteger:position], [NSNumber numberWithInteger:primaryKey]])
 		{
-			NSString *message = [NSString stringWithFormat:@"Failed to save ACAppStoreApplication with message '%@'.", [database lastErrorMessage]];
+			NSString *message = [NSString stringWithFormat:@"Failed to save ARAppStoreApplication with message '%@'.", [database lastErrorMessage]];
 			PSLogError(message);
 			NSAssert(0, message);
 		}
@@ -183,7 +183,7 @@
 	}
 	else
 	{
-		PSLogError(@"Failed to hydrate ACAppStoreApplication using primary key %d", primaryKey);
+		PSLogError(@"Failed to hydrate ARAppStoreApplication using primary key %d", primaryKey);
 		self.name = nil;
 		self.company = nil;
 		self.defaultStoreIdentifier = kDefaultStoreId;
@@ -217,13 +217,13 @@
 {
 	if (![database executeUpdate:@"DELETE FROM application WHERE id=?", [NSNumber numberWithInteger:primaryKey]])
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to delete ACAppStoreApplication with message '%@'.", [database lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to delete ARAppStoreApplication with message '%@'.", [database lastErrorMessage]];
 		PSLogError(message);
 		NSAssert(0, message);
 	}
 }
 
-- (NSComparisonResult)compareByPosition:(ACAppStoreApplication *)other
+- (NSComparisonResult)compareByPosition:(ARAppStoreApplication *)other
 {
 	if (self.position < other.position)
 		return NSOrderedAscending;
@@ -233,14 +233,14 @@
 		return NSOrderedSame;
 }
 
-- (void)cancelOperationsForApplicationDetails:(ACAppStoreApplicationDetails *)appStoreDetails
+- (void)cancelOperationsForApplicationDetails:(ARAppStoreApplicationDetails *)appStoreDetails
 {
 	@synchronized(self)
 	{
 		[updateOperationsQueue setSuspended:YES];
 
 		NSArray *updateOperations = [updateOperationsQueue operations];
-		for (ACAppStoreUpdateOperation *op in updateOperations)
+		for (ARAppStoreUpdateOperation *op in updateOperations)
 		{
 			if ([op.appDetails.appIdentifier isEqualToString:appStoreDetails.appIdentifier] &&
 				[op.appDetails.storeIdentifier isEqualToString:appStoreDetails.storeIdentifier] &&
@@ -278,7 +278,7 @@
 	[updateOperationsQueue setSuspended:NO];
 }
 
-- (void)addUpdateOperation:(ACAppStoreUpdateOperation *)op
+- (void)addUpdateOperation:(ARAppStoreUpdateOperation *)op
 {
 	@synchronized(self)
 	{
@@ -294,7 +294,7 @@
 	@synchronized(self)
 	{
 		// Check that this notification was for our application.
-		ACAppStoreApplicationDetails *details = (ACAppStoreApplicationDetails *) [notification object];
+		ARAppStoreApplicationDetails *details = (ARAppStoreApplicationDetails *) [notification object];
 		if ([details.appIdentifier isEqualToString:appIdentifier])
 		{
 			if (updateOperationsCount > 0)

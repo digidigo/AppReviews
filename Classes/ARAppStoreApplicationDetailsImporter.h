@@ -32,13 +32,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACAppReviewsStore.h"
+#import "ARAppReviewsStore.h"
 #import "AppReviewsAppDelegate.h"
 
 
-@class ACAppStoreApplication;
-@class ACAppStoreApplicationDetails;
-@class ACAppStore;
+@class ARAppStoreApplication;
+@class ARAppStoreApplicationDetails;
+@class ARAppStore;
 
 
 typedef enum
@@ -129,7 +129,7 @@ typedef enum
 } DetailsXMLState;
 
 
-@interface ACAppStoreApplicationDetailsImporter : NSObject
+@interface ARAppStoreApplicationDetailsImporter : NSObject
 {
 	NSString *appIdentifier;
 	NSString *storeIdentifier;
@@ -151,7 +151,7 @@ typedef enum
 	double ratingCurrent;
 	NSUInteger reviewCountAll;
 	NSUInteger reviewCountCurrent;
-	ACReviewsSortOrder lastSortOrder;
+	ARReviewsSortOrder lastSortOrder;
 	NSDate *lastUpdated;
 	NSString *released;
 	NSString *appVersion;
@@ -194,7 +194,7 @@ typedef enum
 @property (nonatomic, assign) double ratingCurrent;
 @property (nonatomic, assign) NSUInteger reviewCountAll;
 @property (nonatomic, assign) NSUInteger reviewCountCurrent;
-@property (nonatomic, assign) ACReviewsSortOrder lastSortOrder;
+@property (nonatomic, assign) ARReviewsSortOrder lastSortOrder;
 @property (nonatomic, copy) NSDate *lastUpdated;
 @property (nonatomic, copy) NSString *released;
 @property (nonatomic, copy) NSString *appVersion;
@@ -212,6 +212,6 @@ typedef enum
 - (id)initWithAppIdentifier:(NSString *)inAppIdentifier storeIdentifier:(NSString *)inStoreIdentifier;
 - (NSURL *)detailsURL;
 - (void)processDetails:(NSData *)data;
-- (void)copyDetailsTo:(ACAppStoreApplicationDetails *)receiver;
+- (void)copyDetailsTo:(ARAppStoreApplicationDetails *)receiver;
 
 @end

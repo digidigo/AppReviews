@@ -35,17 +35,17 @@
 
 @class PSRatingView;
 @class PSCountView;
-@class ACHorizontalBarView;
+@class ARHorizontalBarView;
 
-@interface ACAppStoreRatingsCountTableCell : UITableViewCell
+@interface ARAppStoreRatingsCountTableCell : UITableViewCell
 {
 	PSRatingView *ratingView;
 	PSCountView *countView;
-	ACHorizontalBarView *barView;
+	ARHorizontalBarView *barView;
 }
 
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) PSCountView *countView;
-@property (nonatomic, retain) ACHorizontalBarView *barView;
+@property (nonatomic, retain) ARHorizontalBarView *barView;
 
 @end

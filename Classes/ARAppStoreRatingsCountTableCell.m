@@ -31,17 +31,17 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreRatingsCountTableCell.h"
+#import "ARAppStoreRatingsCountTableCell.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
-#import "ACHorizontalBarView.h"
+#import "ARHorizontalBarView.h"
 
 
 #define kRatingsCountBarWidth	kRatingWidth
 #define kRatingsCountBarHeight	16.0
 
 
-@implementation ACAppStoreRatingsCountTableCell
+@implementation ARAppStoreRatingsCountTableCell
 
 @synthesize ratingView, countView, barView;
 
@@ -57,7 +57,7 @@
 		[self.contentView addSubview:countView];
 
 		CGRect countBounds = [PSCountView boundsForCount:[countView count] usingFontSize:countView.fontSize];
-		barView = [[ACHorizontalBarView alloc] initWithFrame:CGRectMake(0, 0, kRatingsCountBarWidth, countBounds.size.height)];
+		barView = [[ARHorizontalBarView alloc] initWithFrame:CGRectMake(0, 0, kRatingsCountBarWidth, countBounds.size.height)];
 		[self.contentView addSubview:barView];
     }
     return self;

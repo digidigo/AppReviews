@@ -31,29 +31,29 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreCountriesViewController.h"
-#import "ACAppStoreReviewsViewController.h"
-#import "ACAppStoreApplication.h"
-#import "ACAppStore.h"
-#import "ACAppStoreUpdateOperation.h"
+#import "ARAppStoreCountriesViewController.h"
+#import "ARAppStoreReviewsViewController.h"
+#import "ARAppStoreApplication.h"
+#import "ARAppStore.h"
+#import "ARAppStoreUpdateOperation.h"
 #import "AppReviewsAppDelegate.h"
-#import "ACAppStoreTableCell.h"
+#import "ARAppStoreTableCell.h"
 #import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreCountriesViewController ()
+@interface ARAppStoreCountriesViewController ()
 
 @property (nonatomic, retain) NSMutableArray *enabledStores;
 @property (nonatomic, retain) NSMutableArray *displayedStores;
 @property (nonatomic, retain) UIBarButtonItem *updateButton;
 @property (nonatomic, retain) UILabel *remainingLabel;
 @property (nonatomic, retain) UIActivityIndicatorView *remainingSpinner;
-@property (nonatomic, retain) ACAppStoreReviewsViewController *appStoreReviewsViewController;
-@property (retain) ACAppStoreApplicationDetailsImporter *detailsImporter;
-@property (retain) ACAppStoreApplicationReviewsImporter *reviewsImporter;
+@property (nonatomic, retain) ARAppStoreReviewsViewController *appStoreReviewsViewController;
+@property (retain) ARAppStoreApplicationDetailsImporter *detailsImporter;
+@property (retain) ARAppStoreApplicationReviewsImporter *reviewsImporter;
 @property (nonatomic, retain) NSMutableArray *storeIdsProcessed;
 @property (nonatomic, retain) NSMutableArray *storeIdsRemaining;
 @property (nonatomic, retain) NSMutableArray *unavailableStoreNames;
@@ -63,7 +63,7 @@
 
 @end
 
-@implementation ACAppStoreCountriesViewController
+@implementation ARAppStoreCountriesViewController
 
 @synthesize appStoreApplication, enabledStores, displayedStores, updateButton, remainingLabel, remainingSpinner, appStoreReviewsViewController, detailsImporter, reviewsImporter, storeIdsProcessed, storeIdsRemaining, unavailableStoreNames, failedStoreNames;
 
@@ -170,7 +170,7 @@
 
 	// Build up a list of enabled stores.
 	[enabledStores removeAllObjects];
-	for (ACAppStore *store in [[ACAppReviewsStore sharedInstance] appStores])
+	for (ARAppStore *store in [[ARAppReviewsStore sharedInstance] appStores])
 	{
 		if (store.enabled)
 		{
@@ -187,9 +187,9 @@
 {
 	[super viewDidAppear:animated];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kACAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kARAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStoreReviewsUpdated:) name:kARAppStoreUpdateOperationDidFailNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -198,12 +198,12 @@
 
 	[self.navigationController setToolbarHidden:YES animated:animated];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidStartNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFinishNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreUpdateOperationDidFailNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidStartNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidFinishNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kARAppStoreUpdateOperationDidFailNotification object:nil];
 }
 
-- (void)setAppStoreApplication:(ACAppStoreApplication *)inAppStoreApplication
+- (void)setAppStoreApplication:(ARAppStoreApplication *)inAppStoreApplication
 {
 	[inAppStoreApplication retain];
 	[appStoreApplication release];
@@ -224,14 +224,14 @@
 
 	// Add operations to the queue for processing.
 	[appStoreApplication suspendAllOperations];
-	for (ACAppStore *appStore in enabledStores)
+	for (ARAppStore *appStore in enabledStores)
 	{
 		// Only add this store if it is enabled for this app.
 		if (appStore.enabled)
 		{
-			ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
-			details.state = ACAppStoreStatePending;
-			ACAppStoreUpdateOperation *op = [[ACAppStoreUpdateOperation alloc] initWithApplicationDetails:details];
+			ARAppStoreApplicationDetails *details = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+			details.state = ARAppStoreStatePending;
+			ARAppStoreUpdateOperation *op = [[ARAppStoreUpdateOperation alloc] initWithApplicationDetails:details];
 
 			// Make sure that the "home store" for this app has a high priority in the queue.
 			if ([appStore.storeIdentifier isEqualToString:appStoreApplication.defaultStoreIdentifier])
@@ -257,7 +257,7 @@
 - (void)appStoreReviewsUpdated:(NSNotification *)notification
 {
 	PSLog(@"Received notification: %@", notification.name);
-	ACAppStoreApplicationDetails *lastStoreProcessed = (ACAppStoreApplicationDetails *) [notification object];
+	ARAppStoreApplicationDetails *lastStoreProcessed = (ARAppStoreApplicationDetails *) [notification object];
 
 	// Only pay attention to this notification if it is for our current application.
 	if ([lastStoreProcessed.appIdentifier isEqualToString:appStoreApplication.appIdentifier])
@@ -266,7 +266,7 @@
 		[self updateDisplayedStores];
 
 		// Fill in missing app details if we have them available in last processed store reviews.
-		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [[notification name] isEqualToString:kACAppStoreUpdateOperationDidFinishNotification])
+		if ((appStoreApplication.name==nil || appStoreApplication.company==nil) && [[notification name] isEqualToString:kARAppStoreUpdateOperationDidFinishNotification])
 		{
 			if (lastStoreProcessed.appName && [lastStoreProcessed.appName length] > 0)
 			{
@@ -286,9 +286,9 @@
 {
 	// Updates the tableview and takes account of the hideEmptyCountries setting.
 	[displayedStores removeAllObjects];
-	for (ACAppStore *appStore in enabledStores)
+	for (ARAppStore *appStore in enabledStores)
 	{
-		ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+		ARAppStoreApplicationDetails *details = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 		// Only add store if it has any ratings/reviews OR we are not hiding empty stores.
 		if ((details && (details.reviewCountAll + details.reviewCountCurrent + details.ratingCountAll + details.ratingCountCurrent) > 0) ||
 			([[NSUserDefaults standardUserDefaults] boolForKey:@"hideEmptyCountries"] == NO))
@@ -323,10 +323,10 @@
 	NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
 	if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
 	{
-		ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+		ARAppStore *store = [[ARAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
 		if (store)
 		{
-			ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+			ARAppStoreApplicationDetails *details = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
 			if (details)
 			{
 				[details hydrate];
@@ -358,12 +358,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	// Display reviews for store.
-	ACAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
-	ACAppStoreApplicationDetails *appStoreDetails = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	ARAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
+	ARAppStoreApplicationDetails *appStoreDetails = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	// Lazily create reviews view controller.
 	if (self.appStoreReviewsViewController == nil)
 	{
-		ACAppStoreReviewsViewController *viewController = [[ACAppStoreReviewsViewController alloc] initWithStyle:UITableViewStylePlain];
+		ARAppStoreReviewsViewController *viewController = [[ARAppStoreReviewsViewController alloc] initWithStyle:UITableViewStylePlain];
 		self.appStoreReviewsViewController = viewController;
 		[viewController release];
 	}
@@ -397,16 +397,16 @@
 {
     static NSString *CellIdentifier = @"AppStoreCell";
 
-    ACAppStoreTableCell *cell = (ACAppStoreTableCell *) [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ARAppStoreTableCell *cell = (ARAppStoreTableCell *) [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
 	{
-        cell = [[[ACAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[ARAppStoreTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	ACAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
+	ARAppStore *appStore = [displayedStores objectAtIndex:indexPath.row];
 	cell.nameLabel.text = appStore.name;
 	cell.flagView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", appStore.storeIdentifier]];
-	ACAppStoreApplicationDetails *storeDetails = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
+	ARAppStoreApplicationDetails *storeDetails = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:appStore];
 	if (storeDetails)
 	{
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -442,7 +442,7 @@
 		cell.countView.count = 0;
 		cell.ratingView.rating = 0.0;
 		[cell.countView setLozengeColor:nil];
-		cell.state = ACAppStoreStateDefault;
+		cell.state = ARAppStoreStateDefault;
 	}
 
     return cell;
@@ -479,10 +479,10 @@
 			NSString *defaultStoreIdentifier = appStoreApplication.defaultStoreIdentifier;
 			if (defaultStoreIdentifier && [defaultStoreIdentifier length] > 0)
 			{
-				ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
+				ARAppStore *store = [[ARAppReviewsStore sharedInstance] storeForIdentifier:defaultStoreIdentifier];
 				if (store)
 				{
-					ACAppStoreApplicationDetails *details = [[ACAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
+					ARAppStoreApplicationDetails *details = [[ARAppReviewsStore sharedInstance] detailsForApplication:appStoreApplication inStore:store];
 					if (details)
 					{
 						NSMutableArray *URLs = [NSMutableArray array];

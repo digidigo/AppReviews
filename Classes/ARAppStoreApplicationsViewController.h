@@ -34,18 +34,18 @@
 #import <UIKit/UIKit.h>
 
 
-@class ACEditAppStoreApplicationViewController;
-@class ACAppStoreCountriesViewController;
+@class AREditAppStoreApplicationViewController;
+@class ARAppStoreCountriesViewController;
 
 
-@interface ACAppStoreApplicationsViewController : UITableViewController
+@interface ARAppStoreApplicationsViewController : UITableViewController
 {
-	ACEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
-	ACAppStoreCountriesViewController *appStoreCountriesViewController;
+	AREditAppStoreApplicationViewController *editAppStoreApplicationViewController;
+	ARAppStoreCountriesViewController *appStoreCountriesViewController;
 	NSNumber *savedEditingState;
 }
 
-@property (nonatomic, retain) ACEditAppStoreApplicationViewController *editAppStoreApplicationViewController;
-@property (nonatomic, retain) ACAppStoreCountriesViewController *appStoreCountriesViewController;
+@property (nonatomic, retain) AREditAppStoreApplicationViewController *editAppStoreApplicationViewController;
+@property (nonatomic, retain) ARAppStoreCountriesViewController *appStoreCountriesViewController;
 
 @end

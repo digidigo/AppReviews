@@ -32,15 +32,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACAppStoreApplicationDetails.h"
+#import "ARAppStoreApplicationDetails.h"
 
 @class PSImageView;
 @class PSRatingView;
 @class PSCountView;
 
-@interface ACAppStoreTableCell : UITableViewCell
+@interface ARAppStoreTableCell : UITableViewCell
 {
-	ACAppStoreState state;
+	ARAppStoreState state;
 	UILabel *nameLabel;
 	PSImageView *flagView;
 	PSRatingView *ratingView;
@@ -54,7 +54,7 @@
 @property (nonatomic, retain) PSRatingView *ratingView;
 @property (nonatomic, retain) UILabel *ratingCountLabel;
 @property (nonatomic, retain) PSCountView *countView;
-@property (nonatomic, assign) ACAppStoreState state;
+@property (nonatomic, assign) ARAppStoreState state;
 @property (nonatomic, retain) UIActivityIndicatorView *stateSpinnerView;
 
 @end

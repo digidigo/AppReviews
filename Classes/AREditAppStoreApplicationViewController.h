@@ -34,18 +34,18 @@
 #import <UIKit/UIKit.h>
 
 
-@class ACAppStoreApplication;
+@class ARAppStoreApplication;
 @class PSSelectionListViewController;
 
 
-@interface ACEditAppStoreApplicationViewController : UIViewController
+@interface AREditAppStoreApplicationViewController : UIViewController
 {
 	UITextField *appId;
 	UILabel *label;
 	UIButton *defaultStoreButton;
 	UIBarButtonItem *saveButton;
 	NSString *defaultStore;
-	ACAppStoreApplication *app;
+	ARAppStoreApplication *app;
 	PSSelectionListViewController *selectionListViewController;
 }
 
@@ -54,7 +54,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *defaultStoreButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, retain) NSString *defaultStore;
-@property (nonatomic, retain) ACAppStoreApplication *app;
+@property (nonatomic, retain) ARAppStoreApplication *app;
 @property (nonatomic, retain) PSSelectionListViewController *selectionListViewController;
 
 - (IBAction)cancel:(id)sender;

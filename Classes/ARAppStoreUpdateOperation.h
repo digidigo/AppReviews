@@ -34,24 +34,24 @@
 #import <Foundation/Foundation.h>
 
 
-@class ACAppStoreApplicationDetailsImporter;
-@class ACAppStoreApplicationReviewsImporter;
-@class ACAppStoreApplicationDetails;
+@class ARAppStoreApplicationDetailsImporter;
+@class ARAppStoreApplicationReviewsImporter;
+@class ARAppStoreApplicationDetails;
 
 
-@interface ACAppStoreUpdateOperation : NSOperation
+@interface ARAppStoreUpdateOperation : NSOperation
 {
 	BOOL fetchReviews;
-	ACAppStoreApplicationDetails *appDetails;
-	ACAppStoreApplicationDetailsImporter *detailsImporter;
-	ACAppStoreApplicationReviewsImporter *reviewsImporter;
+	ARAppStoreApplicationDetails *appDetails;
+	ARAppStoreApplicationDetailsImporter *detailsImporter;
+	ARAppStoreApplicationReviewsImporter *reviewsImporter;
 }
 
 @property (nonatomic, assign) BOOL fetchReviews;
-@property (nonatomic, readonly) ACAppStoreApplicationDetails *appDetails;
-@property (nonatomic, readonly) ACAppStoreApplicationDetailsImporter *detailsImporter;
-@property (nonatomic, readonly) ACAppStoreApplicationReviewsImporter *reviewsImporter;
+@property (nonatomic, readonly) ARAppStoreApplicationDetails *appDetails;
+@property (nonatomic, readonly) ARAppStoreApplicationDetailsImporter *detailsImporter;
+@property (nonatomic, readonly) ARAppStoreApplicationReviewsImporter *reviewsImporter;
 
-- (id)initWithApplicationDetails:(ACAppStoreApplicationDetails *)details;
+- (id)initWithApplicationDetails:(ARAppStoreApplicationDetails *)details;
 
 @end

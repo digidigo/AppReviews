@@ -34,21 +34,21 @@
 #import <Foundation/Foundation.h>
 
 
-@class ACAppStoreApplicationDetailsImporter;
+@class ARAppStoreApplicationDetailsImporter;
 @class PSProgressHUD;
 
 
-@interface ACAppStoreVerifyOperation : NSOperation
+@interface ARAppStoreVerifyOperation : NSOperation
 {
 	NSString *appIdentifier;
 	NSString *storeIdentifier;
-	ACAppStoreApplicationDetailsImporter *detailsImporter;
+	ARAppStoreApplicationDetailsImporter *detailsImporter;
 	PSProgressHUD *progressHUD;
 }
 
 @property (nonatomic, copy) NSString *appIdentifier;
 @property (nonatomic, copy) NSString *storeIdentifier;
-@property (nonatomic, readonly) ACAppStoreApplicationDetailsImporter *detailsImporter;
+@property (nonatomic, readonly) ARAppStoreApplicationDetailsImporter *detailsImporter;
 @property (nonatomic, retain) PSProgressHUD *progressHUD;
 
 - (id)initWithAppIdentifier:(NSString *)appId storeIdentifier:(NSString *)storeId;

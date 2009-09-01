@@ -33,30 +33,30 @@
 
 #import <UIKit/UIKit.h>
 
-@class ACAppStoreApplication;
-@class ACAppStoreApplicationDetailsImporter;
-@class ACAppStoreApplicationReviewsImporter;
-@class ACAppStoreReviewsViewController;
+@class ARAppStoreApplication;
+@class ARAppStoreApplicationDetailsImporter;
+@class ARAppStoreApplicationReviewsImporter;
+@class ARAppStoreReviewsViewController;
 
-@interface ACAppStoreCountriesViewController : UITableViewController <UIActionSheetDelegate>
+@interface ARAppStoreCountriesViewController : UITableViewController <UIActionSheetDelegate>
 {
-	ACAppStoreApplication *appStoreApplication;
+	ARAppStoreApplication *appStoreApplication;
 	UIBarButtonItem *updateButton;
 	UILabel *remainingLabel;
 	UIActivityIndicatorView *remainingSpinner;
 	NSMutableArray *enabledStores;
 	NSMutableArray *displayedStores;
-	ACAppStoreReviewsViewController *appStoreReviewsViewController;
+	ARAppStoreReviewsViewController *appStoreReviewsViewController;
 
 	// Members used when updating reviews.
-	ACAppStoreApplicationDetailsImporter *detailsImporter;
-	ACAppStoreApplicationReviewsImporter *reviewsImporter;
+	ARAppStoreApplicationDetailsImporter *detailsImporter;
+	ARAppStoreApplicationReviewsImporter *reviewsImporter;
 	NSMutableArray *storeIdsProcessed;
 	NSMutableArray *storeIdsRemaining;
 	NSMutableArray *unavailableStoreNames;
 	NSMutableArray *failedStoreNames;
 }
 
-@property (nonatomic, retain) ACAppStoreApplication *appStoreApplication;
+@property (nonatomic, retain) ARAppStoreApplication *appStoreApplication;
 
 @end

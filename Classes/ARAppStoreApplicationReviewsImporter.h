@@ -32,12 +32,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ACAppReviewsStore.h"
+#import "ARAppReviewsStore.h"
 #import "AppReviewsAppDelegate.h"
 
 
-//@class ACAppStoreApplication;
-//@class ACAppStore;
+//@class ARAppStoreApplication;
+//@class ARAppStore;
 
 
 typedef enum
@@ -78,7 +78,7 @@ typedef enum
 } ReviewsXMLState;
 
 
-@interface ACAppStoreApplicationReviewsImporter : NSObject
+@interface ARAppStoreApplicationReviewsImporter : NSObject
 {
 	NSString *appIdentifier;
 	NSString *storeIdentifier;

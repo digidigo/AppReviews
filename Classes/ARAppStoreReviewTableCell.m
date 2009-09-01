@@ -31,8 +31,8 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreReviewTableCell.h"
-#import "ACAppStoreApplicationReview.h"
+#import "ARAppStoreReviewTableCell.h"
+#import "ARAppStoreApplicationReview.h"
 #import "PSRatingView.h"
 #import <UIKit/UIStringDrawing.h>
 
@@ -40,7 +40,7 @@
 static UIFont *sSummaryFont = nil;
 static UIFont *sDetailFont = nil;
 
-@implementation ACAppStoreReviewTableCell
+@implementation ARAppStoreReviewTableCell
 
 @synthesize summaryLabel, authorLabel, detailLabel, ratingView, review;
 
@@ -50,12 +50,12 @@ static UIFont *sDetailFont = nil;
 	sDetailFont = [[UIFont systemFontOfSize:13.0] retain];
 }
 
-+ (NSString *)summaryTextForReview:(ACAppStoreApplicationReview *)review
++ (NSString *)summaryTextForReview:(ARAppStoreApplicationReview *)review
 {
 	return [NSString stringWithFormat:@"%d. %@%@", review.index, review.summary, (review.appVersion?[NSString stringWithFormat:@" (%@)", review.appVersion]:@"")];
 }
 
-+ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(ACAppStoreApplicationReview *)inReview
++ (CGFloat)tableView:(UITableView *)tableView heightForCellWithReview:(ARAppStoreApplicationReview *)inReview
 {
 #define MARGIN_X	5
 #define MARGIN_Y	5
@@ -137,7 +137,7 @@ static UIFont *sDetailFont = nil;
     [super dealloc];
 }
 
-- (void)setReview:(ACAppStoreApplicationReview *)inReview
+- (void)setReview:(ARAppStoreApplicationReview *)inReview
 {
 	[inReview retain];
 	[review release];
@@ -145,7 +145,7 @@ static UIFont *sDetailFont = nil;
 
 	if (review)
 	{
-		self.summaryLabel.text = [ACAppStoreReviewTableCell summaryTextForReview:review];
+		self.summaryLabel.text = [ARAppStoreReviewTableCell summaryTextForReview:review];
 		self.ratingView.rating = review.rating;
 		self.authorLabel.text = [NSString stringWithFormat:@"by %@%@", review.reviewer, (review.reviewDate?[NSString stringWithFormat:@" on %@", review.reviewDate]:@"")];
 		self.detailLabel.text = review.detail;

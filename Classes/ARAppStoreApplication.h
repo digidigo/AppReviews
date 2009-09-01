@@ -39,10 +39,10 @@
 
 
 @class FMDatabase;
-@class ACAppStoreUpdateOperation;
+@class ARAppStoreUpdateOperation;
 
 
-@interface ACAppStoreApplication : NSObject
+@interface ARAppStoreApplication : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;
@@ -92,9 +92,9 @@
 - (void)deleteFromDatabase;
 // Manage the operations queue for this application.
 - (void)cancelAllOperations;
-- (void)cancelOperationsForApplicationDetails:(ACAppStoreApplicationDetails *)appStoreDetails;
+- (void)cancelOperationsForApplicationDetails:(ARAppStoreApplicationDetails *)appStoreDetails;
 - (void)suspendAllOperations;
 - (void)resumeAllOperations;
-- (void)addUpdateOperation:(ACAppStoreUpdateOperation *)op;
+- (void)addUpdateOperation:(ARAppStoreUpdateOperation *)op;
 
 @end

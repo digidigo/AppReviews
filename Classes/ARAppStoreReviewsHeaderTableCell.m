@@ -31,10 +31,10 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreReviewsHeaderTableCell.h"
-#import "ACAppReviewsStore.h"
-#import "ACAppStoreApplicationDetails.h"
-#import "ACAppStoreApplication.h"
+#import "ARAppStoreReviewsHeaderTableCell.h"
+#import "ARAppReviewsStore.h"
+#import "ARAppStoreApplicationDetails.h"
+#import "ARAppStoreApplication.h"
 #import "UIColor+MoreColors.h"
 #import "AppReviewsAppDelegate.h"
 
@@ -43,7 +43,7 @@ static UIColor *sLabelColor = nil;
 static CGGradientRef sGradient = NULL;
 
 
-@implementation ACAppStoreReviewsHeaderTableCell
+@implementation ARAppStoreReviewsHeaderTableCell
 
 @synthesize appDetails, appCompany, versionLabel, versionValue, sizeLabel, sizeValue, dateLabel, dateValue;
 @synthesize priceLabel, priceValue;
@@ -298,7 +298,7 @@ static CGGradientRef sGradient = NULL;
 	sizeLabel.frame = frame;
 }
 
-- (void)setAppDetails:(ACAppStoreApplicationDetails *)inDetails
+- (void)setAppDetails:(ARAppStoreApplicationDetails *)inDetails
 {
 	[inDetails retain];
 	[appDetails release];
@@ -306,7 +306,7 @@ static CGGradientRef sGradient = NULL;
 
 	if (appDetails)
 	{
-		ACAppStoreApplication *theApp = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
+		ARAppStoreApplication *theApp = [[ARAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
 		if (theApp.name)
 			appName.text = theApp.name;
 		else

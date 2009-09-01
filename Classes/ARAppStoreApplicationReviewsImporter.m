@@ -31,14 +31,14 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreApplicationReviewsImporter.h"
-#import "ACAppStoreApplicationReview.h"
+#import "ARAppStoreApplicationReviewsImporter.h"
+#import "ARAppStoreApplicationReview.h"
 #import "GTMRegex.h"
 #import "NSString+PSPathAdditions.h"
 #import "PSLog.h"
 
 
-@implementation ACAppStoreApplicationReviewsImporter
+@implementation ARAppStoreApplicationReviewsImporter
 
 @synthesize appIdentifier, storeIdentifier, importState;
 
@@ -372,7 +372,7 @@
 				[currentString setString:@""];
 				// Store current review info, ready for reading next review.
 				currentReviewIndex++;
-				ACAppStoreApplicationReview *thisReview = [[ACAppStoreApplicationReview alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
+				ARAppStoreApplicationReview *thisReview = [[ARAppStoreApplicationReview alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
 				thisReview.summary = currentReviewSummary;
 				thisReview.detail = currentReviewDetail;
 				thisReview.reviewer = currentReviewer;

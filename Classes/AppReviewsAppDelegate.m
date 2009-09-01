@@ -32,8 +32,8 @@
 //
 
 #import "AppReviewsAppDelegate.h"
-#import "ACAppReviewsStore.h"
-#import "ACAppStoreApplicationsViewController.h"
+#import "ARAppReviewsStore.h"
+#import "ARAppStoreApplicationsViewController.h"
 #import "PSLog.h"
 
 @interface AppReviewsAppDelegate (Private)
@@ -67,11 +67,11 @@
     [window setBackgroundColor:[UIColor whiteColor]];
 
 	// Create singleton appReviewsStore.
-	appReviewsStore = [ACAppReviewsStore sharedInstance];
+	appReviewsStore = [ARAppReviewsStore sharedInstance];
 	if (appReviewsStore)
 	{
 		// Create root view controller.
-		ACAppStoreApplicationsViewController *appsController = [[ACAppStoreApplicationsViewController alloc] initWithStyle:UITableViewStylePlain];
+		ARAppStoreApplicationsViewController *appsController = [[ARAppStoreApplicationsViewController alloc] initWithStyle:UITableViewStylePlain];
 
 		// Create a navigation controller using the new controller.
 		navigationController = [[UINavigationController alloc] initWithRootViewController:appsController];
@@ -208,7 +208,7 @@
 	[self performSelector:selector];
 
 	// Now perform selector on all applications' op queues.
-	NSArray *allApps = [[ACAppReviewsStore sharedInstance] applications];
+	NSArray *allApps = [[ARAppReviewsStore sharedInstance] applications];
 	[allApps makeObjectsPerformSelector:selector];
 }
 

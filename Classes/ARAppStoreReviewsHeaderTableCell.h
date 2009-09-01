@@ -34,12 +34,12 @@
 #import <UIKit/UIKit.h>
 
 
-@class ACAppStoreApplicationDetails;
+@class ARAppStoreApplicationDetails;
 
 
-@interface ACAppStoreReviewsHeaderTableCell : UITableViewCell
+@interface ARAppStoreReviewsHeaderTableCell : UITableViewCell
 {
-	ACAppStoreApplicationDetails *appDetails;
+	ARAppStoreApplicationDetails *appDetails;
 	UILabel *appName;
 	UILabel *appCompany;
 	UILabel *versionLabel;
@@ -52,7 +52,7 @@
 	UILabel *priceValue;
 }
 
-@property (nonatomic, retain) ACAppStoreApplicationDetails *appDetails;
+@property (nonatomic, retain) ARAppStoreApplicationDetails *appDetails;
 @property (nonatomic, retain) UILabel *appCompany;
 @property (nonatomic, retain) UILabel *versionLabel;
 @property (nonatomic, retain) UILabel *versionValue;

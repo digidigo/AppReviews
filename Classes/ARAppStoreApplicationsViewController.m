@@ -31,24 +31,24 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreApplicationsViewController.h"
-#import "ACAppStoreCountriesViewController.h"
-#import "ACAppReviewsStore.h"
-#import "ACAppStoreApplication.h"
-#import "ACEditAppStoreApplicationViewController.h"
+#import "ARAppStoreApplicationsViewController.h"
+#import "ARAppStoreCountriesViewController.h"
+#import "ARAppReviewsStore.h"
+#import "ARAppStoreApplication.h"
+#import "AREditAppStoreApplicationViewController.h"
 #import "AppReviewsAppDelegate.h"
 #import "PSAboutViewController.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreApplicationsViewController ()
+@interface ARAppStoreApplicationsViewController ()
 
 @property (nonatomic, retain) NSNumber *savedEditingState;
 
 @end
 
 
-@implementation ACAppStoreApplicationsViewController
+@implementation ARAppStoreApplicationsViewController
 
 @synthesize editAppStoreApplicationViewController, appStoreCountriesViewController, savedEditingState;
 
@@ -140,11 +140,11 @@
 	// Lazily create edit view.
 	if (editAppStoreApplicationViewController == nil)
 	{
-		editAppStoreApplicationViewController = [[ACEditAppStoreApplicationViewController alloc] initWithNibName:@"ACEditAppStoreApplicationView" bundle:nil];
+		editAppStoreApplicationViewController = [[AREditAppStoreApplicationViewController alloc] initWithNibName:@"AREditAppStoreApplicationView" bundle:nil];
 	}
 	// Configure view.
 	editAppStoreApplicationViewController.title = @"New Application";
-	editAppStoreApplicationViewController.app = [[[ACAppStoreApplication alloc] init] autorelease];
+	editAppStoreApplicationViewController.app = [[[ARAppStoreApplication alloc] init] autorelease];
 	[[self navigationController] pushViewController:editAppStoreApplicationViewController animated:YES];
 }
 
@@ -161,11 +161,11 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	PSLog(@"Tapped on disclosure for row %d", indexPath.row);
-	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ARAppStoreApplication *app = [[ARAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create edit view.
 	if (editAppStoreApplicationViewController == nil)
 	{
-		editAppStoreApplicationViewController = [[ACEditAppStoreApplicationViewController alloc] initWithNibName:@"ACEditAppStoreApplicationView" bundle:nil];
+		editAppStoreApplicationViewController = [[AREditAppStoreApplicationViewController alloc] initWithNibName:@"AREditAppStoreApplicationView" bundle:nil];
 	}
 	// Configure view.
 	editAppStoreApplicationViewController.title = app.name;
@@ -176,11 +176,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ARAppStoreApplication *app = [[ARAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	// Lazily create countries view controller.
 	if (self.appStoreCountriesViewController == nil)
 	{
-		ACAppStoreCountriesViewController *viewController = [[ACAppStoreCountriesViewController alloc] initWithNibName:nil bundle:nil];
+		ARAppStoreCountriesViewController *viewController = [[ARAppStoreCountriesViewController alloc] initWithNibName:nil bundle:nil];
 		self.appStoreCountriesViewController = viewController;
 		[viewController release];
 	}
@@ -201,7 +201,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[ACAppReviewsStore sharedInstance] applicationCount];
+    return [[ARAppReviewsStore sharedInstance] applicationCount];
 }
 
 
@@ -215,7 +215,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     // Configure the cell
-	ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+	ARAppStoreApplication *app = [[ARAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
 	if (app.name==nil || [app.name length]==0)
 		cell.textLabel.text = app.appIdentifier;
 	else
@@ -246,9 +246,9 @@
 	if (editingStyle == UITableViewCellEditingStyleDelete)
 	{
 		PSLog(@"Deleting row %d", indexPath.row);
-		ACAppStoreApplication *app = [[ACAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
-		[[ACAppReviewsStore sharedInstance] removeApplication:app];
-		[[ACAppReviewsStore sharedInstance] save];
+		ARAppStoreApplication *app = [[ARAppReviewsStore sharedInstance] applicationAtIndex:indexPath.row];
+		[[ARAppReviewsStore sharedInstance] removeApplication:app];
+		[[ARAppReviewsStore sharedInstance] save];
 
 		// Confirm back to GUI that row has been deleted from model.
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -264,24 +264,24 @@
 		// Print out apps list BEFORE reorder.
 		NSUInteger appIndex;
 		PSLog(@"Apps list BEFORE reorder:");
-		for (appIndex = 0; appIndex < [[ACAppReviewsStore sharedInstance] applicationCount]; appIndex++)
+		for (appIndex = 0; appIndex < [[ARAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
-			ACAppStoreApplication *anApp = [[ACAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
+			ARAppStoreApplication *anApp = [[ARAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
 		}
 #endif
 		// Move array elements to match moved rows.
-		[[ACAppReviewsStore sharedInstance] moveApplicationAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+		[[ARAppReviewsStore sharedInstance] moveApplicationAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
 #ifdef DEBUG
 		// Print out apps list AFTER reorder.
 		PSLog(@"Apps list AFTER reorder:");
-		for (appIndex = 0; appIndex < [[ACAppReviewsStore sharedInstance] applicationCount]; appIndex++)
+		for (appIndex = 0; appIndex < [[ARAppReviewsStore sharedInstance] applicationCount]; appIndex++)
 		{
-			ACAppStoreApplication *anApp = [[ACAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
+			ARAppStoreApplication *anApp = [[ARAppReviewsStore sharedInstance] applicationAtIndex:appIndex];
 			PSLog(@"%d: %@", appIndex, anApp.name);
 		}
 #endif
-		[[ACAppReviewsStore sharedInstance] save];
+		[[ARAppReviewsStore sharedInstance] save];
 	}
 }
 

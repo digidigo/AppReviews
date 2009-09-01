@@ -34,7 +34,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSDate (ACNSDateAdditions)
+@interface NSDate (ARNSDateAdditions)
 
 + (NSString *)ordinalForDay:(NSUInteger)day;
 - (NSString *)friendlyDateStringWithFormat:(NSString *)format allowingWords:(BOOL)words;

@@ -37,7 +37,7 @@
 /**
  * Subclass of UIView which displays a filled bar representing a value between 0.0 and 1.0.
  */
-@interface ACHorizontalBarView : UIView
+@interface ARHorizontalBarView : UIView
 {
 	double barValue;
 	CGFloat barRed;

@@ -31,10 +31,10 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStore.h"
+#import "ARAppStore.h"
 
 
-@implementation ACAppStore
+@implementation ARAppStore
 
 @synthesize name, storeIdentifier, enabled;
 
@@ -67,7 +67,7 @@
 	[super dealloc];
 }
 
-- (NSComparisonResult)compare:(ACAppStore *)other
+- (NSComparisonResult)compare:(ARAppStore *)other
 {
 	return [self.name compare:other.name];
 }

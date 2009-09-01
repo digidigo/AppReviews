@@ -31,33 +31,33 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppReviewsStore.h"
+#import "ARAppReviewsStore.h"
 #import "PSSynthesizeSingleton.h"
-#import "ACAppStore.h"
-#import "ACAppStoreApplication.h"
-#import "ACAppStoreApplicationDetails.h"
-#import "ACAppStoreApplicationReview.h"
+#import "ARAppStore.h"
+#import "ARAppStoreApplication.h"
+#import "ARAppStoreApplicationDetails.h"
+#import "ARAppStoreApplicationReview.h"
 #import "NSString+PSPathAdditions.h"
 #import "FMDatabase.h"
 #import "PSLog.h"
 
 
-static NSString *kACAppReviewsDatabaseFile = @"AppReviews.db";
+static NSString *kARAppReviewsDatabaseFile = @"AppReviews.db";
 
 
-@interface ACAppReviewsStore ()
+@interface ARAppReviewsStore ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 - (BOOL)open;
 - (void)setupAppStores;
 - (void)updatePositions;
-- (void)removeDetailsForApplication:(ACAppStoreApplication *)app;
-- (void)removeReviewsForApplication:(ACAppStoreApplication *)app;
-- (void)removeReviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
+- (void)removeDetailsForApplication:(ARAppStoreApplication *)app;
+- (void)removeReviewsForApplication:(ARAppStoreApplication *)app;
+- (void)removeReviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store;
 - (void)loadApplications;
-- (void)loadDetailsForApplication:(ACAppStoreApplication *)app;
-- (void)loadReviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store;
+- (void)loadDetailsForApplication:(ARAppStoreApplication *)app;
+- (void)loadReviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store;
 
 #ifdef DEBUG
 - (void)setupTestData;
@@ -66,11 +66,11 @@ static NSString *kACAppReviewsDatabaseFile = @"AppReviews.db";
 @end
 
 
-@implementation ACAppReviewsStore
+@implementation ARAppReviewsStore
 
 @synthesize database, appStores;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
+SYNTHESIZE_SINGLETON_FOR_CLASS(ARAppReviewsStore);
 
 + (void)initialize
 {
@@ -82,16 +82,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
-    NSString *writableDBPath = [[NSString documentsPath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
+    NSString *writableDBPath = [[NSString documentsPath] stringByAppendingPathComponent:kARAppReviewsDatabaseFile];
     success = [fileManager fileExistsAtPath:writableDBPath];
     if (success)
 	{
-		PSLogDebug(@"Writable database file %@ found", kACAppReviewsDatabaseFile);
+		PSLogDebug(@"Writable database file %@ found", kARAppReviewsDatabaseFile);
 		return;
 	}
     // The writable database does not exist, so copy the default to the appropriate location.
 	PSLogDebug(@"No writable database file found");
-    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
+    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kARAppReviewsDatabaseFile];
     success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
     if (!success)
 	{
@@ -99,7 +99,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
     }
 }
 
-- (ACAppReviewsStore *)init
+- (ARAppReviewsStore *)init
 {
 	if (self = [super init])
 	{
@@ -137,14 +137,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 {
 	BOOL result;
 	// Open the database.
-	NSString *path = [[NSString documentsPath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
+	NSString *path = [[NSString documentsPath] stringByAppendingPathComponent:kARAppReviewsDatabaseFile];
 	self.database = [FMDatabase databaseWithPath:path];
 	PSLogDebug(@"Using SQLite version %@", [FMDatabase sqliteLibVersion]);
 	result = [database open];
 	if (result)
-		PSLogDebug(@"Opened database %@ successfully", kACAppReviewsDatabaseFile);
+		PSLogDebug(@"Opened database %@ successfully", kARAppReviewsDatabaseFile);
 	else
-		PSLogError(@"Failed to open database %@", kACAppReviewsDatabaseFile);
+		PSLogError(@"Failed to open database %@", kARAppReviewsDatabaseFile);
 	return result;
 }
 
@@ -175,12 +175,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 {
 	[database close];
 	self.database = nil;
-	PSLogDebug(@"Closed database %@", kACAppReviewsDatabaseFile);
+	PSLogDebug(@"Closed database %@", kARAppReviewsDatabaseFile);
 }
 
-- (ACAppStore *)storeForIdentifier:(NSString *)storeIdentifier
+- (ARAppStore *)storeForIdentifier:(NSString *)storeIdentifier
 {
-	for (ACAppStore *store in appStores)
+	for (ARAppStore *store in appStores)
 	{
 		if ([store.storeIdentifier isEqualToString:storeIdentifier])
 			return store;
@@ -193,9 +193,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	return [NSArray arrayWithArray:applications];
 }
 
-- (ACAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier
+- (ARAppStoreApplication *)applicationForIdentifier:(NSString *)appIdentifier
 {
-	for (ACAppStoreApplication *app in applications)
+	for (ARAppStoreApplication *app in applications)
 	{
 		if ([app.appIdentifier isEqualToString:appIdentifier])
 			return app;
@@ -203,9 +203,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	return nil;
 }
 
-- (ACAppStoreApplication *)applicationAtIndex:(NSUInteger)index
+- (ARAppStoreApplication *)applicationAtIndex:(NSUInteger)index
 {
-	ACAppStoreApplication *result = nil;
+	ARAppStoreApplication *result = nil;
 	if (index < [applications count])
 		result = [applications objectAtIndex:index];
 	return result;
@@ -216,7 +216,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	return [applications count];
 }
 
-- (void)addApplication:(ACAppStoreApplication *)app
+- (void)addApplication:(ARAppStoreApplication *)app
 {
 	// Add application to database.
 	[app insertIntoDatabase:database];
@@ -226,7 +226,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	[self updatePositions];
 }
 
-- (void)addApplication:(ACAppStoreApplication *)app atIndex:(NSUInteger)index
+- (void)addApplication:(ARAppStoreApplication *)app atIndex:(NSUInteger)index
 {
 	// Add application to database.
 	[app insertIntoDatabase:database];
@@ -238,14 +238,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 
 - (void)moveApplicationAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
 {
-	ACAppStoreApplication *app = [[applications objectAtIndex:fromIndex] retain];
+	ARAppStoreApplication *app = [[applications objectAtIndex:fromIndex] retain];
 	[applications removeObjectAtIndex:fromIndex];
 	[applications insertObject:app atIndex:toIndex];
 	[app release];
 	[self updatePositions];
 }
 
-- (void)removeApplication:(ACAppStoreApplication *)app
+- (void)removeApplication:(ARAppStoreApplication *)app
 {
 	// Cancel all NSOperations for this app.
 	[app suspendAllOperations];
@@ -254,7 +254,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	// Delete actual reviews for this app.
 	[self removeReviewsForApplication:app];
 
-	// Remove any existing ACAppStoreApplicationDetails for this app.
+	// Remove any existing ARAppStoreApplicationDetails for this app.
 	[self removeDetailsForApplication:app];
 
 	// Remove app from database.
@@ -264,19 +264,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	[self updatePositions];
 }
 
-- (void)resetDetailsForApplication:(ACAppStoreApplication *)app
+- (void)resetDetailsForApplication:(ARAppStoreApplication *)app
 {
 	// STEP 1: Delete actual reviews for this app.
 	[self removeReviewsForApplication:app];
 
-	// STEP 2: Remove any existing ACAppStoreApplicationDetails for this app.
+	// STEP 2: Remove any existing ARAppStoreApplicationDetails for this app.
 	[self removeDetailsForApplication:app];
 
-	// STEP 3: Create a new ACAppStoreApplicationDetails instance for this app, one for each store.
+	// STEP 3: Create a new ARAppStoreApplicationDetails instance for this app, one for each store.
 	NSMutableDictionary *storeDetailsDictionary = [NSMutableDictionary dictionary];
-	for (ACAppStore *appStore in appStores)
+	for (ARAppStore *appStore in appStores)
 	{
-		ACAppStoreApplicationDetails *appStoreDetails = [[ACAppStoreApplicationDetails alloc] initWithAppIdentifier:app.appIdentifier storeIdentifier:appStore.storeIdentifier];
+		ARAppStoreApplicationDetails *appStoreDetails = [[ARAppStoreApplicationDetails alloc] initWithAppIdentifier:app.appIdentifier storeIdentifier:appStore.storeIdentifier];
 		[appStoreDetails insertIntoDatabase:database];
 		[storeDetailsDictionary setObject:appStoreDetails forKey:appStore.storeIdentifier];
 		[appStoreDetails release];
@@ -284,7 +284,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	[appDetails setObject:storeDetailsDictionary forKey:app.appIdentifier];
 }
 
-- (ACAppStoreApplicationDetails *)detailsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store
+- (ARAppStoreApplicationDetails *)detailsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store
 {
 	NSMutableDictionary *storeDetailsDictionary = [appDetails objectForKey:app.appIdentifier];
 	if (storeDetailsDictionary == nil)
@@ -300,21 +300,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	return nil;
 }
 
-- (void)removeDetailsForApplication:(ACAppStoreApplication *)app
+- (void)removeDetailsForApplication:(ARAppStoreApplication *)app
 {
-	// Remove any existing ACAppStoreApplicationDetails for this app.
+	// Remove any existing ARAppStoreApplicationDetails for this app.
 	NSMutableDictionary *storeDetailsDictionary = [appDetails objectForKey:app.appIdentifier];
 	if (storeDetailsDictionary)
 	{
 		// We have found an existing dictionary of Details for this app.
-		// Delete all ACAppStoreApplicationDetails objects.
+		// Delete all ARAppStoreApplicationDetails objects.
 		[[storeDetailsDictionary allValues] makeObjectsPerformSelector:@selector(deleteFromDatabase)];
 		// Finally, delete the existing details dictionary for this app.
 		[appDetails removeObjectForKey:app.appIdentifier];
 	}
 }
 
-- (void)removeReviewsForApplication:(ACAppStoreApplication *)app
+- (void)removeReviewsForApplication:(ARAppStoreApplication *)app
 {
 	NSMutableDictionary *storeReviewsDictionary = [appReviews objectForKey:app.appIdentifier];
 	if (storeReviewsDictionary)
@@ -322,7 +322,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 		// Iterate through all storeIds, removing reviews as we go.
 		for (NSString *storeId in [storeReviewsDictionary allKeys])
 		{
-			ACAppStore *store = [self storeForIdentifier:storeId];
+			ARAppStore *store = [self storeForIdentifier:storeId];
 			if (store)
 			{
 				[self removeReviewsForApplication:app inStore:store];
@@ -331,7 +331,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	}
 }
 
-- (void)removeReviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store
+- (void)removeReviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store
 {
 	NSArray *reviews = [self reviewsForApplication:app inStore:store];
 	if (reviews)
@@ -347,7 +347,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	}
 }
 
-- (void)setReviews:(NSArray *)reviews forApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store
+- (void)setReviews:(NSArray *)reviews forApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store
 {
 	// Delete existing reviews for this app/store.
 	[self removeReviewsForApplication:app inStore:store];
@@ -357,7 +357,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	[self loadReviewsForApplication:app inStore:store];
 }
 
-- (NSArray *)reviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store
+- (NSArray *)reviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store
 {
 	// Return actual reviews for this app/store.
 	NSMutableArray *reviewsForAppStore = nil;
@@ -385,75 +385,75 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 {
 	// Create array of App Stores.
 	NSMutableArray *tmpArray = [NSMutableArray array];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"United States" storeIdentifier:@"143441"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"United Kingdom" storeIdentifier:@"143444"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Argentina" storeIdentifier:@"143505"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Australia" storeIdentifier:@"143460"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Belgium" storeIdentifier:@"143446"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Brazil" storeIdentifier:@"143503"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Canada" storeIdentifier:@"143455"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Chile" storeIdentifier:@"143483"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"China" storeIdentifier:@"143465"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Colombia" storeIdentifier:@"143501"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Costa Rica" storeIdentifier:@"143495"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Croatia" storeIdentifier:@"143494"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Czech Republic" storeIdentifier:@"143489"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Denmark" storeIdentifier:@"143458"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Deutschland" storeIdentifier:@"143443"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"El Salvador" storeIdentifier:@"143506"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Espana" storeIdentifier:@"143454"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Finland" storeIdentifier:@"143447"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"France" storeIdentifier:@"143442"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Greece" storeIdentifier:@"143448"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Guatemala" storeIdentifier:@"143504"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Hong Kong" storeIdentifier:@"143463"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Hungary" storeIdentifier:@"143482"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"India" storeIdentifier:@"143467"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Indonesia" storeIdentifier:@"143476"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Ireland" storeIdentifier:@"143449"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Israel" storeIdentifier:@"143491"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Italia" storeIdentifier:@"143450"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Japan" storeIdentifier:@"143462"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Korea" storeIdentifier:@"143466"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Kuwait" storeIdentifier:@"143493"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Lebanon" storeIdentifier:@"143497"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Luxembourg" storeIdentifier:@"143451"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Malaysia" storeIdentifier:@"143473"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Mexico" storeIdentifier:@"143468"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Nederland" storeIdentifier:@"143452"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"New Zealand" storeIdentifier:@"143461"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Norway" storeIdentifier:@"143457"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Osterreich" storeIdentifier:@"143445"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Pakistan" storeIdentifier:@"143477"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Panama" storeIdentifier:@"143485"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Peru" storeIdentifier:@"143507"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Phillipines" storeIdentifier:@"143474"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Poland" storeIdentifier:@"143478"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Portugal" storeIdentifier:@"143453"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Qatar" storeIdentifier:@"143498"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Romania" storeIdentifier:@"143487"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Russia" storeIdentifier:@"143469"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Saudi Arabia" storeIdentifier:@"143479"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Schweitz/Suisse" storeIdentifier:@"143459"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Singapore" storeIdentifier:@"143464"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Slovakia" storeIdentifier:@"143496"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Slovenia" storeIdentifier:@"143499"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"South Africa" storeIdentifier:@"143472"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Sri Lanka" storeIdentifier:@"143486"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Sweden" storeIdentifier:@"143456"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Taiwan" storeIdentifier:@"143470"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Thailand" storeIdentifier:@"143475"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Turkey" storeIdentifier:@"143480"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"United Arab Emirates" storeIdentifier:@"143481"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Venezuela" storeIdentifier:@"143502"] autorelease]];
-	[tmpArray addObject:[[[ACAppStore alloc] initWithName:@"Vietnam" storeIdentifier:@"143471"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"United States" storeIdentifier:@"143441"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"United Kingdom" storeIdentifier:@"143444"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Argentina" storeIdentifier:@"143505"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Australia" storeIdentifier:@"143460"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Belgium" storeIdentifier:@"143446"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Brazil" storeIdentifier:@"143503"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Canada" storeIdentifier:@"143455"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Chile" storeIdentifier:@"143483"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"China" storeIdentifier:@"143465"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Colombia" storeIdentifier:@"143501"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Costa Rica" storeIdentifier:@"143495"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Croatia" storeIdentifier:@"143494"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Czech Republic" storeIdentifier:@"143489"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Denmark" storeIdentifier:@"143458"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Deutschland" storeIdentifier:@"143443"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"El Salvador" storeIdentifier:@"143506"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Espana" storeIdentifier:@"143454"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Finland" storeIdentifier:@"143447"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"France" storeIdentifier:@"143442"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Greece" storeIdentifier:@"143448"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Guatemala" storeIdentifier:@"143504"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Hong Kong" storeIdentifier:@"143463"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Hungary" storeIdentifier:@"143482"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"India" storeIdentifier:@"143467"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Indonesia" storeIdentifier:@"143476"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Ireland" storeIdentifier:@"143449"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Israel" storeIdentifier:@"143491"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Italia" storeIdentifier:@"143450"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Japan" storeIdentifier:@"143462"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Korea" storeIdentifier:@"143466"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Kuwait" storeIdentifier:@"143493"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Lebanon" storeIdentifier:@"143497"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Luxembourg" storeIdentifier:@"143451"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Malaysia" storeIdentifier:@"143473"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Mexico" storeIdentifier:@"143468"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Nederland" storeIdentifier:@"143452"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"New Zealand" storeIdentifier:@"143461"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Norway" storeIdentifier:@"143457"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Osterreich" storeIdentifier:@"143445"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Pakistan" storeIdentifier:@"143477"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Panama" storeIdentifier:@"143485"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Peru" storeIdentifier:@"143507"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Phillipines" storeIdentifier:@"143474"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Poland" storeIdentifier:@"143478"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Portugal" storeIdentifier:@"143453"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Qatar" storeIdentifier:@"143498"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Romania" storeIdentifier:@"143487"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Russia" storeIdentifier:@"143469"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Saudi Arabia" storeIdentifier:@"143479"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Schweitz/Suisse" storeIdentifier:@"143459"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Singapore" storeIdentifier:@"143464"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Slovakia" storeIdentifier:@"143496"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Slovenia" storeIdentifier:@"143499"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"South Africa" storeIdentifier:@"143472"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Sri Lanka" storeIdentifier:@"143486"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Sweden" storeIdentifier:@"143456"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Taiwan" storeIdentifier:@"143470"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Thailand" storeIdentifier:@"143475"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Turkey" storeIdentifier:@"143480"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"United Arab Emirates" storeIdentifier:@"143481"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Venezuela" storeIdentifier:@"143502"] autorelease]];
+	[tmpArray addObject:[[[ARAppStore alloc] initWithName:@"Vietnam" storeIdentifier:@"143471"] autorelease]];
 	self.appStores = [tmpArray sortedArrayUsingSelector:@selector(compare:)];
 }
 
 - (void)updatePositions
 {
 	NSInteger i = 0;
-	for (ACAppStoreApplication *app in applications)
+	for (ARAppStoreApplication *app in applications)
 	{
 		app.position = i;
 		i++;
@@ -467,7 +467,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	while ([ids next])
 	{
 		NSInteger app_pk = [ids intForColumnIndex:0];
-		ACAppStoreApplication *app = [[ACAppStoreApplication alloc] initWithPrimaryKey:app_pk database:database];
+		ARAppStoreApplication *app = [[ARAppStoreApplication alloc] initWithPrimaryKey:app_pk database:database];
 		[app hydrate];
 		[tmpArray addObject:app];
 		[app release];
@@ -483,22 +483,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 		[self setupTestData];
 #endif
 		// Start new user off with some default applications.
-		[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
-		[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
-		[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
-		[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"Dialogues" appIdentifier:@"320166734"] autorelease]];
+		[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"EventHorizon" appIdentifier:@"303143596"] autorelease]];
+		[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"SleepOver" appIdentifier:@"286546049"] autorelease]];
+		[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
+		[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"Dialogues" appIdentifier:@"320166734"] autorelease]];
 		PSLog(@"Added %d apps", [applications count]-countBefore);
 	}
 }
 
-- (void)loadDetailsForApplication:(ACAppStoreApplication *)app
+- (void)loadDetailsForApplication:(ARAppStoreApplication *)app
 {
 	NSMutableDictionary *tmpDict = [NSMutableDictionary dictionary];
 	FMResultSet *ids = [database executeQuery:@"SELECT id FROM application_details WHERE app_identifier=?", app.appIdentifier];
 	while ([ids next])
 	{
 		NSInteger appDetails_pk = [ids intForColumnIndex:0];
-		ACAppStoreApplicationDetails *details = [[ACAppStoreApplicationDetails alloc] initWithPrimaryKey:appDetails_pk database:database];
+		ARAppStoreApplicationDetails *details = [[ARAppStoreApplicationDetails alloc] initWithPrimaryKey:appDetails_pk database:database];
 		[tmpDict setObject:details forKey:details.storeIdentifier];
 		[details release];
 	}
@@ -506,14 +506,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 	[appDetails setObject:tmpDict forKey:app.appIdentifier];
 }
 
-- (void)loadReviewsForApplication:(ACAppStoreApplication *)app inStore:(ACAppStore *)store
+- (void)loadReviewsForApplication:(ARAppStoreApplication *)app inStore:(ARAppStore *)store
 {
 	NSMutableArray *tmpArray = [NSMutableArray array];
 	FMResultSet *ids = [database executeQuery:@"SELECT id FROM application_review WHERE app_identifier=? AND store_identifier=? ORDER BY review_index", app.appIdentifier, store.storeIdentifier];
 	while ([ids next])
 	{
 		NSInteger appReview_pk = [ids intForColumnIndex:0];
-		ACAppStoreApplicationReview *review = [[ACAppStoreApplicationReview alloc] initWithPrimaryKey:appReview_pk database:database];
+		ARAppStoreApplicationReview *review = [[ARAppStoreApplicationReview alloc] initWithPrimaryKey:appReview_pk database:database];
 		[tmpArray addObject:review];
 		[review release];
 	}
@@ -538,10 +538,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 
 - (void)setupTestData
 {
-	[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
-	[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"Lux Touch" appIdentifier:@"292538570"] autorelease]];
-	[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"Remote" appIdentifier:@"284417350"] autorelease]];
-	[self addApplication:[[[ACAppStoreApplication alloc] initWithName:@"Texas Hold'em" appIdentifier:@"284602850"] autorelease]];
+	[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"vConqr" appIdentifier:@"290649401"] autorelease]];
+	[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"Lux Touch" appIdentifier:@"292538570"] autorelease]];
+	[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"Remote" appIdentifier:@"284417350"] autorelease]];
+	[self addApplication:[[[ARAppStoreApplication alloc] initWithName:@"Texas Hold'em" appIdentifier:@"284602850"] autorelease]];
 }
 
 #endif

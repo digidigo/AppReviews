@@ -37,7 +37,7 @@
 @class FMDatabase;
 
 
-@interface ACAppStoreApplicationReview : NSObject
+@interface ARAppStoreApplicationReview : NSObject
 {
 	// Persistent members.
 	NSString *appIdentifier;

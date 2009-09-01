@@ -31,33 +31,33 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreUpdateOperation.h"
-#import "ACAppStoreApplicationDetails.h"
-#import "ACAppStoreApplicationDetailsImporter.h"
-#import "ACAppStoreApplicationReviewsImporter.h"
+#import "ARAppStoreUpdateOperation.h"
+#import "ARAppStoreApplicationDetails.h"
+#import "ARAppStoreApplicationDetailsImporter.h"
+#import "ARAppStoreApplicationReviewsImporter.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreUpdateOperation ()
+@interface ARAppStoreUpdateOperation ()
 
 - (NSData *)dataFromURL:(NSURL *)url;
 
 @end
 
 
-@implementation ACAppStoreUpdateOperation
+@implementation ARAppStoreUpdateOperation
 
 @synthesize appDetails, fetchReviews, detailsImporter, reviewsImporter;
 
-- (id)initWithApplicationDetails:(ACAppStoreApplicationDetails *)details
+- (id)initWithApplicationDetails:(ARAppStoreApplicationDetails *)details
 {
 	PSLogDebug(@"appIdentifier=%@, storeIdentifier=%@", details.appIdentifier, details.storeIdentifier);
 
 	if (self = [super init])
 	{
 		appDetails = [details retain];
-		detailsImporter = [[ACAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:details.appIdentifier storeIdentifier:details.storeIdentifier];
-		reviewsImporter = [[ACAppStoreApplicationReviewsImporter alloc] initWithAppIdentifier:details.appIdentifier storeIdentifier:details.storeIdentifier];
+		detailsImporter = [[ARAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:details.appIdentifier storeIdentifier:details.storeIdentifier];
+		reviewsImporter = [[ARAppStoreApplicationReviewsImporter alloc] initWithAppIdentifier:details.appIdentifier storeIdentifier:details.storeIdentifier];
 		fetchReviews = YES;
 	}
 	return self;
@@ -80,9 +80,9 @@
 	BOOL success = YES;
 
 	// Update state.
-	appDetails.state = ACAppStoreStateProcessing;
-	// Send kACAppStoreUpdateOperationDidStartNotification to main thread.
-	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreUpdateOperationDidStartNotification object:appDetails] waitUntilDone:YES];
+	appDetails.state = ARAppStoreStateProcessing;
+	// Send kARAppStoreUpdateOperationDidStartNotification to main thread.
+	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreUpdateOperationDidStartNotification object:appDetails] waitUntilDone:YES];
 
 	// Fetch app details.
 	if (![self isCancelled])
@@ -129,19 +129,19 @@
 		{
 			// Save if all successful.
 			[self performSelectorOnMainThread:@selector(save:) withObject:self waitUntilDone:YES];
-			appDetails.state = ACAppStoreStateDefault;
-			// Send kACAppStoreUpdateOperationDidFinishNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreUpdateOperationDidFinishNotification object:appDetails] waitUntilDone:YES];
+			appDetails.state = ARAppStoreStateDefault;
+			// Send kARAppStoreUpdateOperationDidFinishNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreUpdateOperationDidFinishNotification object:appDetails] waitUntilDone:YES];
 		}
 		else
 		{
-			appDetails.state = ACAppStoreStateFailed;
-			// Send kACAppStoreUpdateOperationDidFailNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreUpdateOperationDidFailNotification object:appDetails] waitUntilDone:YES];
+			appDetails.state = ARAppStoreStateFailed;
+			// Send kARAppStoreUpdateOperationDidFailNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreUpdateOperationDidFailNotification object:appDetails] waitUntilDone:YES];
 		}
 	}
 	else
-		appDetails.state = ACAppStoreStateDefault;
+		appDetails.state = ARAppStoreStateDefault;
 
 	[pool drain];
 }
@@ -178,8 +178,8 @@
 - (void)save:(id)object
 {
 	PSLogDebug(@"-->");
-	ACAppStoreApplication *appStoreApplication = [[ACAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
-	ACAppStore *store = [[ACAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
+	ARAppStoreApplication *appStoreApplication = [[ARAppReviewsStore sharedInstance] applicationForIdentifier:appDetails.appIdentifier];
+	ARAppStore *store = [[ARAppReviewsStore sharedInstance] storeForIdentifier:detailsImporter.storeIdentifier];
 	// Save details info for this app/store.
 	NSUInteger oldRatingsCount = appDetails.ratingCountAll;
 	NSUInteger oldReviewsCount = appDetails.reviewCountAll;
@@ -196,7 +196,7 @@
 	if (fetchReviews)
 	{
 		NSArray *reviews = [reviewsImporter reviews];
-		[[ACAppReviewsStore sharedInstance] setReviews:reviews forApplication:appStoreApplication inStore:store];
+		[[ARAppReviewsStore sharedInstance] setReviews:reviews forApplication:appStoreApplication inStore:store];
 	}
 	PSLogDebug(@"<--");
 }

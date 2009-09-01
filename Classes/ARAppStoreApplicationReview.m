@@ -31,19 +31,19 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreApplicationReview.h"
+#import "ARAppStoreApplicationReview.h"
 #import "FMDatabase.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreApplicationReview ()
+@interface ARAppStoreApplicationReview ()
 
 @property (nonatomic, retain) FMDatabase *database;
 
 @end
 
 
-@implementation ACAppStoreApplicationReview
+@implementation ARAppStoreApplicationReview
 
 @synthesize appIdentifier, storeIdentifier, index, reviewer, rating, summary, detail, appVersion, reviewDate, primaryKey, database;
 
@@ -101,7 +101,7 @@
 		}
 		else
 		{
-			PSLogError(@"Failed to populate ACAppStoreApplicationReview using primary key %d", pk);
+			PSLogError(@"Failed to populate ARAppStoreApplicationReview using primary key %d", pk);
 			self.appIdentifier = nil;
 			self.storeIdentifier = nil;
 			self.index = 0;
@@ -134,7 +134,7 @@
 	}
 	else
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to insert ACAppStoreApplicationReview into the database with message '%@'.", [db lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to insert ARAppStoreApplicationReview into the database with message '%@'.", [db lastErrorMessage]];
 		PSLogError(message);
         NSAssert(0, message);
 	}
@@ -161,7 +161,7 @@
 			  reviewDate,
 			  [NSNumber numberWithInteger:primaryKey]])
 		{
-			NSString *message = [NSString stringWithFormat:@"Failed to save ACAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
+			NSString *message = [NSString stringWithFormat:@"Failed to save ARAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
 			PSLogError(message);
 			NSAssert(0, message);
 		}
@@ -189,7 +189,7 @@
 	}
 	else
 	{
-		PSLogError(@"Failed to hydrate ACAppStoreApplicationReview using primary key %d", primaryKey);
+		PSLogError(@"Failed to hydrate ARAppStoreApplicationReview using primary key %d", primaryKey);
 		self.reviewer = nil;
 		self.summary = nil;
 		self.detail = nil;
@@ -229,7 +229,7 @@
 {
 	if (![database executeUpdate:@"DELETE FROM application_review WHERE id=?", [NSNumber numberWithInteger:primaryKey]])
 	{
-		NSString *message = [NSString stringWithFormat:@"Failed to delete ACAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
+		NSString *message = [NSString stringWithFormat:@"Failed to delete ARAppStoreApplicationReview with message '%@'.", [database lastErrorMessage]];
 		PSLogError(message);
 		NSAssert(0, message);
 	}

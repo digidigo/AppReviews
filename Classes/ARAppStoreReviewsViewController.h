@@ -34,24 +34,24 @@
 #import <UIKit/UIKit.h>
 
 
-@class ACAppStoreApplicationDetails;
-@class ACAppStoreDetailsViewController;
+@class ARAppStoreApplicationDetails;
+@class ARAppStoreDetailsViewController;
 
 
-@interface ACAppStoreReviewsViewController : UITableViewController
+@interface ARAppStoreReviewsViewController : UITableViewController
 {
 	UIBarButtonItem *updateButtonItem;
 	UIBarButtonItem *activitySpinnerItem;
 	UIActivityIndicatorView *activitySpinner;
-	ACAppStoreApplicationDetails *appStoreDetails;
-	ACAppStoreDetailsViewController *appStoreDetailsViewController;
+	ARAppStoreApplicationDetails *appStoreDetails;
+	ARAppStoreDetailsViewController *appStoreDetailsViewController;
 	NSArray *userReviews;
 }
 
 @property (nonatomic, retain) UIBarButtonItem *updateButtonItem;
 @property (nonatomic, retain) UIBarButtonItem *activitySpinnerItem;
 @property (nonatomic, retain) UIActivityIndicatorView *activitySpinner;
-@property (nonatomic, retain) ACAppStoreApplicationDetails *appStoreDetails;
+@property (nonatomic, retain) ARAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, retain) NSArray *userReviews;
 
 @end

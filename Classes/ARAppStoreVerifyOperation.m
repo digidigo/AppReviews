@@ -31,20 +31,20 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreVerifyOperation.h"
-#import "ACAppStoreApplicationDetailsImporter.h"
+#import "ARAppStoreVerifyOperation.h"
+#import "ARAppStoreApplicationDetailsImporter.h"
 #import "AppReviewsAppDelegate.h"
 #import "PSLog.h"
 
 
-@interface ACAppStoreVerifyOperation ()
+@interface ARAppStoreVerifyOperation ()
 
 - (NSData *)dataFromURL:(NSURL *)url;
 
 @end
 
 
-@implementation ACAppStoreVerifyOperation
+@implementation ARAppStoreVerifyOperation
 
 @synthesize appIdentifier, storeIdentifier, detailsImporter, progressHUD;
 
@@ -56,7 +56,7 @@
 	{
 		self.appIdentifier = appId;
 		self.storeIdentifier = storeId;
-		detailsImporter = [[ACAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
+		detailsImporter = [[ARAppStoreApplicationDetailsImporter alloc] initWithAppIdentifier:appIdentifier storeIdentifier:storeIdentifier];
 	}
 	return self;
 }
@@ -78,8 +78,8 @@
 
 	BOOL success = YES;
 
-	// Send kACAppStoreVerifyOperationDidStartNotification to main thread.
-	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidStartNotification object:detailsImporter] waitUntilDone:NO];
+	// Send kARAppStoreVerifyOperationDidStartNotification to main thread.
+	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreVerifyOperationDidStartNotification object:detailsImporter] waitUntilDone:NO];
 
 	// Fetch app details.
 	if (![self isCancelled])
@@ -104,13 +104,13 @@
 	{
 		if (success)
 		{
-			// Send kACAppStoreVerifyOperationDidFinishNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidFinishNotification object:self] waitUntilDone:YES];
+			// Send kARAppStoreVerifyOperationDidFinishNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreVerifyOperationDidFinishNotification object:self] waitUntilDone:YES];
 		}
 		else
 		{
-			// Send kACAppStoreVerifyOperationDidFailNotification to main thread.
-			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kACAppStoreVerifyOperationDidFailNotification object:self] waitUntilDone:YES];
+			// Send kARAppStoreVerifyOperationDidFailNotification to main thread.
+			[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:kARAppStoreVerifyOperationDidFailNotification object:self] waitUntilDone:YES];
 		}
 	}
 

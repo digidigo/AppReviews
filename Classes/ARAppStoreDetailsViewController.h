@@ -34,16 +34,16 @@
 #import <UIKit/UIKit.h>
 
 
-@class ACAppStoreApplicationDetails;
+@class ARAppStoreApplicationDetails;
 
 
-@interface ACAppStoreDetailsViewController : UITableViewController
+@interface ARAppStoreDetailsViewController : UITableViewController
 {
-	ACAppStoreApplicationDetails *appStoreDetails;
+	ARAppStoreApplicationDetails *appStoreDetails;
 	BOOL useCurrentVersion;
 }
 
-@property (nonatomic, retain) ACAppStoreApplicationDetails *appStoreDetails;
+@property (nonatomic, retain) ARAppStoreApplicationDetails *appStoreDetails;
 @property (nonatomic, assign) BOOL useCurrentVersion;
 
 @end

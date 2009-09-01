@@ -37,7 +37,7 @@
 @class PSRatingView;
 
 
-@interface ACAppStoreReviewsSummaryTableCell : UITableViewCell
+@interface ARAppStoreReviewsSummaryTableCell : UITableViewCell
 {
 	UILabel *ratingsLabel;
 	UILabel *ratingsValue;

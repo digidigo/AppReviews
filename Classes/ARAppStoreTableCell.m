@@ -31,7 +31,7 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACAppStoreTableCell.h"
+#import "ARAppStoreTableCell.h"
 #import "PSImageView.h"
 #import "PSRatingView.h"
 #import "PSCountView.h"
@@ -40,7 +40,7 @@
 #define	kActivityIndicatorSize 20.0
 
 
-@implementation ACAppStoreTableCell
+@implementation ARAppStoreTableCell
 
 @synthesize nameLabel, flagView, ratingView, ratingCountLabel, countView, state, stateSpinnerView;
 
@@ -83,7 +83,7 @@
 		countView.opaque = NO;
 		[self.contentView addSubview:countView];
 
-		state = ACAppStoreStateDefault;
+		state = ARAppStoreStateDefault;
 		stateSpinnerView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
 		stateSpinnerView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
 		stateSpinnerView.hidesWhenStopped = NO;
@@ -165,24 +165,24 @@
 	self.backgroundColor = self.contentView.backgroundColor;
 }
 
-- (void)setState:(ACAppStoreState)value
+- (void)setState:(ARAppStoreState)value
 {
 	state = value;
 	switch (state)
 	{
-		case ACAppStoreStatePending:
+		case ARAppStoreStatePending:
 			[stateSpinnerView stopAnimating];
 			stateSpinnerView.hidden = NO;
 			countView.hidden = YES;
 			self.contentView.backgroundColor = [UIColor whiteColor];
 			break;
-		case ACAppStoreStateProcessing:
+		case ARAppStoreStateProcessing:
 			[stateSpinnerView startAnimating];
 			stateSpinnerView.hidden = NO;
 			countView.hidden = YES;
 			self.contentView.backgroundColor = [UIColor whiteColor];
 			break;
-		case ACAppStoreStateFailed:
+		case ARAppStoreStateFailed:
 			[stateSpinnerView stopAnimating];
 			stateSpinnerView.hidden = YES;
 			countView.hidden = NO;

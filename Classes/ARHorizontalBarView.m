@@ -31,7 +31,7 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "ACHorizontalBarView.h"
+#import "ARHorizontalBarView.h"
 #import <UIKit/UIColor.h>
 
 
@@ -44,7 +44,7 @@ static CGFloat sDefaultBarAlpha = 1.0;
 /**
  * Subclass of UIView which displays a filled bar representing a value between 0.0 and 1.0.
  */
-@implementation ACHorizontalBarView
+@implementation ARHorizontalBarView
 
 @synthesize barValue;
 
