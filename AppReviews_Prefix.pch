@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'AppCritics' target in the 'AppCritics' project
+// Prefix header for all source files of the 'AppReviews' target in the 'AppReviews' project
 //
 
 #ifdef __OBJC__

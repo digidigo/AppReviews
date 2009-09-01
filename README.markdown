@@ -1,8 +1,8 @@
-AppCritics
+AppReviews
 ==========
-AppCritics is a tool for iPhone and iPod touch developers, allowing you to keep track of how your applications are being reviewed and rated by users across all of the iTunes App Stores worldwide. Of course you can already do this now by finding your application in each iTunes App Store, but AppCritics make this a one-tap operation once you have added your application identifier into the AppCritics applications list.
+AppReviews is a tool for iPhone and iPod touch developers, allowing you to keep track of how your applications are being reviewed and rated by users across all of the iTunes App Stores worldwide. Of course you can already do this now by finding your application in each iTunes App Store, but AppReviews make this a one-tap operation once you have added your application identifier into the AppReviews applications list.
 
-AppCritics helps you find your "poisonous" reviews fast, even in App Stores which you might not usually see. You can benefit from this by identifying reported issues faster and/or reporting abuse in your reviews in an attempt to lessen their impact on your sales, or just revel in the glory of all your 5-star reviews across the world!
+AppReviews helps you find your "poisonous" reviews fast, even in App Stores which you might not usually see. You can benefit from this by identifying reported issues faster and/or reporting abuse in your reviews in an attempt to lessen their impact on your sales, or just revel in the glory of all your 5-star reviews across the world!
 
 Features
 --------
@@ -15,17 +15,17 @@ Features
 Requirements
 ------------
 
-AppCritics currently requires each application's unique application indentifier, which is found in your reports from Apple and also in the iTunes Store URL (right-click on your application icon in iTunes App Store).
+AppReviews currently requires each application's unique application indentifier, which is found in your reports from Apple and also in the iTunes Store URL (right-click on your application icon in iTunes App Store).
 
 Why open-source it?
 -------------------
 
-I have released AppCritics as open-source for two main reasons:
+I have released AppReviews as open-source for two main reasons:
 
 * It fetches data using a non-public web API and therefore cannot be sold in the App Store (Don't Ask Me How I Know This :-)
 * I no longer have as much free time to work on this project.
 
-However, it is a useful tool for iPhone developers and I didn't want to see it just die off, so I am releasing it as open-source (under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)) in the hope that others might contribute and improve AppCritics for the benefit of all of us developers.
+However, it is a useful tool for iPhone developers and I didn't want to see it just die off, so I am releasing it as open-source (under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)) in the hope that others might contribute and improve AppReviews for the benefit of all of us developers.
 
 License
 -------
@@ -35,4 +35,4 @@ This software is released under the terms of the [BSD License](http://www.openso
 For More Information
 --------------------
 
-Please visit the [AppCritics](http://www.perculasoft.com/appcritics) page at [Percula Software](http://www.perculasoft.com).
+Please visit the [AppReviews](http://www.perculasoft.com/appreviews) page at [Percula Software](http://www.perculasoft.com).

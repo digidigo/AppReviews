@@ -1,7 +1,7 @@
 //
-//	Copyright (c) 2008-2009, AppCritics
-//	http://github.com/gambcl/AppCritics
-//	http://www.perculasoft.com/appcritics
+//	Copyright (c) 2008-2009, AppReviews
+//	http://github.com/gambcl/AppReviews
+//	http://www.perculasoft.com/appreviews
 //	All rights reserved.
 //
 //	This software is released under the terms of the BSD License.
@@ -15,7 +15,7 @@
 //	* Redistributions in binary form must reproduce the above copyright notice,
 //	  this list of conditions and the following disclaimer
 //	  in the documentation and/or other materials provided with the distribution.
-//	* Neither the name of AppCritics nor the names of its contributors may be used
+//	* Neither the name of AppReviews nor the names of its contributors may be used
 //	  to endorse or promote products derived from this software without specific
 //	  prior written permission.
 //
@@ -39,7 +39,7 @@
 #import "ACAppStoreApplicationDetailsImporter.h"
 #import "ACAppStore.h"
 #import "PSProgressHUD.h"
-#import "AppCriticsAppDelegate.h"
+#import "AppReviewsAppDelegate.h"
 #import "PSLog.h"
 
 
@@ -152,7 +152,7 @@
 
 - (IBAction)save:(id)sender
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+	AppReviewsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
 	// Hide the keyboard.
 	[appId resignFirstResponder];
@@ -162,7 +162,7 @@
 	if (appForNewAppId && (appForNewAppId != app))
 	{
 		// Duplicate appId.
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:@"This Application Identifier already exists in AppCritics! Please choose another Application Identifier." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppReviews" message:@"This Application Identifier already exists in AppReviews! Please choose another Application Identifier." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 		[alert show];
 		[alert release];
 		saveButton.enabled = NO;
@@ -194,7 +194,7 @@
 
 - (void)validateApplication:(ACAppStoreApplicationDetailsImporter *)detailsImporter
 {
-	AppCriticsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+	AppReviewsAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreVerifyOperationDidFinishNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:kACAppStoreVerifyOperationDidFailNotification object:nil];
@@ -243,7 +243,7 @@
 				// Could not validate appId.
 				saveButton.enabled = NO;
 
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:@"This Application Identifier could not be found in the chosen App Store. Please check the Application Identifier and network connection before trying again." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppReviews" message:@"This Application Identifier could not be found in the chosen App Store. Please check the Application Identifier and network connection before trying again." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 				[alert show];
 				[alert release];
 			}

@@ -1,7 +1,7 @@
 //
-//	Copyright (c) 2008-2009, AppCritics
-//	http://github.com/gambcl/AppCritics
-//	http://www.perculasoft.com/appcritics
+//	Copyright (c) 2008-2009, AppReviews
+//	http://github.com/gambcl/AppReviews
+//	http://www.perculasoft.com/appreviews
 //	All rights reserved.
 //
 //	This software is released under the terms of the BSD License.
@@ -15,7 +15,7 @@
 //	* Redistributions in binary form must reproduce the above copyright notice,
 //	  this list of conditions and the following disclaimer
 //	  in the documentation and/or other materials provided with the distribution.
-//	* Neither the name of AppCritics nor the names of its contributors may be used
+//	* Neither the name of AppReviews nor the names of its contributors may be used
 //	  to endorse or promote products derived from this software without specific
 //	  prior written permission.
 //
@@ -31,19 +31,19 @@
 //	OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "AppCriticsAppDelegate.h"
+#import "AppReviewsAppDelegate.h"
 #import "ACAppReviewsStore.h"
 #import "ACAppStoreApplicationsViewController.h"
 #import "PSLog.h"
 
-@interface AppCriticsAppDelegate (Private)
+@interface AppReviewsAppDelegate (Private)
 
 - (NSUserDefaults *)loadUserSettings:(NSString *)aKey;
 
 @end
 
 
-@implementation AppCriticsAppDelegate
+@implementation AppReviewsAppDelegate
 
 @synthesize window, exiting, settings, operationQueue;
 
@@ -85,7 +85,7 @@
 	else
 	{
 		// Failed to open database.
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppCritics" message:@"" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AppReviews" message:@"" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:nil];
 		[alert show];
 		[alert release];
 	}
@@ -129,7 +129,7 @@
 {
 	PSLogWarning(@"");
 #ifdef DEBUG
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Memory Warning" message:@"AppCritics is running low on memory!\nRestarting your device may alleviate memory issues." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Memory Warning" message:@"AppReviews is running low on memory!\nRestarting your device may alleviate memory issues." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 #endif

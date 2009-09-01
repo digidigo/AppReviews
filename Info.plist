@@ -31,9 +31,9 @@
 	<key>PSWebsiteURL</key>
 	<string>www.perculasoft.com</string>
 	<key>PSApplicationURL</key>
-	<string>www.perculasoft.com/appcritics</string>
+	<string>www.perculasoft.com/appreviews</string>
 	<key>PSReleaseNotesURL</key>
-	<string>www.perculasoft.com/appcritics/releases.html</string>
+	<string>www.perculasoft.com/appreviews/releases.html</string>
 	<key>PSAboutIconFile</key>
 	<string>About.png</string>
 </dict>

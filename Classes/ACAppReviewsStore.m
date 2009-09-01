@@ -1,7 +1,7 @@
 //
-//	Copyright (c) 2008-2009, AppCritics
-//	http://github.com/gambcl/AppCritics
-//	http://www.perculasoft.com/appcritics
+//	Copyright (c) 2008-2009, AppReviews
+//	http://github.com/gambcl/AppReviews
+//	http://www.perculasoft.com/appreviews
 //	All rights reserved.
 //
 //	This software is released under the terms of the BSD License.
@@ -15,7 +15,7 @@
 //	* Redistributions in binary form must reproduce the above copyright notice,
 //	  this list of conditions and the following disclaimer
 //	  in the documentation and/or other materials provided with the distribution.
-//	* Neither the name of AppCritics nor the names of its contributors may be used
+//	* Neither the name of AppReviews nor the names of its contributors may be used
 //	  to endorse or promote products derived from this software without specific
 //	  prior written permission.
 //
@@ -42,7 +42,7 @@
 #import "PSLog.h"
 
 
-static NSString *kACAppCriticsDatabaseFile = @"AppCritics.db";
+static NSString *kACAppReviewsDatabaseFile = @"AppReviews.db";
 
 
 @interface ACAppReviewsStore ()
@@ -82,16 +82,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
-    NSString *writableDBPath = [[NSString documentsPath] stringByAppendingPathComponent:kACAppCriticsDatabaseFile];
+    NSString *writableDBPath = [[NSString documentsPath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
     success = [fileManager fileExistsAtPath:writableDBPath];
     if (success)
 	{
-		PSLogDebug(@"Writable database file %@ found", kACAppCriticsDatabaseFile);
+		PSLogDebug(@"Writable database file %@ found", kACAppReviewsDatabaseFile);
 		return;
 	}
     // The writable database does not exist, so copy the default to the appropriate location.
 	PSLogDebug(@"No writable database file found");
-    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kACAppCriticsDatabaseFile];
+    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
     success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
     if (!success)
 	{
@@ -137,14 +137,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 {
 	BOOL result;
 	// Open the database.
-	NSString *path = [[NSString documentsPath] stringByAppendingPathComponent:kACAppCriticsDatabaseFile];
+	NSString *path = [[NSString documentsPath] stringByAppendingPathComponent:kACAppReviewsDatabaseFile];
 	self.database = [FMDatabase databaseWithPath:path];
 	PSLogDebug(@"Using SQLite version %@", [FMDatabase sqliteLibVersion]);
 	result = [database open];
 	if (result)
-		PSLogDebug(@"Opened database %@ successfully", kACAppCriticsDatabaseFile);
+		PSLogDebug(@"Opened database %@ successfully", kACAppReviewsDatabaseFile);
 	else
-		PSLogError(@"Failed to open database %@", kACAppCriticsDatabaseFile);
+		PSLogError(@"Failed to open database %@", kACAppReviewsDatabaseFile);
 	return result;
 }
 
@@ -175,7 +175,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ACAppReviewsStore);
 {
 	[database close];
 	self.database = nil;
-	PSLogDebug(@"Closed database %@", kACAppCriticsDatabaseFile);
+	PSLogDebug(@"Closed database %@", kACAppReviewsDatabaseFile);
 }
 
 - (ACAppStore *)storeForIdentifier:(NSString *)storeIdentifier

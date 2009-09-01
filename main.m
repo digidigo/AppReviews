@@ -1,7 +1,7 @@
 //
-//	Copyright (c) 2008-2009, AppCritics
-//	http://github.com/gambcl/AppCritics
-//	http://www.perculasoft.com/appcritics
+//	Copyright (c) 2008-2009, AppReviews
+//	http://github.com/gambcl/AppReviews
+//	http://www.perculasoft.com/appreviews
 //	All rights reserved.
 //
 //	This software is released under the terms of the BSD License.
@@ -15,7 +15,7 @@
 //	* Redistributions in binary form must reproduce the above copyright notice,
 //	  this list of conditions and the following disclaimer
 //	  in the documentation and/or other materials provided with the distribution.
-//	* Neither the name of AppCritics nor the names of its contributors may be used
+//	* Neither the name of AppReviews nor the names of its contributors may be used
 //	  to endorse or promote products derived from this software without specific
 //	  prior written permission.
 //
@@ -36,7 +36,7 @@
 int main(int argc, char *argv[])
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"AppCriticsAppDelegate");
+    int retVal = UIApplicationMain(argc, argv, nil, @"AppReviewsAppDelegate");
     [pool release];
     return retVal;
 }
