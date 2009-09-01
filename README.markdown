@@ -14,12 +14,10 @@ Features
 
 Requirements
 ------------
-
 AppReviews currently requires each application's unique application indentifier, which is found in your reports from Apple and also in the iTunes Store URL (right-click on your application icon in iTunes App Store).
 
 Why open-source it?
 -------------------
-
 I have released AppReviews as open-source for two main reasons:
 
 * It fetches data using a non-public web API and therefore cannot be sold in the App Store (Don't Ask Me How I Know This :-)
@@ -27,12 +25,14 @@ I have released AppReviews as open-source for two main reasons:
 
 However, it is a useful tool for iPhone developers and I didn't want to see it just die off, so I am releasing it as open-source (under the [BSD license](http://www.opensource.org/licenses/bsd-license.php)) in the hope that others might contribute and improve AppReviews for the benefit of all of us developers.
 
+Why rename it?
+--------------
+The open-source AppCritics was renamed to AppReviews to avoid a name-clash with an existing app in the App Store.
+
 License
 -------
-
 This software is released under the terms of the [BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
 For More Information
 --------------------
-
 Please visit the [AppReviews](http://www.perculasoft.com/appreviews) page at [Percula Software](http://www.perculasoft.com).
